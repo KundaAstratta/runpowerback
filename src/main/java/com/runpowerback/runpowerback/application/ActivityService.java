@@ -20,6 +20,7 @@ public class ActivityService {
     }
 
     public List<Activity> findOneActivity() {
+
         return this.activityRepository.findAll();
     }
 

@@ -41,10 +41,6 @@ public class ActivityJPA {
         this.timezone = activity.getTimezone();
     }
 
-    public Activity toActvity() {
-        return new Activity(id, latitude,longitude,elevation,hearthrate,timezone);
-    }
-
     public Long getId() {
         return id;
     }
@@ -69,5 +65,20 @@ public class ActivityJPA {
         return timezone;
     }
 
+    @Override
+    public String toString() {
+        return "ActivityJPA{" +
+                "id=" + id +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", elevation='" + elevation + '\'' +
+                ", hearthrate='" + hearthrate + '\'' +
+                ", timezone='" + timezone + '\'' +
+                '}';
+    }
+
+    public Activity toActvity() {
+        return new Activity(id, latitude,longitude,elevation,hearthrate,timezone);
+    }
 
 }

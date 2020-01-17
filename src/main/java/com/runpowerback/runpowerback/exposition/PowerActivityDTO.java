@@ -2,34 +2,34 @@ package com.runpowerback.runpowerback.exposition;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ActivityDTO {
+public class PowerActivityDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long id;
 
     @JsonProperty
-    public String latitude;
+    public String power;
 
     @JsonProperty
-    public String longitude;
-
-    @JsonProperty
-    public String elevation;
+    public String speed;
 
     @JsonProperty
     public String hearthrate;
 
     @JsonProperty
+    public String distance;
+
+    @JsonProperty
     public String timezone;
 
-    public ActivityDTO() {}
+    public PowerActivityDTO() {}
 
-    public ActivityDTO(Long id, String latitude, String longitude, String elevation, String hearthrate, String timezone) {
+    public PowerActivityDTO(Long id, String power, String speed, String hearthrate, String distance, String timezone) {
         this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.elevation = elevation;
+        this.power = power;
+        this.speed = speed;
         this.hearthrate = hearthrate;
+        this.distance = distance;
         this.timezone = timezone;
     }
 
@@ -37,20 +37,20 @@ public class ActivityDTO {
         return id;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public String getPower() {
+        return power;
     }
 
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public String getElevation() {
-        return elevation;
+    public String getSpeed() {
+        return speed;
     }
 
     public String getHearthrate() {
         return hearthrate;
+    }
+
+    public String getDistance() {
+        return distance;
     }
 
     public String getTimezone() {
@@ -59,15 +59,13 @@ public class ActivityDTO {
 
     @Override
     public String toString() {
-        return "ActivityDTO{" +
+        return "PowerActivityDTO{" +
                 "id=" + id +
-                ", latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", elevation='" + elevation + '\'' +
+                ", power='" + power + '\'' +
+                ", speed='" + speed + '\'' +
                 ", hearthrate='" + hearthrate + '\'' +
+                ", distance='" + distance + '\'' +
                 ", timezone='" + timezone + '\'' +
                 '}';
     }
-
 }
-
