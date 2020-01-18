@@ -3,15 +3,15 @@ package com.runpowerback.runpowerback.domaine;
 public class PowerActivity {
 
     private Long id;
-    private String power;
-    private String speed;
-    private String hearthrate;
-    private String distance;
-    private String timezone;
+    private float power;
+    private float speed;
+    private float hearthrate;
+    private float distance;
+    private float timezone;
 
     public PowerActivity() {}
 
-    public PowerActivity(Long id, String power, String speed, String hearthrate, String distance, String timezone) {
+    public PowerActivity(Long id, float power, float speed, float hearthrate, float distance, float timezone) {
         this.id = id;
         this.power = power;
         this.speed = speed;
@@ -24,23 +24,23 @@ public class PowerActivity {
         return id;
     }
 
-    public String getPower() {
+    public float getPower() {
         return power;
     }
 
-    public String getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    public String getHearthrate() {
+    public float getHearthrate() {
         return hearthrate;
     }
 
-    public String getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public String getTimezone() {
+    public float getTimezone() {
         return timezone;
     }
 

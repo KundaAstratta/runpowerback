@@ -2,15 +2,15 @@ package com.runpowerback.runpowerback.domaine;
 
 public class Activity {
     private Long id;
-    private String latitude;
-    private String longitude;
-    private String elevation;
-    private String hearthrate;
+    private float latitude;
+    private float longitude;
+    private float elevation;
+    private float hearthrate;
     private String timezone;
 
     public Activity() {}
 
-    public Activity(Long id,  String latitude, String longitude, String elevation, String hearthrate, String timezone) {
+    public Activity(Long id,  float latitude, float longitude, float elevation, float hearthrate, String timezone) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -23,19 +23,19 @@ public class Activity {
         return id;
     }
 
-    public String getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
-    public String getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
-    public String getElevation() {
+    public float getElevation() {
         return elevation;
     }
 
-    public String getHearthrate() {
+    public float getHearthrate() {
         return hearthrate;
     }
 

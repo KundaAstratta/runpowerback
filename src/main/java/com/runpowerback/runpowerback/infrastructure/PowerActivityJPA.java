@@ -2,33 +2,30 @@ package com.runpowerback.runpowerback.infrastructure;
 
 import com.runpowerback.runpowerback.domaine.PowerActivity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "POWERACTIVITY")
 public class PowerActivityJPA {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
     public Long id;
 
     @Column(name = "POWER")
-    private String power;
+    private float power;
 
     @Column(name = "SPEED")
-    private String speed;
+    private float speed;
 
     @Column(name = "HEARTHRATE")
-    private String hearthrate;
+    private float hearthrate;
 
     @Column(name = "DISTANCE")
-    private String distance;
+    private float distance;
 
     @Column(name = "TIMEZONE")
-    private String timezone;
+    private float timezone;
 
     public PowerActivityJPA() {}
 
@@ -45,23 +42,23 @@ public class PowerActivityJPA {
         return id;
     }
 
-    public String getPower() {
+    public float getPower() {
         return power;
     }
 
-    public String getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    public String getHearthrate() {
+    public float getHearthrate() {
         return hearthrate;
     }
 
-    public String getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public String getTimezone() {
+    public float getTimezone() {
         return timezone;
     }
 

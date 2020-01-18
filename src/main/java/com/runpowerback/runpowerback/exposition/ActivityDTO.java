@@ -8,23 +8,23 @@ public class ActivityDTO {
     public Long id;
 
     @JsonProperty
-    public String latitude;
+    public float latitude;
 
     @JsonProperty
-    public String longitude;
+    public float longitude;
 
     @JsonProperty
-    public String elevation;
+    public float elevation;
 
     @JsonProperty
-    public String hearthrate;
+    public float hearthrate;
 
     @JsonProperty
     public String timezone;
 
     public ActivityDTO() {}
 
-    public ActivityDTO(Long id, String latitude, String longitude, String elevation, String hearthrate, String timezone) {
+    public ActivityDTO(Long id, float latitude, float longitude, float elevation, float hearthrate, String timezone) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -37,19 +37,19 @@ public class ActivityDTO {
         return id;
     }
 
-    public String getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
-    public String getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
-    public String getElevation() {
+    public float getElevation() {
         return elevation;
     }
 
-    public String getHearthrate() {
+    public float getHearthrate() {
         return hearthrate;
     }
 

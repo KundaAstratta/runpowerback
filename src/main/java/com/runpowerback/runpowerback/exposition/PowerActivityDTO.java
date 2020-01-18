@@ -8,23 +8,23 @@ public class PowerActivityDTO {
     public Long id;
 
     @JsonProperty
-    public String power;
+    public float power;
 
     @JsonProperty
-    public String speed;
+    public float speed;
 
     @JsonProperty
-    public String hearthrate;
+    public float hearthrate;
 
     @JsonProperty
-    public String distance;
+    public float distance;
 
     @JsonProperty
-    public String timezone;
+    public float timezone;
 
     public PowerActivityDTO() {}
 
-    public PowerActivityDTO(Long id, String power, String speed, String hearthrate, String distance, String timezone) {
+    public PowerActivityDTO(Long id, float power, float speed, float hearthrate, float distance, float timezone) {
         this.id = id;
         this.power = power;
         this.speed = speed;
@@ -37,23 +37,23 @@ public class PowerActivityDTO {
         return id;
     }
 
-    public String getPower() {
+    public float getPower() {
         return power;
     }
 
-    public String getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
-    public String getHearthrate() {
+    public float getHearthrate() {
         return hearthrate;
     }
 
-    public String getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public String getTimezone() {
+    public float getTimezone() {
         return timezone;
     }
 
