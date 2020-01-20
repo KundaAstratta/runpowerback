@@ -17,63 +17,63 @@ public class TransformService {
     @Autowired
     PowerActivityRepository powerActivityRepository;
 
-    void toTransform(List<Activity> run, int i) {
+    float distanceFromStart = 0;
+    float timeFromStart = 0;
 
-        float deltaDistancePowerActivity =
-                getDistanceFromLatLontoMeter(run.get(1).getLatitude(),
-                        run.get(1).getLongitude(),
-                        run.get(2).getLatitude(),
-                        run.get(2).getLongitude()) -
-                getDistanceFromLatLontoMeter(run.get(0).getLatitude(),
-                        run.get(0).getLongitude(),
-                        run.get(1).getLatitude(),
-                        run.get(1).getLongitude())
-                ;
-        System.out.println("deltaDistance : " + deltaDistancePowerActivity);
+    void toTransform(List<Activity> run) {
 
-        float hearthratePowerActivity=run.get(2).getHearthrate();
-        System.out.println("heathrate : " + hearthratePowerActivity);
+        int i = 1;
+        System.out.println("taille : " + run.size());
 
-        float deltaTimezonePowerActivity =
-                getDeltaTimeFromTimezoneString(run.get(0).getTimezone(),run.get(1).getTimezone()) -
-                getDeltaTimeFromTimezoneString(run.get(1).getTimezone(),run.get(2).getTimezone());
-        System.out.println("timezone : " + deltaTimezonePowerActivity);
+        while(i <= run.size()-1) {
 
-        float speedPowerActivity = getSpeedFromDistanceAndTime(deltaDistancePowerActivity,deltaTimezonePowerActivity);
-        System.out.println("speed : " + speedPowerActivity);
+            float deltaDistancePowerActivity =
+                    getDistanceFromLatLontoMeter(
+                            run.get(i-1).getLatitude(),
+                            run.get(i-1).getLongitude(),
+                            run.get(i).getLatitude(),
+                            run.get(i).getLongitude());
+            System.out.println("deltaDistance : " + deltaDistancePowerActivity);
 
-        float rateElevation = run.get(2).getElevation() / run.get(0).getElevation();
-        System.out.println("rate Elevation : " + rateElevation);
+            float hearthratePowerActivity = run.get(i).getHearthrate();
+            System.out.println("heathrate : " + hearthratePowerActivity);
 
-        float mass = 70.0f;
-        float Ar = 0.24f;
-        float massVolumic = 1.2f;
-        float speedWind = 0f;
-        float gravity = 9.81f;
-        float power = getPower(mass, deltaDistancePowerActivity, deltaTimezonePowerActivity,Ar, massVolumic, speedWind, gravity, rateElevation);
-        System.out.println("power :" + power);
+            float deltaTimezonePowerActivity =
+                    getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
+            System.out.println("timezone : " + deltaTimezonePowerActivity);
 
-        float distanceFromStart =
-                getDistanceFromLatLontoMeter(run.get(1).getLatitude(),
-                       run.get(1).getLongitude(),
-                       run.get(2).getLatitude(),
-                       run.get(2).getLongitude()) -
-                getDistanceFromLatLontoMeter(run.get(0).getLatitude(),
-                        run.get(0).getLongitude(),
-                        run.get(1).getLatitude(),
-                        run.get(1).getLongitude())
-                 ;
+            float speedPowerActivity = getSpeedFromDistanceAndTime(deltaDistancePowerActivity, deltaTimezonePowerActivity);
+            System.out.println("speed : " + speedPowerActivity);
 
-        float timeFromStart =
-                getDeltaTimeFromTimezoneString(run.get(0).getTimezone(),run.get(1).getTimezone()) -
-                getDeltaTimeFromTimezoneString(run.get(1).getTimezone(),run.get(2).getTimezone());
+            float rateElevation = (run.get(i).getElevation() - run.get(i-1).getElevation()) / run.get(i).getElevation();
+            System.out.println("rate Elevation : " + rateElevation);
 
-        PowerActivity powerActivity = new PowerActivity(null,power,speedPowerActivity,hearthratePowerActivity,distanceFromStart,timeFromStart);
-        System.out.println("Object power : " + powerActivity );
+            float mass = 70.0f;
+            float Ar = 0.24f;
+            float massVolumic = 1.2f;
+            float speedWind = 0f;
+            float gravity = 9.81f;
 
-        this.powerActivityRepository.save(powerActivity);
+            float power = getPower(mass, deltaDistancePowerActivity, deltaTimezonePowerActivity, Ar, massVolumic, speedWind, rateElevation, gravity);
+            System.out.println("power :" + power);
 
+            distanceFromStart = distanceFromStart +
+                    getDistanceFromLatLontoMeter(run.get(i-1).getLatitude(),
+                            run.get(i-1).getLongitude(),
+                            run.get(i).getLatitude(),
+                            run.get(i).getLongitude());
 
+            timeFromStart = timeFromStart +
+                    getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
+
+            PowerActivity powerActivity = new PowerActivity(null, power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, timeFromStart);
+            System.out.println("Object power : " + powerActivity);
+
+            this.powerActivityRepository.save(powerActivity);
+
+            i=i+1;
+
+        }
     }
 
     static float getDistanceFromLatLontoMeter(float lat1, float lon1, float lat2, float lon2) {
@@ -93,20 +93,22 @@ public class TransformService {
 
 
     static float getDeltaTimeFromTimezoneString(String timezone1, String timezone2){
-        return  3600*(ZonedDateTime.parse(timezone2).getHour()-ZonedDateTime.parse(timezone1).getHour()) +
-                60*(ZonedDateTime.parse(timezone2).getMinute()-ZonedDateTime.parse(timezone1).getMinute()) +
-                (ZonedDateTime.parse(timezone2).getSecond()-ZonedDateTime.parse(timezone1).getSecond());
+        float timezoneStartPoint = 3600 * (ZonedDateTime.parse(timezone1).getHour()) + 60* (ZonedDateTime.parse(timezone1).getMinute()) +
+                ZonedDateTime.parse(timezone1).getSecond();
+        float timezoneEndPoint = 3600 * (ZonedDateTime.parse(timezone2).getHour()) + 60* (ZonedDateTime.parse(timezone2).getMinute()) +
+                ZonedDateTime.parse(timezone2).getSecond();
+        return  (timezoneEndPoint- timezoneStartPoint);
     }
 
     static float getSpeedFromDistanceAndTime(float distance, float time) {
         return distance / time;
     }
 
-    static float getPower(float mass, float deltaDistance, float deltaTime, float Ar, float massVolumic, float speedWind,float gravity , float rateElevation) {
+    static float getPower(float mass, float deltaDistance, float deltaTime, float Ar, float massVolumic, float speedWind, float rateElevation, float gravity) {
         return mass * (deltaDistance / deltaTime) +
-                0.5f * Ar * massVolumic * (deltaDistance / deltaTime + speedWind) * (deltaDistance / deltaTime + speedWind)
-                          * deltaDistance +
-                mass * gravity * rateElevation * (deltaDistance / deltaTime);
+               0.5f * Ar * massVolumic * (deltaDistance / deltaTime + speedWind) * (deltaDistance / deltaTime + speedWind)
+                          * deltaDistance/deltaTime +
+               mass * gravity * rateElevation * (deltaDistance / deltaTime);
     }
 
 

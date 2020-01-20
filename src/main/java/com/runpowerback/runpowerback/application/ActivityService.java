@@ -25,7 +25,7 @@ public class ActivityService {
     public List<Activity> findOneActivity() {
         List<Activity> run;
         run = this.activityRepository.findAll();
-        this.transformService.toTransform(run,2);
+        this.transformService.toTransform(run);
         return run;
     }
 
