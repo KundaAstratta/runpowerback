@@ -16,6 +16,7 @@ public class PowerActivityMapper {
                 powerActivityDTO.speed,
                 powerActivityDTO.hearthrate,
                 powerActivityDTO.distance,
+                powerActivityDTO.pace,
                 powerActivityDTO.timezone
         );
     }
@@ -26,6 +27,7 @@ public class PowerActivityMapper {
                                     powerActivity.getSpeed(),
                                     powerActivity.getHearthrate(),
                                     powerActivity.getDistance(),
+                                    powerActivity.getPace(),
                                     powerActivity.getTimezone());
     }
 

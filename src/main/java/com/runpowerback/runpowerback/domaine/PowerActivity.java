@@ -7,16 +7,18 @@ public class PowerActivity {
     private float speed;
     private float hearthrate;
     private float distance;
+    private float pace;
     private float timezone;
 
     public PowerActivity() {}
 
-    public PowerActivity(Long id, float power, float speed, float hearthrate, float distance, float timezone) {
+    public PowerActivity(Long id, float power, float speed, float hearthrate, float distance, float pace, float timezone) {
         this.id = id;
         this.power = power;
         this.speed = speed;
         this.hearthrate = hearthrate;
         this.distance = distance;
+        this.pace = pace;
         this.timezone = timezone;
     }
 
@@ -40,6 +42,8 @@ public class PowerActivity {
         return distance;
     }
 
+    public float getPace() { return pace;}
+
     public float getTimezone() {
         return timezone;
     }
@@ -52,6 +56,7 @@ public class PowerActivity {
                 ", speed='" + speed + '\'' +
                 ", hearthrate='" + hearthrate + '\'' +
                 ", distance='" + distance + '\'' +
+                ", pace='" + pace + '\'' +
                 ", timezone='" + timezone + '\'' +
                 '}';
     }

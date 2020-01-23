@@ -20,16 +20,20 @@ public class PowerActivityDTO {
     public float distance;
 
     @JsonProperty
+    public float pace;
+
+    @JsonProperty
     public float timezone;
 
     public PowerActivityDTO() {}
 
-    public PowerActivityDTO(Long id, float power, float speed, float hearthrate, float distance, float timezone) {
+    public PowerActivityDTO(Long id, float power, float speed, float hearthrate, float distance, float pace, float timezone) {
         this.id = id;
         this.power = power;
         this.speed = speed;
         this.hearthrate = hearthrate;
         this.distance = distance;
+        this.pace = pace;
         this.timezone = timezone;
     }
 
@@ -53,6 +57,8 @@ public class PowerActivityDTO {
         return distance;
     }
 
+    public float getPace() {return pace;}
+
     public float getTimezone() {
         return timezone;
     }
@@ -65,6 +71,7 @@ public class PowerActivityDTO {
                 ", speed='" + speed + '\'' +
                 ", hearthrate='" + hearthrate + '\'' +
                 ", distance='" + distance + '\'' +
+                ", pace='" + pace + '\'' +
                 ", timezone='" + timezone + '\'' +
                 '}';
     }

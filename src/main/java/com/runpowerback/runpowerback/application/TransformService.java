@@ -45,6 +45,9 @@ public class TransformService {
             float speedPowerActivity = getSpeedFromDistanceAndTime(deltaDistancePowerActivity, deltaTimezonePowerActivity);
             System.out.println("speed : " + speedPowerActivity);
 
+            float pacePowerActivity = getPaceFromSpeed(speedPowerActivity);
+            System.out.println("pace : " + pacePowerActivity);
+
             float rateElevation = (run.get(i).getElevation() - run.get(i-1).getElevation()) / run.get(i).getElevation();
             System.out.println("rate Elevation : " + rateElevation);
 
@@ -66,7 +69,7 @@ public class TransformService {
             timeFromStart = timeFromStart +
                     getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
 
-            PowerActivity powerActivity = new PowerActivity(null, power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, timeFromStart);
+            PowerActivity powerActivity = new PowerActivity(null, power, speedPowerActivity, hearthratePowerActivity, distanceFromStart,  pacePowerActivity, timeFromStart);
             System.out.println("Object power : " + powerActivity);
 
             this.powerActivityRepository.save(powerActivity);
@@ -102,6 +105,10 @@ public class TransformService {
 
     static float getSpeedFromDistanceAndTime(float distance, float time) {
         return distance / time;
+    }
+
+    static float getPaceFromSpeed(float speed) {
+        return (60f / (speed * 3.6f));
     }
 
     static float getPower(float mass, float deltaDistance, float deltaTime, float Ar, float massVolumic, float speedWind, float rateElevation, float gravity) {

@@ -24,6 +24,9 @@ public class PowerActivityJPA {
     @Column(name = "DISTANCE")
     private float distance;
 
+    @Column(name= "PACE")
+    private float pace;
+
     @Column(name = "TIMEZONE")
     private float timezone;
 
@@ -35,6 +38,7 @@ public class PowerActivityJPA {
         this.speed = powerActivity.getSpeed();
         this.hearthrate = powerActivity.getHearthrate();
         this.distance = powerActivity.getDistance();
+        this.pace = powerActivity.getPace();
         this.timezone = powerActivity.getTimezone();
     }
 
@@ -58,6 +62,8 @@ public class PowerActivityJPA {
         return distance;
     }
 
+    public float getPace() {return pace;}
+
     public float getTimezone() {
         return timezone;
     }
@@ -70,10 +76,11 @@ public class PowerActivityJPA {
                 ", speed='" + speed + '\'' +
                 ", hearthrate='" + hearthrate + '\'' +
                 ", distance='" + distance + '\'' +
+                ", pace='" + pace + '\'' +
                 ", timezone='" + timezone + '\'' +
                 '}';
     }
 
-    public PowerActivity toPowerActivity() {return new PowerActivity(id,power,speed,hearthrate,distance,timezone);}
+    public PowerActivity toPowerActivity() {return new PowerActivity(id,power,speed,hearthrate,distance,pace,timezone);}
 
 }
