@@ -19,6 +19,8 @@ public class TransformService {
 
     float distanceFromStart = 0;
     float timeFromStart = 0;
+    float powerPrevious = 0;
+    float powerCurrent = 0;
 
     void toTransform(List<Activity> run) {
 
@@ -57,8 +59,10 @@ public class TransformService {
             float speedWind = 0f;
             float gravity = 9.81f;
 
+            powerPrevious = powerCurrent;
             float power = getPower(mass, deltaDistancePowerActivity, deltaTimezonePowerActivity, Ar, massVolumic, speedWind, rateElevation, gravity);
             System.out.println("power :" + power);
+            powerCurrent = power;
 
             distanceFromStart = distanceFromStart +
                     getDistanceFromLatLontoMeter(run.get(i-1).getLatitude(),
@@ -69,11 +73,12 @@ public class TransformService {
             timeFromStart = timeFromStart +
                     getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
 
-            PowerActivity powerActivity = new PowerActivity(null, power, speedPowerActivity, hearthratePowerActivity, distanceFromStart,  pacePowerActivity, timeFromStart);
-            System.out.println("Object power : " + powerActivity);
+            if ((power > 0) && (powerCurrent < (2 * powerPrevious))) {
+                PowerActivity powerActivity = new PowerActivity(null, power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, pacePowerActivity, timeFromStart);
+                System.out.println("Object power : " + powerActivity);
 
-            this.powerActivityRepository.save(powerActivity);
-
+                this.powerActivityRepository.save(powerActivity);
+            }
             i=i+1;
 
         }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,6 +24,11 @@ public class ActivityController {
     @RequestMapping(method = RequestMethod.GET, path = {"/activity"})
     public List<ActivityDTO> findOneActivity() {
         return ActivityMapper.mapToOneActivity(this.activityService.findOneActivity());
+    }
+
+    @RequestMapping(method =RequestMethod.POST, path = {"/readXML"})
+    public void readXML() throws IOException {
+        this.activityService.readXML();
     }
 
 }
