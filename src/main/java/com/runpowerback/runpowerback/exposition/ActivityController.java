@@ -26,11 +26,17 @@ public class ActivityController {
         this.activityService.readXMLconvertToActivity();
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = {"/fromActivityToPowerActivity"})
-    public List<ActivityDTO> fromActivityToPowerActivity() {
-        return ActivityMapper.mapToOneActivity(this.activityService.fromActivityToPowerActivity());
+    /*
+    @RequestMapping(method = RequestMethod.GET, path = {"/libraries/director/surname/{surname}"})
+    public List<LibraryDTO> listAllLibrairiesByDirectorName(@PathVariable("surname") String surname) {
+        return LibraryAdapter.adaptToLibraryDTOList(this.libraryService.listAllByDirectorName(surname));
     }
+    */
 
+   @RequestMapping(method = RequestMethod.GET, path = {"/fromActivityToPowerActivity"})
+   public void fromActivityToPowerActivity() {
+        this.activityService.fromActivityToPowerActivity();
+   }
 
     @RequestMapping(method = RequestMethod.GET, path = {"/activity"})
     public List<ActivityDTO> findOneActivity() {
