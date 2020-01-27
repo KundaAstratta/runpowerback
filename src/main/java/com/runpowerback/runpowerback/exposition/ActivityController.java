@@ -26,7 +26,7 @@ public class ActivityController {
         return ActivityMapper.mapToOneActivity(this.activityService.findOneActivity());
     }
 
-    @RequestMapping(method =RequestMethod.POST, path = {"/readXML"})
+    @RequestMapping(method =RequestMethod.POST, path = {"/fromXMLtoActivity"})
     public void readXML() throws IOException {
         this.activityService.readXML();
     }
