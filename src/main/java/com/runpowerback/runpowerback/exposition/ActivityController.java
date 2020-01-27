@@ -21,14 +21,21 @@ public class ActivityController {
         return this.activityService.createOnePointOfActivity(ActivityMapper.mapToOnePointActivity(activityDTO));
     }
 
+    @RequestMapping(method =RequestMethod.POST, path = {"/fromXMLtoActivity"})
+    public void readXMLconvertToActivity() throws IOException {
+        this.activityService.readXMLconvertToActivity();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = {"/fromActivityToPowerActivity"})
+    public List<ActivityDTO> fromActivityToPowerActivity() {
+        return ActivityMapper.mapToOneActivity(this.activityService.fromActivityToPowerActivity());
+    }
+
+
     @RequestMapping(method = RequestMethod.GET, path = {"/activity"})
     public List<ActivityDTO> findOneActivity() {
         return ActivityMapper.mapToOneActivity(this.activityService.findOneActivity());
     }
 
-    @RequestMapping(method =RequestMethod.POST, path = {"/fromXMLtoActivity"})
-    public void readXML() throws IOException {
-        this.activityService.readXML();
-    }
 
 }

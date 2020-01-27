@@ -26,14 +26,20 @@ public class ActivityService {
         return this.activityRepository.save(activity);
     }
 
-    public List<Activity> findOneActivity() {
+    public List<Activity> fromActivityToPowerActivity() {
         List<Activity> run;
         run = this.activityRepository.findAll();
         this.transformService.toTransform(run);
         return run;
     }
 
-    public void readXML() throws IOException {
+
+     public List<Activity> findOneActivity() {
+        return this.activityRepository.findAll();
+    }
+
+
+    public void readXMLconvertToActivity() throws IOException {
         this.readXMLService.toReadXMLService();
     }
 
