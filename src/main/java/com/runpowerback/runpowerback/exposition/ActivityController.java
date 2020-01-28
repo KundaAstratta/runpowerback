@@ -21,17 +21,10 @@ public class ActivityController {
         return this.activityService.createOnePointOfActivity(ActivityMapper.mapToOnePointActivity(activityDTO));
     }
 
-    @RequestMapping(method =RequestMethod.POST, path = {"/fromXMLtoActivity"})
+    @RequestMapping(method =RequestMethod.GET, path = {"/fromXMLtoActivity"})
     public void readXMLconvertToActivity() throws IOException {
         this.activityService.readXMLconvertToActivity();
     }
-
-    /*
-    @RequestMapping(method = RequestMethod.GET, path = {"/libraries/director/surname/{surname}"})
-    public List<LibraryDTO> listAllLibrairiesByDirectorName(@PathVariable("surname") String surname) {
-        return LibraryAdapter.adaptToLibraryDTOList(this.libraryService.listAllByDirectorName(surname));
-    }
-    */
 
    @RequestMapping(method = RequestMethod.GET, path = {"/fromActivityToPowerActivity"})
    public void fromActivityToPowerActivity() {

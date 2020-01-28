@@ -19,7 +19,7 @@ public class ReadXMLService {
     @Autowired
     ActivityRepository activityRepository;
 
-    void toReadXMLService() throws IOException {
+        void toReadXMLService() throws IOException {
 
         try {
 
