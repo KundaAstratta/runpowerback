@@ -22,8 +22,8 @@ public class ActivityController {
     }
 
     @RequestMapping(method =RequestMethod.GET, path = {"/fromXMLtoActivity"})
-    public void readXMLconvertToActivity() throws IOException {
-        this.activityService.readXMLconvertToActivity();
+    public void fromXMLtoActivity() throws IOException {
+        this.activityService.fromXMLtoActivity();
     }
 
    @RequestMapping(method = RequestMethod.GET, path = {"/fromActivityToPowerActivity"})

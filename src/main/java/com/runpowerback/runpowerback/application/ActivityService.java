@@ -37,7 +37,7 @@ public class ActivityService {
     }
 
 
-    public void readXMLconvertToActivity() throws IOException {
+    public void fromXMLtoActivity() throws IOException {
         this.readXMLService.toReadXMLService();
     }
 
