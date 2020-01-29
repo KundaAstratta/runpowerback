@@ -8,6 +8,12 @@ public class PowerActivityDTO {
     public Long id;
 
     @JsonProperty
+    public Long idathlete;
+
+    @JsonProperty
+    public Long idpoweractivity;
+
+    @JsonProperty
     public float power;
 
     @JsonProperty
@@ -27,8 +33,10 @@ public class PowerActivityDTO {
 
     public PowerActivityDTO() {}
 
-    public PowerActivityDTO(Long id, float power, float speed, float hearthrate, float distance, float pace, float timezone) {
+    public PowerActivityDTO(Long id, Long idathlete, Long idpoweractivity, float power, float speed, float hearthrate, float distance, float pace, float timezone) {
         this.id = id;
+        this.idathlete = idathlete;
+        this.idpoweractivity = idpoweractivity;
         this.power = power;
         this.speed = speed;
         this.hearthrate = hearthrate;
@@ -39,6 +47,14 @@ public class PowerActivityDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getIdathlete() {
+        return idathlete;
+    }
+
+    public Long getIdpoweractivity() {
+        return idpoweractivity;
     }
 
     public float getPower() {
@@ -67,6 +83,8 @@ public class PowerActivityDTO {
     public String toString() {
         return "PowerActivityDTO{" +
                 "id=" + id +
+                ", idathlete=" + idathlete + '\'' +
+                ", idpoweractivity=" + idpoweractivity + '\'' +
                 ", power='" + power + '\'' +
                 ", speed='" + speed + '\'' +
                 ", hearthrate='" + hearthrate + '\'' +

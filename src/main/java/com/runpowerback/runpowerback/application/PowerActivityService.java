@@ -23,4 +23,8 @@ public class PowerActivityService {
         return this.powerActivityRepository.findAll();
     }
 
+    public void deleteOnePowerActivity () {
+        this.powerActivityRepository.deleteAll();
+    }
+
 }

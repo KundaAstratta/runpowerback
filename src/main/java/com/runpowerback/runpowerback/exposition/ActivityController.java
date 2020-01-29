@@ -36,5 +36,10 @@ public class ActivityController {
         return ActivityMapper.mapToOneActivity(this.activityService.findOneActivity());
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, path = {"/activity"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOneActivity() {
+        this.activityService.deleteOneActivity();
+    }
 
 }

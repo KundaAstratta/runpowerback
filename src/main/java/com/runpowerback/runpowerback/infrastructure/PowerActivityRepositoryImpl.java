@@ -25,4 +25,10 @@ public class PowerActivityRepositoryImpl implements PowerActivityRepository {
         return this.powerActivityDAO.findByOrderByIdAsc().stream().map(PowerActivityJPA::toPowerActivity).collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteAll() {
+        powerActivityDAO.deleteAll();
+    }
+
+
 }

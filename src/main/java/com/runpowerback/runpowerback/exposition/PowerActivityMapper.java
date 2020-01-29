@@ -12,6 +12,8 @@ public class PowerActivityMapper {
 
     public static PowerActivity mapToOnePointOfPowerActivity(PowerActivityDTO powerActivityDTO) {
         return new PowerActivity(null,
+                powerActivityDTO.idathlete,
+                powerActivityDTO.idpoweractivity,
                 powerActivityDTO.power,
                 powerActivityDTO.speed,
                 powerActivityDTO.hearthrate,
@@ -23,6 +25,8 @@ public class PowerActivityMapper {
 
     public static PowerActivityDTO mapToOnePointOfPowerActivityDTO(PowerActivity powerActivity) {
         return new PowerActivityDTO(powerActivity.getId(),
+                                    powerActivity.getIdathlete(),
+                                    powerActivity.getIdpoweractivity(),
                                     powerActivity.getPower(),
                                     powerActivity.getSpeed(),
                                     powerActivity.getHearthrate(),

@@ -12,6 +12,12 @@ public class PowerActivityJPA {
     @Column(name="ID")
     public Long id;
 
+    @Column(name= "IDATHLETE")
+    public Long idathlete;
+
+    @Column(name = "IDPOWERACTIVITY")
+    public Long idpoweractivity;
+
     @Column(name = "POWER")
     private float power;
 
@@ -34,6 +40,8 @@ public class PowerActivityJPA {
 
     public PowerActivityJPA(PowerActivity powerActivity) {
         this.id = powerActivity.getId();
+        this.idathlete = powerActivity.getIdathlete();
+        this.idpoweractivity = powerActivity.getIdpoweractivity();
         this.power = powerActivity.getPower();
         this.speed = powerActivity.getSpeed();
         this.hearthrate = powerActivity.getHearthrate();
@@ -48,6 +56,14 @@ public class PowerActivityJPA {
 
     public float getPower() {
         return power;
+    }
+
+    public Long getIdathlete() {
+        return idathlete;
+    }
+
+    public Long getIdpoweractivity() {
+        return idpoweractivity;
     }
 
     public float getSpeed() {
@@ -72,6 +88,8 @@ public class PowerActivityJPA {
     public String toString() {
         return "PowerActivityJPA{" +
                 "id=" + id +
+                ", idathlete='" + idathlete + '\'' +
+                ", idpoweractivity='" + idpoweractivity + '\'' +
                 ", power='" + power + '\'' +
                 ", speed='" + speed + '\'' +
                 ", hearthrate='" + hearthrate + '\'' +
@@ -81,6 +99,6 @@ public class PowerActivityJPA {
                 '}';
     }
 
-    public PowerActivity toPowerActivity() {return new PowerActivity(id,power,speed,hearthrate,distance,pace,timezone);}
+    public PowerActivity toPowerActivity() {return new PowerActivity(id,idathlete, idpoweractivity,power,speed,hearthrate,distance,pace,timezone);}
 
 }

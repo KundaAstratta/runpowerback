@@ -3,6 +3,8 @@ package com.runpowerback.runpowerback.domaine;
 public class PowerActivity {
 
     private Long id;
+    private Long idathlete;
+    private Long idpoweractivity;
     private float power;
     private float speed;
     private float hearthrate;
@@ -12,8 +14,10 @@ public class PowerActivity {
 
     public PowerActivity() {}
 
-    public PowerActivity(Long id, float power, float speed, float hearthrate, float distance, float pace, float timezone) {
+    public PowerActivity(Long id, Long idathlete, Long idpoweractivity, float power, float speed, float hearthrate, float distance, float pace, float timezone) {
         this.id = id;
+        this.idathlete = idathlete;
+        this.idpoweractivity = idpoweractivity;
         this.power = power;
         this.speed = speed;
         this.hearthrate = hearthrate;
@@ -24,6 +28,14 @@ public class PowerActivity {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getIdathlete() {
+        return idathlete;
+    }
+
+    public Long getIdpoweractivity() {
+        return idpoweractivity;
     }
 
     public float getPower() {
@@ -52,6 +64,8 @@ public class PowerActivity {
     public String toString() {
         return "PowerActivity{" +
                 "id=" + id +
+                ", idathlete='" + idathlete + '\'' +
+                ", idpoweractivity='" + idpoweractivity + '\'' +
                 ", power='" + power + '\'' +
                 ", speed='" + speed + '\'' +
                 ", hearthrate='" + hearthrate + '\'' +

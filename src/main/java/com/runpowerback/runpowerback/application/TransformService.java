@@ -74,7 +74,7 @@ public class TransformService {
                     getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
 
             if ((power > 0) && (powerCurrent < (2 * powerPrevious))) {
-                PowerActivity powerActivity = new PowerActivity(null, power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, pacePowerActivity, timeFromStart);
+                PowerActivity powerActivity = new PowerActivity(null, 1L,1L,power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, pacePowerActivity, timeFromStart);
                 System.out.println("Object power : " + powerActivity);
 
                 this.powerActivityRepository.save(powerActivity);

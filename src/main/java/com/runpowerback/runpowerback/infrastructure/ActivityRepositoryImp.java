@@ -25,4 +25,9 @@ public class ActivityRepositoryImp implements ActivityRepository {
         return activityDAO.findByOrderByIdAsc().stream().map(ActivityJPA::toActvity).collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteAll() {
+        activityDAO.deleteAll();
+    }
+
 }

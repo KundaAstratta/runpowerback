@@ -25,4 +25,10 @@ public class PowerActivityController {
         return PowerActivityMapper.mapToOnePowerActivity(this.powerActivityService.findOnePowerActivity());
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, path = {"/poweractivity"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOnePowerActivity() {
+        this.powerActivityService.deleteOnePowerActivity();
+    }
+
 }
