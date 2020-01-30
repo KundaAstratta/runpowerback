@@ -1,8 +1,6 @@
 package com.runpowerback.runpowerback.exposition;
 
-import com.runpowerback.runpowerback.domaine.Activity;
 import com.runpowerback.runpowerback.domaine.PowerActivity;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

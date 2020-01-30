@@ -4,7 +4,6 @@ import com.runpowerback.runpowerback.domaine.PowerActivity;
 import com.runpowerback.runpowerback.domaine.PowerActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,5 +29,14 @@ public class PowerActivityRepositoryImpl implements PowerActivityRepository {
         powerActivityDAO.deleteAll();
     }
 
+    @Override
+    public void deleteOnePowerActivity(Long idathlete, Long idpoweractivity) {
+        powerActivityDAO.deleteOnePowerActivity(idathlete, idpoweractivity);
+    }
+
+    @Override
+    public List<PowerActivity> findOnePowerActivity(Long idathlete, Long idpoweractivity) {
+        return this.powerActivityDAO.findOnePowerActivity(idathlete,idpoweractivity).stream().map(PowerActivityJPA::toPowerActivity).collect(Collectors.toList());
+    }
 
 }

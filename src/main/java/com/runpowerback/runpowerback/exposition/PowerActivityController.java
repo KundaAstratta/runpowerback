@@ -1,6 +1,7 @@
 package com.runpowerback.runpowerback.exposition;
 
 import com.runpowerback.runpowerback.application.PowerActivityService;
+import com.runpowerback.runpowerback.domaine.PowerActivity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +22,25 @@ public class PowerActivityController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = {"/poweractivity"})
-    public List<PowerActivityDTO> findOnePowerActivity() {
-        return PowerActivityMapper.mapToOnePowerActivity(this.powerActivityService.findOnePowerActivity());
+    public List<PowerActivityDTO> findAll() {
+        return PowerActivityMapper.mapToOnePowerActivity(this.powerActivityService.findAll());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = {"/poweractivity/athlete/{idathlete}/activity/{idpoweractivity}"})
+    public List<PowerActivityDTO> findOnePowerActivity(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity ) {
+        return PowerActivityMapper.mapToOnePowerActivity(this.powerActivityService.findOnePowerActivity(idathlete,idpoweractivity));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = {"/poweractivity"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOnePowerActivity() {
-        this.powerActivityService.deleteOnePowerActivity();
+    public void deleteAll() {
+        this.powerActivityService.deleteAll();
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = {"/poweractivity/delete/athlete/{idathlete}/activity/{idpoweractivity}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOnePowerActivity(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity ) {
+        this.powerActivityService.deleteOnePowerActivity(idathlete,idpoweractivity);
     }
 
 }

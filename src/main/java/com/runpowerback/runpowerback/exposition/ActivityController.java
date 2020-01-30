@@ -32,14 +32,14 @@ public class ActivityController {
    }
 
     @RequestMapping(method = RequestMethod.GET, path = {"/activity"})
-    public List<ActivityDTO> findOneActivity() {
-        return ActivityMapper.mapToOneActivity(this.activityService.findOneActivity());
+    public List<ActivityDTO> findAll() {
+        return ActivityMapper.mapToOneActivity(this.activityService.findAll());
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = {"/activity"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOneActivity() {
-        this.activityService.deleteOneActivity();
+    public void deleteAll() {
+        this.activityService.deleteAll();
     }
 
 }

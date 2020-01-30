@@ -29,7 +29,7 @@ public class ActivityService {
         return this.activityRepository.save(activity);
     }
 
-     public List<Activity> findOneActivity() {
+     public List<Activity> findAll() {
         return this.activityRepository.findAll();
     }
 
@@ -39,13 +39,14 @@ public class ActivityService {
     }
 
     public void fromActivityToPowerActivity() {
-        this.powerActivityRepository.deleteAll();
+   //   this.powerActivityRepository.deleteAll();
+        this.powerActivityRepository.deleteOnePowerActivity(1L,1L);
         List<Activity> run;
         run = this.activityRepository.findAll();
         this.transformService.toTransform(run);
     }
 
-    public void deleteOneActivity () {
+    public void deleteAll () {
         this.activityRepository.deleteAll();
     }
 

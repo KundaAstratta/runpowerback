@@ -19,12 +19,19 @@ public class PowerActivityService {
         return this.powerActivityRepository.save(powerActivity);
     }
 
-    public List<PowerActivity> findOnePowerActivity() {
+    public List<PowerActivity> findAll() {
         return this.powerActivityRepository.findAll();
     }
 
-    public void deleteOnePowerActivity () {
+    public void deleteAll() {
         this.powerActivityRepository.deleteAll();
     }
 
+    public void deleteOnePowerActivity(Long idathlete, Long idpoweractivity) {
+        this.powerActivityRepository.deleteOnePowerActivity(idathlete,idpoweractivity);
+    }
+
+    public List<PowerActivity> findOnePowerActivity(Long idathlete, Long idpoweractivity) {
+        return this.powerActivityRepository.findOnePowerActivity(idathlete, idpoweractivity);
+    }
 }
