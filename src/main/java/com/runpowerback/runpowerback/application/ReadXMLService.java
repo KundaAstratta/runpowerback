@@ -1,6 +1,9 @@
 package com.runpowerback.runpowerback.application;
 
+import com.runpowerback.runpowerback.RunpowerbackApplication;
 import com.runpowerback.runpowerback.domaine.ActivityRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.runpowerback.runpowerback.domaine.Activity;
@@ -15,6 +18,8 @@ import java.io.IOException;
 @Service
 @Transactional
 public class ReadXMLService {
+
+    private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
 
     @Autowired
     ActivityRepository activityRepository;
@@ -67,49 +72,29 @@ public class ReadXMLService {
 
                 if (xmlTag.startsWith(trkptLatLonBegin)) {
                     extractLonLat = getMappedXML(xmlTag, trkptLatLonBegin, trkptLatLonEnd);
-                    //  System.out.println("words : " + extractLonLat.split(" ")[0]);
-                    //  System.out.println(getMappedXML(extractLonLat.split(" ")[posLat], extractLatBegin, extractLatEnd));
-                    //  System.out.println(getMappedXML(extractLonLat.split(" ")[posLon], extractLonBegin, extractLonEnd));
-                    //  System.out.println(xmlTag.substring(12,21));
-                    //  latitude = Float.parseFloat(xmlTag.substring(12,21));
                     latitude = Float.parseFloat(getMappedXML(extractLonLat.split(" ")[posLat], extractLatBegin, extractLatEnd));
-                    // longitude = Float.parseFloat(xmlTag.substring(29,37));
                     longitude = Float.parseFloat(getMappedXML(extractLonLat.split(" ")[posLon], extractLonBegin, extractLonEnd));
 
-                    System.out.println(latitude);
-                    System.out.println(longitude);
+                    logger.info(latitude);
+                    logger.info(longitude);
                 }
                 if (xmlTag.startsWith(trkptEleBegin)) {
-                    //    words = getMappedXML(xmlTag,"<ele>","</ele>");
-                    //    System.out.println(words);
-                    //     elevation = Float.parseFloat(xmlTag.substring(5,9));
                     elevation = Float.parseFloat(getMappedXML(xmlTag, trkptEleBegin, trkptEleEnd));
-                    System.out.println(elevation);
+                    logger.info(elevation);
                 }
                 if (xmlTag.startsWith(trkptTimeBegin)) {
-                    //   timezone = xmlTag.substring(6,25);
                     timezone = getMappedXML(xmlTag, trkptTimeBegin, trkptTimeEnd);
-                    System.out.println(timezone);
+                    logger.info(timezone);
                 }
                 if (xmlTag.startsWith(trkptHrBegin)) {
-                    //    System.out.println(xmlTag.substring(11,14));
-                    //    System.out.println(xmlTag.substring(13,14));
-                    //    if (xmlTag.substring(13,14).equals("<")) {
-                    //        hearthrate = Float.parseFloat(xmlTag.substring(11,13));
-                    //    } else {
-                    //        hearthrate = Float.parseFloat(xmlTag.substring(11, 14));
-                    //    }
-                    //    System.out.println("hearthrate : " + hearthrate);
                     hearthrate = Float.parseFloat(getMappedXML(xmlTag,trkptHrBegin,trkptHrEnd));
-                    System.out.println("hearthrate 2 : " + hearthrate);
+                    logger.info("hearthrate 2 : " + hearthrate);
 
                 }
                 if (xmlTag.startsWith(trkptEnd)) {
-                //    System.out.println("Activity : " +  latitude + " ; "+ longitude + " ; "+ elevation + " ; "
-                //            + hearthrate + " ; " + timezone);
                     Activity  activity = new Activity(null, latitude, longitude, elevation, hearthrate, timezone);
                     this.activityRepository.save(activity);
-                    System.out.println("Activity" + activity);
+                    logger.info("Activity" + activity);
                 }
 
 
@@ -121,8 +106,8 @@ public class ReadXMLService {
 
     }
 
-    static String getMappedXML(String res, String xml_begin, String xml_end) {
-        return res.replace(xml_begin,"").replace(xml_end,"");
+    static String getMappedXML(String extractedXML, String xml_begin, String xml_end) {
+        return extractedXML.replace(xml_begin,"").replace(xml_end,"");
     }
 
 }

@@ -1,8 +1,11 @@
 package com.runpowerback.runpowerback.application;
 
+import com.runpowerback.runpowerback.RunpowerbackApplication;
 import com.runpowerback.runpowerback.domaine.Activity;
 import com.runpowerback.runpowerback.domaine.PowerActivity;
 import com.runpowerback.runpowerback.domaine.PowerActivityRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,8 @@ import java.util.List;
 @Service
 @Transactional
 public class TransformService {
+
+    private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
 
     @Autowired
     PowerActivityRepository powerActivityRepository;
@@ -25,7 +30,7 @@ public class TransformService {
     void toTransform(List<Activity> run) {
 
         int i = 1;
-        System.out.println("taille : " + run.size());
+        logger.info("taille : " + run.size());
 
         while(i <= run.size()-1) {
 
@@ -35,23 +40,23 @@ public class TransformService {
                             run.get(i-1).getLongitude(),
                             run.get(i).getLatitude(),
                             run.get(i).getLongitude());
-            System.out.println("deltaDistance : " + deltaDistancePowerActivity);
+            logger.info("deltaDistance : " + deltaDistancePowerActivity);
 
             float hearthratePowerActivity = run.get(i).getHearthrate();
-            System.out.println("heathrate : " + hearthratePowerActivity);
+            logger.info("heathrate : " + hearthratePowerActivity);
 
             float deltaTimezonePowerActivity =
                     getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
-            System.out.println("timezone : " + deltaTimezonePowerActivity);
+            logger.info("timezone : " + deltaTimezonePowerActivity);
 
             float speedPowerActivity = getSpeedFromDistanceAndTime(deltaDistancePowerActivity, deltaTimezonePowerActivity);
-            System.out.println("speed : " + speedPowerActivity);
+            logger.info("speed : " + speedPowerActivity);
 
             float pacePowerActivity = getPaceFromSpeed(speedPowerActivity);
-            System.out.println("pace : " + pacePowerActivity);
+            logger.info("pace : " + pacePowerActivity);
 
             float rateElevation = (run.get(i).getElevation() - run.get(i-1).getElevation()) / run.get(i).getElevation();
-            System.out.println("rate Elevation : " + rateElevation);
+            logger.info("rate Elevation : " + rateElevation);
 
             float mass = 70.0f;
             float Ar = 0.24f;
@@ -61,7 +66,7 @@ public class TransformService {
 
             powerPrevious = powerCurrent;
             float power = getPower(mass, deltaDistancePowerActivity, deltaTimezonePowerActivity, Ar, massVolumic, speedWind, rateElevation, gravity);
-            System.out.println("power :" + power);
+            logger.info("power : " + power);
             powerCurrent = power;
 
             distanceFromStart = distanceFromStart +
@@ -75,7 +80,7 @@ public class TransformService {
 
             if ((power > 0) && (powerCurrent < (2 * powerPrevious))) {
                 PowerActivity powerActivity = new PowerActivity(null, 1L,1L,power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, pacePowerActivity, timeFromStart);
-                System.out.println("Object power : " + powerActivity);
+                logger.info("Object power : " + powerActivity);
 
                 this.powerActivityRepository.save(powerActivity);
             }

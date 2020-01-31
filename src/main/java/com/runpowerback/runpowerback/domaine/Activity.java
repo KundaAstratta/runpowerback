@@ -1,11 +1,28 @@
 package com.runpowerback.runpowerback.domaine;
 
+import javax.persistence.*;
+
+@Entity(name="ACTIVITY")
 public class Activity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID")
     private Long id;
+
+    @Column(name="LATITUDE")
     private float latitude;
+
+    @Column(name="LONGITUDE")
     private float longitude;
+
+    @Column(name="ELEVATION")
     private float elevation;
+
+    @Column(name="HEARTHRATE")
     private float hearthrate;
+
+    @Column(name="TIMEZONE")
     private String timezone;
 
     public Activity() {}

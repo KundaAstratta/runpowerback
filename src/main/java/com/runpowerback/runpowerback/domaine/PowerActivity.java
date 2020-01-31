@@ -1,15 +1,36 @@
 package com.runpowerback.runpowerback.domaine;
 
-public class PowerActivity {
+import javax.persistence.*;
 
+@Entity(name = "POWERACTIVITY")
+public class PowerActivity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID")
     private Long id;
+
+    @Column(name= "IDATHLETE")
     private Long idathlete;
+
+    @Column(name = "IDPOWERACTIVITY")
     private Long idpoweractivity;
+
+    @Column(name = "POWER")
     private float power;
+
+    @Column(name = "SPEED")
     private float speed;
+
+    @Column(name = "HEARTHRATE")
     private float hearthrate;
+
+    @Column(name = "DISTANCE")
     private float distance;
+
+    @Column(name= "PACE")
     private float pace;
+
+    @Column(name = "TIMEZONE")
     private float timezone;
 
     public PowerActivity() {}
