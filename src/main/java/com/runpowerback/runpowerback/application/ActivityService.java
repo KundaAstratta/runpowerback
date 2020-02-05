@@ -20,10 +20,10 @@ public class ActivityService {
     PowerActivityRepository powerActivityRepository;
 
     @Autowired
-    TransformService transformService;
+    FromActivityToPowerActivityService fromActivityToPowerActivityService;
 
     @Autowired
-    ReadXMLService readXMLService;
+    FromXMLtoActiivityService fromXMLtoActiivityService;
 
     public Long createOnePointOfActivity (Activity activity) {
         return this.activityRepository.save(activity);
@@ -35,7 +35,7 @@ public class ActivityService {
 
     public void fromXMLtoActivity() throws IOException {
         this.activityRepository.deleteAll();
-        this.readXMLService.toReadXMLService();
+        this.fromXMLtoActiivityService.toReadXMLService();
     }
 
     public void fromActivityToPowerActivity() {
@@ -43,7 +43,7 @@ public class ActivityService {
         this.powerActivityRepository.deleteOnePowerActivity(1L,1L);
         List<Activity> run;
         run = this.activityRepository.findAll();
-        this.transformService.toTransform(run);
+        this.fromActivityToPowerActivityService.toTransform(run);
     }
 
     public void deleteAll () {

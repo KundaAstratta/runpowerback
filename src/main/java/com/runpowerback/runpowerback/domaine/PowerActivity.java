@@ -9,10 +9,10 @@ public class PowerActivity {
     @Column(name="ID")
     private Long id;
 
-    @Column(name= "IDATHLETE")
+    @Column(name= "ID_ATHLETE")
     private Long idathlete;
 
-    @Column(name = "IDPOWERACTIVITY")
+    @Column(name = "ID_POWERACTIVITY")
     private Long idpoweractivity;
 
     @Column(name = "POWER")

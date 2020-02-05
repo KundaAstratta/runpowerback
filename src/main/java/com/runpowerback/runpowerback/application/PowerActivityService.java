@@ -15,6 +15,9 @@ public class PowerActivityService {
     @Autowired
     PowerActivityRepository powerActivityRepository;
 
+    @Autowired
+    FromPowerActivityToStatisticsService fromPowerActivityToStatisticsService;
+
     public Long createOnePointOfPowerActivity(PowerActivity powerActivity) {
         return this.powerActivityRepository.save(powerActivity);
     }
@@ -34,4 +37,11 @@ public class PowerActivityService {
     public List<PowerActivity> findOnePowerActivity(Long idathlete, Long idpoweractivity) {
         return this.powerActivityRepository.findOnePowerActivity(idathlete, idpoweractivity);
     }
+
+    public void statisticsOfPowerActivity() {
+        List<PowerActivity> runpower;
+        runpower = this.powerActivityRepository.findOnePowerActivity(1L,1L);
+        this.fromPowerActivityToStatisticsService.toStatistics(runpower);
+    }
+
 }

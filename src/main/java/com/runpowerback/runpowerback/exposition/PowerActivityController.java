@@ -31,6 +31,12 @@ public class PowerActivityController {
         return PowerActivityMapper.mapToOnePowerActivity(this.powerActivityService.findOnePowerActivity(idathlete,idpoweractivity));
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = {"/statisticsOfPowerActivity"})
+    public void statisticsOfPowerActivity() {
+        this.powerActivityService.statisticsOfPowerActivity();
+    }
+
+
     @RequestMapping(method = RequestMethod.DELETE, path = {"/poweractivity"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAll() {

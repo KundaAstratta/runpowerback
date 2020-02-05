@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Service
 @Transactional
-public class ReadXMLService {
+public class FromXMLtoActiivityService {
 
     private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
 

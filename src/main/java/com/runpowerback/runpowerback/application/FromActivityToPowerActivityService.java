@@ -15,19 +15,19 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TransformService {
+public class FromActivityToPowerActivityService {
 
     private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
 
     @Autowired
     PowerActivityRepository powerActivityRepository;
 
-    float distanceFromStart = 0;
-    float timeFromStart = 0;
-    float powerPrevious = 0;
-    float powerCurrent = 0;
-
     void toTransform(List<Activity> run) {
+
+        float distanceFromStart = 0;
+        float timeFromStart = 0;
+        float powerPrevious;
+        float powerCurrent = 0;
 
         int i = 1;
         logger.info("taille : " + run.size());
@@ -78,7 +78,7 @@ public class TransformService {
             timeFromStart = timeFromStart +
                     getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
 
-            if ((power > 0) && (powerCurrent < (2 * powerPrevious))) {
+            if ((power > 0) && (powerCurrent < (1.5f * powerPrevious))) {
                 PowerActivity powerActivity = new PowerActivity(null, 1L,1L,power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, pacePowerActivity, timeFromStart);
                 logger.info("Object power : " + powerActivity);
 
@@ -96,19 +96,19 @@ public class TransformService {
         float intResA = (float) (Math.sin(dLat/2) * Math.sin(dLat/2) +
                 Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2));
         float intResB = (float) (2 * Math.atan2(Math.sqrt(intResA), Math.sqrt(1-intResA)));
-        float dDist = 1000*(earthRadius * intResB);
+        float dDist = 1000 * (earthRadius * intResB);
         return dDist;
     }
 
     static float degToRad(float deg) {
-        return (float) (deg * (Math.PI/180));
+        return (float) (deg * (Math.PI / 180));
     }
 
 
     static float getDeltaTimeFromTimezoneString(String timezone1, String timezone2){
-        float timezoneStartPoint = 3600 * (ZonedDateTime.parse(timezone1).getHour()) + 60* (ZonedDateTime.parse(timezone1).getMinute()) +
+        float timezoneStartPoint = 3600 * (ZonedDateTime.parse(timezone1).getHour()) + 60 * (ZonedDateTime.parse(timezone1).getMinute()) +
                 ZonedDateTime.parse(timezone1).getSecond();
-        float timezoneEndPoint = 3600 * (ZonedDateTime.parse(timezone2).getHour()) + 60* (ZonedDateTime.parse(timezone2).getMinute()) +
+        float timezoneEndPoint = 3600 * (ZonedDateTime.parse(timezone2).getHour()) + 60 * (ZonedDateTime.parse(timezone2).getMinute()) +
                 ZonedDateTime.parse(timezone2).getSecond();
         return  (timezoneEndPoint- timezoneStartPoint);
     }

@@ -17,8 +17,7 @@ public class PowerActivityRepositoryImpl implements PowerActivityRepository {
     public Long save(PowerActivity powerActivity) {
       //  PowerActivityJPA powerActivityJPA = powerActivityDAO.save(new PowerActivity(powerActivity));
        this.powerActivityDAO.save(powerActivity);
-
-        return powerActivity.getId();
+       return powerActivity.getId();
     }
 
     @Override
