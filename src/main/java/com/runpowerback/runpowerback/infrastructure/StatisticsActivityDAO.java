@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface StatisticsActivityDAO extends JpaRepository<StatisticsActivity, Long> {
 
-   @Query(value = "SELECT * FROM statistics_activity WHERE (id_athlete = :idathlete AND id_poweractivity = :idpoweractivity)", nativeQuery = true)
+   @Query(value = "SELECT * FROM statisticsactivity WHERE (idathlete = :idathlete AND idpoweractivity = :idpoweractivity)", nativeQuery = true)
    StatisticsActivity findOneStatisticsActivity(Long idathlete, Long idpoweractivity);
 
 

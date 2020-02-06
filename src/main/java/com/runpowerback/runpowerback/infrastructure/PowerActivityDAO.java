@@ -12,10 +12,10 @@ public interface PowerActivityDAO extends JpaRepository<PowerActivity, Long> {
     List<PowerActivity> findByOrderByIdAsc();
 
     @Modifying
-    @Query(value = "DELETE FROM poweractivity WHERE (id_athlete = :idathlete AND id_poweractivity = :idpoweractivity)", nativeQuery = true)
+    @Query(value = "DELETE FROM poweractivity WHERE (idathlete = :idathlete AND idpoweractivity = :idpoweractivity)", nativeQuery = true)
     void deleteOnePowerActivity(Long idathlete, Long idpoweractivity);
 
-    @Query(value = "SELECT * FROM poweractivity WHERE (id_athlete = :idathlete AND id_poweractivity = :idpoweractivity)", nativeQuery = true)
+    @Query(value = "SELECT * FROM poweractivity WHERE (idathlete = :idathlete AND idpoweractivity = :idpoweractivity)", nativeQuery = true)
     List<PowerActivity> findOnePowerActivity(Long idathlete, Long idpoweractivity);
 
 }

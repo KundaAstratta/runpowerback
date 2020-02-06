@@ -2,7 +2,7 @@ package com.runpowerback.runpowerback.domaine;
 
 import javax.persistence.*;
 
-@Entity(name="STATISTICS_ACTIVITY")
+@Entity(name="STATISTICSACTIVITY")
 public class StatisticsActivity {
 
     @Id
@@ -10,10 +10,10 @@ public class StatisticsActivity {
     @Column(name="ID")
     private Long id;
 
-    @Column(name= "ID_ATHLETE")
+    @Column(name= "IDATHLETE")
     private Long idathlete;
 
-    @Column(name = "ID_POWERACTIVITY")
+    @Column(name = "IDPOWERACTIVITY")
     private Long idpoweractivity;
 
     @Column(name="POWERAVERAGE")
@@ -21,7 +21,6 @@ public class StatisticsActivity {
 
     @Column(name = "POWERMEDIAN")
     private float powermedian;
-
 
     @Column(name ="DEVIATION")
     private float deviation;
