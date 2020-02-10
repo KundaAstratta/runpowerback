@@ -39,7 +39,6 @@ public class ActivityService {
     }
 
     public void fromActivityToPowerActivity() {
-   //   this.powerActivityRepository.deleteAll();
         this.powerActivityRepository.deleteOnePowerActivity(1L,1L);
         List<Activity> run;
         run = this.activityRepository.findAll();

@@ -20,7 +20,8 @@ public class StatisticsActivityRepositoryImpl implements StatisticsActivityRepos
     @Override
     public StatisticsActivity findOneStatisticsActivity(Long idathlete, Long idpoweractivity) {
         return this.statisticsActivityDAO.findOneStatisticsActivity(idathlete, idpoweractivity);
-
     }
+
+
 
 }

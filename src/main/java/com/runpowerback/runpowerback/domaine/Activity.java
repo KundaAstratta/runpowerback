@@ -62,14 +62,14 @@ public class Activity {
 
     @Override
     public String toString() {
-        return "Activity{" +
-                "id=" + id +
-                ", latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", elevation='" + elevation + '\'' +
-                ", hearthrate='" + hearthrate + '\'' +
-                ", timezone='" + timezone + '\'' +
-                '}';
+        final StringBuffer sb = new StringBuffer("Activity{");
+        sb.append("id=").append(id);
+        sb.append(", latitude=").append(latitude);
+        sb.append(", longitude=").append(longitude);
+        sb.append(", elevation=").append(elevation);
+        sb.append(", hearthrate=").append(hearthrate);
+        sb.append(", timezone='").append(timezone).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
-
 }

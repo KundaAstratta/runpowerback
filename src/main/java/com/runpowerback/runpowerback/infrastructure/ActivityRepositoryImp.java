@@ -16,14 +16,12 @@ public class ActivityRepositoryImp implements ActivityRepository {
 
     @Override
     public Long save(Activity activity) {
-     //   ActivityJPA activityJPA = activityDAO.save(new ActivityJPA((activity)));
         this.activityDAO.save(activity);
         return activity.getId();
     }
 
     @Override
     public List<Activity> findAll () {
-    //    return activityDAO.findByOrderByIdAsc().stream().map(ActivityJPA::toActvity).collect(Collectors.toList());
       return  this.activityDAO.findByOrderByIdAsc().stream().collect(Collectors.toList());
     }
 

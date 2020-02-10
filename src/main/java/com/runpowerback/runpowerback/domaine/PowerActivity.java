@@ -83,17 +83,17 @@ public class PowerActivity {
 
     @Override
     public String toString() {
-        return "PowerActivity{" +
-                "id=" + id +
-                ", idathlete='" + idathlete + '\'' +
-                ", idpoweractivity='" + idpoweractivity + '\'' +
-                ", power='" + power + '\'' +
-                ", speed='" + speed + '\'' +
-                ", hearthrate='" + hearthrate + '\'' +
-                ", distance='" + distance + '\'' +
-                ", pace='" + pace + '\'' +
-                ", timezone='" + timezone + '\'' +
-                '}';
+        final StringBuffer sb = new StringBuffer("PowerActivity{");
+        sb.append("id=").append(id);
+        sb.append(", idathlete=").append(idathlete);
+        sb.append(", idpoweractivity=").append(idpoweractivity);
+        sb.append(", power=").append(power);
+        sb.append(", speed=").append(speed);
+        sb.append(", hearthrate=").append(hearthrate);
+        sb.append(", distance=").append(distance);
+        sb.append(", pace=").append(pace);
+        sb.append(", timezone=").append(timezone);
+        sb.append('}');
+        return sb.toString();
     }
-
 }
