@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Service
 @Transactional
-public class FromXMLtoActiivityService {
+public class FromXMLtoActivityService {
 
     private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
 
@@ -28,7 +28,7 @@ public class FromXMLtoActiivityService {
 
         try {
 
-            File f = new File("src/repertoire.xml");
+            File f = new File("tmp/repertoire.xml");
 
             BufferedReader b = new BufferedReader(new FileReader(f));
 

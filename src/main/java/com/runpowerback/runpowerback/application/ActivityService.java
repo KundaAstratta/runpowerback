@@ -23,7 +23,7 @@ public class ActivityService {
     FromActivityToPowerActivityService fromActivityToPowerActivityService;
 
     @Autowired
-    FromXMLtoActiivityService fromXMLtoActiivityService;
+    FromXMLtoActivityService fromXMLtoActivityService;
 
     public Long createOnePointOfActivity (Activity activity) {
         return this.activityRepository.save(activity);
@@ -35,7 +35,7 @@ public class ActivityService {
 
     public void fromXMLtoActivity() throws IOException {
         this.activityRepository.deleteAll();
-        this.fromXMLtoActiivityService.toReadXMLService();
+        this.fromXMLtoActivityService.toReadXMLService();
     }
 
     public void fromActivityToPowerActivity() {

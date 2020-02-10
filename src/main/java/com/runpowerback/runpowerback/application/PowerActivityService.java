@@ -38,7 +38,7 @@ public class PowerActivityService {
         return this.powerActivityRepository.findOnePowerActivity(idathlete, idpoweractivity);
     }
 
-    public void statisticsOfPowerActivity() {
+    public void fromPowerActivityToStatistics() {
         List<PowerActivity> runpower;
         runpower = this.powerActivityRepository.findOnePowerActivity(1L,1L);
         this.fromPowerActivityToStatisticsService.toStatistics(runpower);

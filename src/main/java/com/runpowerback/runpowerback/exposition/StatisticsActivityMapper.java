@@ -14,7 +14,8 @@ public class StatisticsActivityMapper {
           statisticsActivityDTO.idpoweractivity,
           statisticsActivityDTO.poweraverage,
           statisticsActivityDTO.powermedian,
-          statisticsActivityDTO.deviation
+          statisticsActivityDTO.deviation,
+          statisticsActivityDTO.powerscore
         );
     }
 
@@ -25,7 +26,8 @@ public class StatisticsActivityMapper {
           statisticsActivity.getIdpoweractivity(),
           statisticsActivity.getPoweraverage(),
           statisticsActivity.getPowermedian(),
-          statisticsActivity.getDeviation()
+          statisticsActivity.getDeviation(),
+          statisticsActivity.getPowerscore()
         );
     }
 

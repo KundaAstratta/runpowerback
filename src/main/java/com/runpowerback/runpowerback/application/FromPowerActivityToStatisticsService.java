@@ -24,14 +24,14 @@ public class FromPowerActivityToStatisticsService {
 
     void toStatistics (List<PowerActivity> runpower) {
         List<Float> runpowerSorted = new ArrayList<>();
-        logger.info("ici");
+        logger.info("here");
         logger.info(runpower);
 
         float sumOfPower = runpower.get(1).getPower();
         float currentPower;
 
         int i = 2;
-        logger.info("taille : " + runpower.size());
+        logger.info("size : " + runpower.size());
 
         float sumOfVariance = 0;
         float deviation;
@@ -70,6 +70,9 @@ public class FromPowerActivityToStatisticsService {
         float powerMedian = runpowerSorted.get(averageNumber);
         logger.info("power Median : " + powerMedian);
 
+        float powerScore = (powerAverage - powerMedian) * (powerAverage - powerMedian) * deviation;
+        logger.info("power Score : " + powerScore);
+
   /*      i = 1;
         s = 0;
         while(i <= runpower.size()-1) {
@@ -80,7 +83,7 @@ public class FromPowerActivityToStatisticsService {
         deviation = (float) Math.sqrt(s / runpower.size());
         logger.info("deviation : " + deviation);
   */
-        StatisticsActivity statisticsActivity = new StatisticsActivity(null,1L,1L, powerAverage, powerMedian,deviation);
+        StatisticsActivity statisticsActivity = new StatisticsActivity(null,1L,1L, powerAverage, powerMedian,deviation,powerScore);
         this.statisticsActivityRepository.save(statisticsActivity);
     }
 

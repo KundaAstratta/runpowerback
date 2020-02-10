@@ -22,15 +22,19 @@ public class StatisticsActivityDTO {
     @JsonProperty
     public float deviation;
 
+    @JsonProperty
+    public float powerscore;
+
     public StatisticsActivityDTO() {}
 
-    public StatisticsActivityDTO(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian, float deviation) {
+    public StatisticsActivityDTO(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian, float deviation, float powerscore) {
         this.id = id;
         this.idathlete = idathlete;
         this.idpoweractivity = idpoweractivity;
         this.poweraverage = poweraverage;
         this.powermedian = powermedian;
         this.deviation = deviation;
+        this.powerscore = powerscore;
     }
 
     public Long getId() {
@@ -57,15 +61,21 @@ public class StatisticsActivityDTO {
         return deviation;
     }
 
+    public float getPowerscore() {
+        return powerscore;
+    }
+
     @Override
     public String toString() {
-        return "StatisticsActivityDTO{" +
-                "id=" + id +
-                ", idathlete=" + idathlete +
-                ", idpoweractivity=" + idpoweractivity +
-                ", poweraverage=" + poweraverage +
-                ", powermedian=" + powermedian +
-                ", deviation=" + deviation +
-                '}';
+        final StringBuffer sb = new StringBuffer("StatisticsActivityDTO{");
+        sb.append("id=").append(id);
+        sb.append(", idathlete=").append(idathlete);
+        sb.append(", idpoweractivity=").append(idpoweractivity);
+        sb.append(", poweraverage=").append(poweraverage);
+        sb.append(", powermedian=").append(powermedian);
+        sb.append(", deviation=").append(deviation);
+        sb.append(", powerscore=").append(powerscore);
+        sb.append('}');
+        return sb.toString();
     }
 }
