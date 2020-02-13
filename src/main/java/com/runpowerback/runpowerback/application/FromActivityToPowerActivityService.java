@@ -22,7 +22,7 @@ public class FromActivityToPowerActivityService {
     @Autowired
     PowerActivityRepository powerActivityRepository;
 
-    void toTransform(List<Activity> run) {
+    public void toTransform(List<Activity> run) {
 
         float distanceFromStart = 0;
         float timeFromStart = 0;

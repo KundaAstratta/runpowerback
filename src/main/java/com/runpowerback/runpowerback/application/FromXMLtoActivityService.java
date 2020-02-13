@@ -24,7 +24,7 @@ public class FromXMLtoActivityService {
     @Autowired
     ActivityRepository activityRepository;
 
-        void toReadXMLService() throws IOException {
+        public void toReadXMLService() throws IOException {
 
         try {
 

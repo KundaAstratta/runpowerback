@@ -22,7 +22,7 @@ public class FromPowerActivityToStatisticsService {
 
     private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
 
-    void toStatistics (List<PowerActivity> runpower) {
+    public void toStatistics (List<PowerActivity> runpower) {
         List<Float> runpowerSorted = new ArrayList<>();
         logger.info("here");
         logger.info(runpower);
@@ -36,6 +36,8 @@ public class FromPowerActivityToStatisticsService {
         float sumOfVariance = 0;
         float deviation;
      //   float s = runpower.get(1).getPower();
+
+        runpowerSorted.add(runpower.get(1).getPower());
 
         while(i <= runpower.size()-1) {
             currentPower = runpower.get(i).getPower();
@@ -54,20 +56,20 @@ public class FromPowerActivityToStatisticsService {
         float powerMax = runpowerSorted.get(runpowerSorted.size()-1);
         logger.info("power max : " + powerMax);
 
-        float powerAverage = sumOfPower / (runpowerSorted.size() - 1);
+        float powerAverage = sumOfPower / (runpower.size()-1);
         logger.info("Average Power : " + powerAverage);
 
         deviation = (float) Math.sqrt(sumOfVariance / (runpower.size()-1));
         logger.info("deviation : " + deviation);
 
         int averageNumber;
-        if (runpower.size()%2 != 0) {
-            averageNumber = runpower.size()/2 + 1;
+        if (runpowerSorted.size()%2 != 0) {
+            averageNumber = runpowerSorted.size()/2 + 1;
         } else {
-            averageNumber = runpower.size()/2;
+            averageNumber = runpowerSorted.size()/2;
         }
         logger.info("average Number : " + averageNumber);
-        float powerMedian = runpowerSorted.get(averageNumber);
+        float powerMedian = runpowerSorted.get(averageNumber-1);
         logger.info("power Median : " + powerMedian);
 
         float powerScore = (powerAverage - powerMedian) * (powerAverage - powerMedian) * deviation;
@@ -83,7 +85,11 @@ public class FromPowerActivityToStatisticsService {
         deviation = (float) Math.sqrt(s / runpower.size());
         logger.info("deviation : " + deviation);
   */
-        StatisticsActivity statisticsActivity = new StatisticsActivity(null,1L,1L, powerAverage, powerMedian,deviation,powerScore);
+        Long idathlete = runpower.get(runpower.size()-1).getIdathlete();
+        Long idpoweractivity = runpower.get(runpower.size()-1).getIdpoweractivity();
+        logger.info("idathlete : "  + idathlete + "idpoweractivity : " + idpoweractivity);
+
+        StatisticsActivity statisticsActivity = new StatisticsActivity(null,idathlete,idpoweractivity, powerAverage, powerMedian,deviation,powerScore);
         this.statisticsActivityRepository.save(statisticsActivity);
     }
 
