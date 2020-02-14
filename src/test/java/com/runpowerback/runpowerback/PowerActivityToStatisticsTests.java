@@ -20,7 +20,7 @@ import java.util.List;
 @SpringBootTest
 class PowerActivityToStatisticsTests {
 
-	private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
+	private static final Logger logger = LogManager.getLogger("File");
 
 	@Autowired
 	PowerActivityRepository powerActivityRepository;

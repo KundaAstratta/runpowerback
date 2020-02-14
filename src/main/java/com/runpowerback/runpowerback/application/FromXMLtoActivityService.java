@@ -19,7 +19,7 @@ import java.io.IOException;
 @Transactional
 public class FromXMLtoActivityService {
 
-    private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
+    private static final Logger logger = LogManager.getLogger();
 
     @Autowired
     ActivityRepository activityRepository;

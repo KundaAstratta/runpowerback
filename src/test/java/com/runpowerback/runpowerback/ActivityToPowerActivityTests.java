@@ -28,7 +28,8 @@ public class ActivityToPowerActivityTests {
     @Autowired
     PowerActivityRepository powerActivityRepository;
 
-    private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
+    private static final Logger logger = LogManager.getLogger("File");
+
 
     @BeforeAll
     static void setup() {

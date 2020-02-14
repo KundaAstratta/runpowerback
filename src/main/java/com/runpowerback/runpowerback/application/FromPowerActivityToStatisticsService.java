@@ -20,7 +20,7 @@ public class FromPowerActivityToStatisticsService {
     @Autowired
     StatisticsActivityRepository statisticsActivityRepository;
 
-    private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
+    private static final Logger logger = LogManager.getLogger();
 
     public void toStatistics (List<PowerActivity> runpower) {
         List<Float> runpowerSorted = new ArrayList<>();

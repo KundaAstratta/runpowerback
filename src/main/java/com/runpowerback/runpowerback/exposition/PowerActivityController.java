@@ -1,7 +1,6 @@
 package com.runpowerback.runpowerback.exposition;
 
 import com.runpowerback.runpowerback.application.PowerActivityService;
-import com.runpowerback.runpowerback.domaine.PowerActivity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

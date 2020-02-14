@@ -17,7 +17,7 @@ import java.util.List;
 @Transactional
 public class FromActivityToPowerActivityService {
 
-    private static final Logger logger = LogManager.getLogger(RunpowerbackApplication.class);
+    private static final Logger logger = LogManager.getLogger();
 
     @Autowired
     PowerActivityRepository powerActivityRepository;
