@@ -38,9 +38,9 @@ public class PowerActivityService {
         return this.powerActivityRepository.findOnePowerActivity(idathlete, idpoweractivity);
     }
 
-    public void fromPowerActivityToStatistics() {
+    public void fromPowerActivityToStatistics(Long idathlete, Long idpoweractivity) {
         List<PowerActivity> runpower;
-        runpower = this.powerActivityRepository.findOnePowerActivity(1L,1L);
+        runpower = this.powerActivityRepository.findOnePowerActivity(idathlete,idpoweractivity);
         this.fromPowerActivityToStatisticsService.toStatistics(runpower);
     }
 

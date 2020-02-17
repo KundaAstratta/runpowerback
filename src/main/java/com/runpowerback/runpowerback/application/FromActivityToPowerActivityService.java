@@ -22,12 +22,15 @@ public class FromActivityToPowerActivityService {
     @Autowired
     PowerActivityRepository powerActivityRepository;
 
-    public void toTransform(List<Activity> run) {
+    public void toTransform(List<Activity> run, Long idathlete, Long idpoweractivity) {
 
         float distanceFromStart = 0;
         float timeFromStart = 0;
         float powerPrevious;
         float powerCurrent = 0;
+
+     //   long idathlete = 1L;
+     //   long idpoweractivity = 1L;
 
         int i = 1;
         logger.info("taille : " + run.size());
@@ -79,7 +82,7 @@ public class FromActivityToPowerActivityService {
                     getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
 
             if ((power > 0) && (powerCurrent < (1.5f * powerPrevious))) {
-                PowerActivity powerActivity = new PowerActivity(null, 1L,1L,power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, pacePowerActivity, timeFromStart);
+                PowerActivity powerActivity = new PowerActivity(null, idathlete, idpoweractivity, power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, pacePowerActivity, timeFromStart);
                 logger.info("Object power : " + powerActivity);
 
                 this.powerActivityRepository.save(powerActivity);

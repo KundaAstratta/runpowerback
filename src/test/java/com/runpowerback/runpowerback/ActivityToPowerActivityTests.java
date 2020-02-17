@@ -51,7 +51,7 @@ public class ActivityToPowerActivityTests {
         this.activityRepository.save(activity);
         List<Activity> run = this.activityRepository.findAll();
         logger.info(run);
-        this.fromActivityToPowerActivityService.toTransform(run);
+        this.fromActivityToPowerActivityService.toTransform(run, 1L, 1L);
         List<PowerActivity> runpower = this.powerActivityRepository.findOnePowerActivity(1l,1L);
         logger.info(runpower);
         assertAll(

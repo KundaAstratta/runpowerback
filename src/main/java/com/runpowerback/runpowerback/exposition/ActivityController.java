@@ -26,9 +26,9 @@ public class ActivityController {
         this.activityService.fromXMLtoActivity();
     }
 
-   @RequestMapping(method = RequestMethod.GET, path = {"/fromActivityToPowerActivity"})
-   public void fromActivityToPowerActivity() {
-        this.activityService.fromActivityToPowerActivity();
+   @RequestMapping(method = RequestMethod.GET, path = {"/fromActivityToPowerActivity/athlete/{idathlete}/activity/{idpoweractivity}"})
+   public void fromActivityToPowerActivity(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity) {
+        this.activityService.fromActivityToPowerActivity(idathlete,idpoweractivity);
    }
 
     @RequestMapping(method = RequestMethod.GET, path = {"/activity"})

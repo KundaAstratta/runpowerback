@@ -30,9 +30,9 @@ public class PowerActivityController {
         return PowerActivityMapper.mapToOnePowerActivity(this.powerActivityService.findOnePowerActivity(idathlete,idpoweractivity));
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = {"/fromPowerActivityToStatistics"})
-    public void fromPowerActivityToStatistics() {
-        this.powerActivityService.fromPowerActivityToStatistics();
+    @RequestMapping(method = RequestMethod.GET, path = {"/fromPowerActivityToStatistics/athlete/{idathlete}/activity/{idpoweractivity}"})
+    public void fromPowerActivityToStatistics(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity) {
+        this.powerActivityService.fromPowerActivityToStatistics(idathlete,idpoweractivity);
     }
 
 

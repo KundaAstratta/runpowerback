@@ -38,16 +38,15 @@ public class ActivityService {
         this.fromXMLtoActivityService.toReadXMLService();
     }
 
-    public void fromActivityToPowerActivity() {
-        this.powerActivityRepository.deleteOnePowerActivity(1L,1L);
+    public void fromActivityToPowerActivity(Long idathlete, Long idpoweractivity) {
+        this.powerActivityRepository.deleteOnePowerActivity(idathlete,idpoweractivity);
         List<Activity> run;
         run = this.activityRepository.findAll();
-        this.fromActivityToPowerActivityService.toTransform(run);
+        this.fromActivityToPowerActivityService.toTransform(run,idathlete,idpoweractivity);
     }
 
     public void deleteAll () {
         this.activityRepository.deleteAll();
     }
-
 
 }
