@@ -10,19 +10,19 @@ public class StatisticsActivity {
     @Column(name="ID")
     private Long id;
 
-    @Column(name= "IDATHLETE")
+    @Column(name="IDATHLETE")
     private Long idathlete;
 
-    @Column(name = "IDPOWERACTIVITY")
+    @Column(name="IDPOWERACTIVITY")
     private Long idpoweractivity;
 
     @Column(name="POWERAVERAGE")
     private float poweraverage;
 
-    @Column(name = "POWERMEDIAN")
+    @Column(name="POWERMEDIAN")
     private float powermedian;
 
-    @Column(name ="DEVIATION")
+    @Column(name="DEVIATION")
     private float deviation;
 
     @Column(name="POWERSCORE")
