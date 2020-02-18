@@ -1,6 +1,5 @@
 package com.runpowerback.runpowerback.application;
 
-import com.runpowerback.runpowerback.RunpowerbackApplication;
 import com.runpowerback.runpowerback.domaine.Activity;
 import com.runpowerback.runpowerback.domaine.PowerActivity;
 import com.runpowerback.runpowerback.domaine.PowerActivityRepository;
@@ -22,7 +21,7 @@ public class FromActivityToPowerActivityService {
     @Autowired
     PowerActivityRepository powerActivityRepository;
 
-    public void toTransform(List<Activity> run, Long idathlete, Long idpoweractivity) {
+    public void toTransform(Long idathlete, Long idpoweractivity,List<Activity> run, float mass) {
 
         float distanceFromStart = 0;
         float timeFromStart = 0;
@@ -61,7 +60,7 @@ public class FromActivityToPowerActivityService {
             float rateElevation = (run.get(i).getElevation() - run.get(i-1).getElevation()) / run.get(i).getElevation();
             logger.info("rate Elevation : " + rateElevation);
 
-            float mass = 70.0f;
+          //  float mass = 70.0f;
             float Ar = 0.24f;
             float massVolumic = 1.2f;
             float speedWind = 0f;
