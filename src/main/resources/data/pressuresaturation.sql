@@ -1,4 +1,4 @@
-INSERT INTO "pressuresaturationversustemperature" (id, temperature, pressure) VALUES
+INSERT INTO "pressuresaturation" (id, temperature, pressure) VALUES
 (01,-20,103),
 (02,-18,150),
 (03,-15,190),
