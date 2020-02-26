@@ -10,7 +10,7 @@ public class AthleteMapper {
     public static Athlete mapToOneAthlete (AthleteDTO athleteDTO) {
         return new Athlete(
                 null,
-                athleteDTO.idathete,
+                athleteDTO.idathlete,
                 athleteDTO.name,
                 athleteDTO.surname,
                 athleteDTO.mass,

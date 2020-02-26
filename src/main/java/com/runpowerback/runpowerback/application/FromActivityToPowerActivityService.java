@@ -1,8 +1,6 @@
 package com.runpowerback.runpowerback.application;
 
-import com.runpowerback.runpowerback.domaine.Activity;
-import com.runpowerback.runpowerback.domaine.PowerActivity;
-import com.runpowerback.runpowerback.domaine.PowerActivityRepository;
+import com.runpowerback.runpowerback.domaine.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +19,30 @@ public class FromActivityToPowerActivityService {
     @Autowired
     PowerActivityRepository powerActivityRepository;
 
+    @Autowired
+    ExternalConditionRepository externalConditionRepository;
+
+    @Autowired
+    PressureSaturationRepository pressureSaturationRepository;
+
+
     public void toTransform(Long idathlete, Long idpoweractivity,List<Activity> run, float mass) {
 
         float distanceFromStart = 0;
         float timeFromStart = 0;
         float powerPrevious;
         float powerCurrent = 0;
+        float Ar = 0.24f;
+        float gravity = 9.81f;
 
-     //   long idathlete = 1L;
-     //   long idpoweractivity = 1L;
+        float speedWind = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getSpeedwind();
+        float temperature = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getTemperature();
+        float pressureATM = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getPressureatm();
+        float pressureSaturation = this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure();
+        float percentHumidity = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getHumidity();
+        float massVolumic;
+        massVolumic = toTransformMassVolumic(percentHumidity,pressureSaturation,pressureATM,temperature);
+
 
         int i = 1;
         logger.info("taille : " + run.size());
@@ -60,12 +73,6 @@ public class FromActivityToPowerActivityService {
             float rateElevation = (run.get(i).getElevation() - run.get(i-1).getElevation()) / run.get(i).getElevation();
             logger.info("rate Elevation : " + rateElevation);
 
-          //  float mass = 70.0f;
-            float Ar = 0.24f;
-            float massVolumic = 1.2f;
-            float speedWind = 0f;
-            float gravity = 9.81f;
-
             powerPrevious = powerCurrent;
             float power = getPower(mass, deltaDistancePowerActivity, deltaTimezonePowerActivity, Ar, massVolumic, speedWind, rateElevation, gravity);
             logger.info("power : " + power);
@@ -86,6 +93,7 @@ public class FromActivityToPowerActivityService {
 
                 this.powerActivityRepository.save(powerActivity);
             }
+
             i=i+1;
 
         }
@@ -105,7 +113,6 @@ public class FromActivityToPowerActivityService {
     static float degToRad(float deg) {
         return (float) (deg * (Math.PI / 180));
     }
-
 
     static float getDeltaTimeFromTimezoneString(String timezone1, String timezone2){
         float timezoneStartPoint = 3600 * (ZonedDateTime.parse(timezone1).getHour()) + 60 * (ZonedDateTime.parse(timezone1).getMinute()) +
@@ -128,6 +135,16 @@ public class FromActivityToPowerActivityService {
                0.5f * Ar * massVolumic * (deltaDistance / deltaTime + speedWind) * (deltaDistance / deltaTime + speedWind)
                           * deltaDistance/deltaTime +
                mass * gravity * rateElevation * (deltaDistance / deltaTime);
+    }
+
+
+
+    public float toTransformMassVolumic (float percentHumidity, float pressureSaturation, float pressureATM, float temperature) {
+        float temperatureKelvin = temperature + 273.15f;
+        float Rs = 287.058f;
+        float Humidity = percentHumidity / 100;
+
+        return (1.0f - (0.3783f * Humidity * pressureSaturation) / pressureATM) * pressureATM / (Rs * temperatureKelvin);
     }
 
 
