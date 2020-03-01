@@ -43,10 +43,11 @@ public class ActivityService {
     }
 
     public void fromActivityToPowerActivity(Long idathlete, Long idpoweractivity) {
-        this.powerActivityRepository.deleteOnePowerActivity(idathlete,idpoweractivity);
+     //   this.powerActivityRepository.deleteOnePowerActivity(idathlete,idpoweractivity);
         List<Activity> run;
         run = this.activityRepository.findAll();
         float mass = this.athleteRepository.findOneAthlete(idathlete).getMass();
+        idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete) + 1;
         this.fromActivityToPowerActivityService.toTransform(idathlete,idpoweractivity,run,mass);
     }
 

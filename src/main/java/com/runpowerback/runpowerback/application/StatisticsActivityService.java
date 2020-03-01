@@ -1,5 +1,6 @@
 package com.runpowerback.runpowerback.application;
 
+import com.runpowerback.runpowerback.domaine.PowerActivityRepository;
 import com.runpowerback.runpowerback.domaine.StatisticsActivity;
 import com.runpowerback.runpowerback.domaine.StatisticsActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,11 @@ public class StatisticsActivityService {
     @Autowired
     StatisticsActivityRepository statisticsActivityRepository;
 
+    @Autowired
+    PowerActivityRepository powerActivityRepository;
+
     public Long createOneStatisticsActivity(StatisticsActivity statisticsActivity) {
-        return this.statisticsActivityRepository.save(statisticsActivity);
+       return this.statisticsActivityRepository.save(statisticsActivity);
     }
 
     public StatisticsActivity findOneStatisticsActivity (Long idathlete, Long idpoweractivity) {

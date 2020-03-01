@@ -39,4 +39,14 @@ public class PowerActivityRepositoryImpl implements PowerActivityRepository {
         return this.powerActivityDAO.findOnePowerActivity(idathlete,idpoweractivity).stream().collect(Collectors.toList());
     }
 
+    @Override
+    public Long findMaxIdPowerActivity(Long idathlete) {
+        if (this.powerActivityDAO.findMaxIdPowerActivity(idathlete) == null) {
+            return 0L;
+        } else {
+            return this.powerActivityDAO.findMaxIdPowerActivity(idathlete);
+        }
+    }
+
+
 }

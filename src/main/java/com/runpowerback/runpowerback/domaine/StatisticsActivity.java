@@ -52,6 +52,10 @@ public class StatisticsActivity {
         return idpoweractivity;
     }
 
+    public void setIdpoweractivity(Long idpoweractivity) {
+        this.idpoweractivity = idpoweractivity;
+    }
+
     public float getPoweraverage() {
         return poweraverage;
     }

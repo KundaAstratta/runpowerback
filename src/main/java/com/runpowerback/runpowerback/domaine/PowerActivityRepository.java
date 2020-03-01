@@ -9,4 +9,6 @@ public interface PowerActivityRepository {
     void deleteAll();
     void deleteOnePowerActivity(Long idathlete, Long idpoweractivity);
     List<PowerActivity> findOnePowerActivity(Long idathlete, Long idpoweractivity);
+    Long findMaxIdPowerActivity(Long idathlete);
+
 }

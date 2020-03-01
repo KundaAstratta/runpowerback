@@ -44,4 +44,8 @@ public class PowerActivityService {
         this.fromPowerActivityToStatisticsService.toStatistics(runpower);
     }
 
+    public Long findMaxIdPowerActivity(Long idathlete) {
+        return this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
+    }
+
 }

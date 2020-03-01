@@ -18,4 +18,7 @@ public interface PowerActivityDAO extends JpaRepository<PowerActivity, Long> {
     @Query(value = "SELECT * FROM poweractivity WHERE (idathlete = :idathlete AND idpoweractivity = :idpoweractivity) ;", nativeQuery = true)
     List<PowerActivity> findOnePowerActivity(Long idathlete, Long idpoweractivity);
 
+    @Query(value = "SELECT MAX (idpoweractivity) FROM poweractivity WHERE (idathlete = :idathlete) ;", nativeQuery = true)
+    Long findMaxIdPowerActivity(Long idathlete);
+
 }

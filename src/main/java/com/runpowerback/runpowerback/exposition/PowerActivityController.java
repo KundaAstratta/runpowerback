@@ -48,4 +48,9 @@ public class PowerActivityController {
         this.powerActivityService.deleteOnePowerActivity(idathlete,idpoweractivity);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = ("/maxidpoweractivity/athlete/{idathlete}"))
+    public Long findMaxIdPowerActivity(@PathVariable("idathlete") Long idathlete) {
+        return this.powerActivityService.findMaxIdPowerActivity(idathlete);
+    }
+
 }

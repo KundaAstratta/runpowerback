@@ -53,6 +53,10 @@ public class ExternalCondition {
         return idpoweractivity;
     }
 
+    public void setIdpoweractivity(Long idpoweractivity) {
+        this.idpoweractivity = idpoweractivity;
+    }
+
     public float getPressureatm() {
         return pressureatm;
     }

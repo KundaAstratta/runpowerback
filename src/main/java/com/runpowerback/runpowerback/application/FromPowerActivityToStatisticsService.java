@@ -1,7 +1,7 @@
 package com.runpowerback.runpowerback.application;
 
-import com.runpowerback.runpowerback.RunpowerbackApplication;
 import com.runpowerback.runpowerback.domaine.PowerActivity;
+import com.runpowerback.runpowerback.domaine.PowerActivityRepository;
 import com.runpowerback.runpowerback.domaine.StatisticsActivity;
 import com.runpowerback.runpowerback.domaine.StatisticsActivityRepository;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +19,9 @@ public class FromPowerActivityToStatisticsService {
 
     @Autowired
     StatisticsActivityRepository statisticsActivityRepository;
+
+    @Autowired
+    PowerActivityRepository powerActivityRepository;
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -86,7 +89,8 @@ public class FromPowerActivityToStatisticsService {
         logger.info("deviation : " + deviation);
   */
         Long idathlete = runpower.get(runpower.size()-1).getIdathlete();
-        Long idpoweractivity = runpower.get(runpower.size()-1).getIdpoweractivity();
+   //   Long idpoweractivity = runpower.get(runpower.size()-1).getIdpoweractivity();
+        Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         logger.info("idathlete : "  + idathlete + "idpoweractivity : " + idpoweractivity);
 
         StatisticsActivity statisticsActivity = new StatisticsActivity(null,idathlete,idpoweractivity, powerAverage, powerMedian,deviation,powerScore);
