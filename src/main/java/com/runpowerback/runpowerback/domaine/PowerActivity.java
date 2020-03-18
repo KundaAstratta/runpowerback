@@ -33,7 +33,27 @@ public class PowerActivity {
     @Column(name="TIMEZONE")
     private float timezone;
 
+    @Column(name="DATE")
+    private String date;
+
+    @Column(name="TIME")
+    private String time;
+
     public PowerActivity() {}
+
+    public PowerActivity(Long id, Long idathlete, Long idpoweractivity, float power, float speed, float hearthrate, float distance, float pace, float timezone, String date, String time) {
+        this.id = id;
+        this.idathlete = idathlete;
+        this.idpoweractivity = idpoweractivity;
+        this.power = power;
+        this.speed = speed;
+        this.hearthrate = hearthrate;
+        this.distance = distance;
+        this.pace = pace;
+        this.timezone = timezone;
+        this.date = date;
+        this.time = time;
+    }
 
     public PowerActivity(Long id, Long idathlete, Long idpoweractivity, float power, float speed, float hearthrate, float distance, float pace, float timezone) {
         this.id = id;
@@ -81,6 +101,14 @@ public class PowerActivity {
         return timezone;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("PowerActivity{");
@@ -93,6 +121,8 @@ public class PowerActivity {
         sb.append(", distance=").append(distance);
         sb.append(", pace=").append(pace);
         sb.append(", timezone=").append(timezone);
+        sb.append(", date=").append(date);
+        sb.append(", time=").append(time);
         sb.append('}');
         return sb.toString();
     }

@@ -47,6 +47,14 @@ public class FromActivityToPowerActivityService {
         int i = 1;
         logger.info("taille : " + run.size());
 
+        String DateOfPowerActivity =  ZonedDateTime.parse(run.get(i).getTimezone()).getDayOfMonth() + " "+
+                ZonedDateTime.parse(run.get(i).getTimezone()).getMonth() +  " " +
+                ZonedDateTime.parse(run.get(i).getTimezone()).getYear();
+
+        String TimeOfPowerActivity = ZonedDateTime.parse(run.get(i).getTimezone()).getHour() + ":"+
+                ZonedDateTime.parse(run.get(i).getTimezone()).getMinute();
+
+
         while(i <= run.size()-1) {
 
             float deltaDistancePowerActivity =
@@ -63,6 +71,8 @@ public class FromActivityToPowerActivityService {
             float deltaTimezonePowerActivity =
                     getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
             logger.info("timezone : " + deltaTimezonePowerActivity);
+            logger.info("date " + DateOfPowerActivity);
+            logger.info("time " + TimeOfPowerActivity);
 
             float speedPowerActivity = getSpeedFromDistanceAndTime(deltaDistancePowerActivity, deltaTimezonePowerActivity);
             logger.info("speed : " + speedPowerActivity);
@@ -88,7 +98,17 @@ public class FromActivityToPowerActivityService {
                     getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
 
             if ((power > 0) && (powerCurrent < (1.5f * powerPrevious))) {
-                PowerActivity powerActivity = new PowerActivity(null, idathlete, idpoweractivity, power, speedPowerActivity, hearthratePowerActivity, distanceFromStart, pacePowerActivity, timeFromStart);
+                PowerActivity powerActivity = new PowerActivity(null,
+                                                                idathlete,
+                                                                idpoweractivity,
+                                                                power,
+                                                                speedPowerActivity,
+                                                                hearthratePowerActivity,
+                                                                distanceFromStart,
+                                                                pacePowerActivity,
+                                                                timeFromStart,
+                                                                DateOfPowerActivity,
+                                                                TimeOfPowerActivity);
                 logger.info("Object power : " + powerActivity);
 
                 this.powerActivityRepository.save(powerActivity);

@@ -28,7 +28,21 @@ public class StatisticsActivity {
     @Column(name="POWERSCORE")
     private float powerscore;
 
+    @Column(name="DATE")
+    private String date;
+
     public StatisticsActivity() {}
+
+    public StatisticsActivity(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian, float deviation, float powerscore, String date) {
+        this.id = id;
+        this.idathlete = idathlete;
+        this.idpoweractivity = idpoweractivity;
+        this.poweraverage = poweraverage;
+        this.powermedian = powermedian;
+        this.deviation = deviation;
+        this.powerscore = powerscore;
+        this.date = date;
+    }
 
     public StatisticsActivity(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian, float deviation, float powerscore) {
         this.id = id;
@@ -72,6 +86,10 @@ public class StatisticsActivity {
         return powerscore;
     }
 
+    public String getDate() {
+        return date;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("StatisticsActivity{");
@@ -82,6 +100,7 @@ public class StatisticsActivity {
         sb.append(", powermedian=").append(powermedian);
         sb.append(", deviation=").append(deviation);
         sb.append(", powerscore=").append(powerscore);
+        sb.append(", date=").append(date);
         sb.append('}');
         return sb.toString();
     }

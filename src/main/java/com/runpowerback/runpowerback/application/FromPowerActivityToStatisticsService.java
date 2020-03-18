@@ -38,7 +38,9 @@ public class FromPowerActivityToStatisticsService {
 
         float sumOfVariance = 0;
         float deviation;
-     //   float s = runpower.get(1).getPower();
+
+        String DateOfStatisticActivity = runpower.get(1).getDate();
+        logger.info("Date : " + DateOfStatisticActivity);
 
         runpowerSorted.add(runpower.get(1).getPower());
 
@@ -46,10 +48,9 @@ public class FromPowerActivityToStatisticsService {
             currentPower = runpower.get(i).getPower();
             runpowerSorted.add(currentPower);
             sumOfPower = sumOfPower + currentPower;
-     //       if  (i>= 2) {
-         //       s = s + runpower.get(i).getPower();
+
             sumOfVariance = sumOfVariance + (i * runpower.get(i).getPower() - sumOfPower) *  (i * runpower.get(i).getPower() - sumOfPower) / (i * (i-1));
-      //      }
+
             i = i + 1;
         }
 
@@ -78,22 +79,12 @@ public class FromPowerActivityToStatisticsService {
         float powerScore = (powerAverage - powerMedian) * (powerAverage - powerMedian) * deviation;
         logger.info("power Score : " + powerScore);
 
-  /*      i = 1;
-        s = 0;
-        while(i <= runpower.size()-1) {
-            s = s + (runpower.get(i).getPower() - powerAverage) * (runpower.get(i).getPower() - powerAverage);
-            i = i + 1;
-        }
-
-        deviation = (float) Math.sqrt(s / runpower.size());
-        logger.info("deviation : " + deviation);
-  */
         Long idathlete = runpower.get(runpower.size()-1).getIdathlete();
-   //   Long idpoweractivity = runpower.get(runpower.size()-1).getIdpoweractivity();
+
         Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         logger.info("idathlete : "  + idathlete + "idpoweractivity : " + idpoweractivity);
 
-        StatisticsActivity statisticsActivity = new StatisticsActivity(null,idathlete,idpoweractivity, powerAverage, powerMedian,deviation,powerScore);
+        StatisticsActivity statisticsActivity = new StatisticsActivity(null,idathlete,idpoweractivity, powerAverage, powerMedian,deviation,powerScore, DateOfStatisticActivity);
         this.statisticsActivityRepository.save(statisticsActivity);
     }
 
