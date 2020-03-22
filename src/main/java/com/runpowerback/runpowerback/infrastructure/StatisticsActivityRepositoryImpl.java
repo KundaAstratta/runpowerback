@@ -7,6 +7,9 @@ import com.runpowerback.runpowerback.domaine.exception.MyProjectException500;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 public class StatisticsActivityRepositoryImpl implements StatisticsActivityRepository {
 
@@ -28,6 +31,9 @@ public class StatisticsActivityRepositoryImpl implements StatisticsActivityRepos
         }
     }
 
-
+    @Override
+    public List<StatisticsActivity> findAllStatisticsActivityForOneAthlete(Long idathlete) {
+        return this.statisticsActivityDAO.findAllStatisticsActivityForOneAthlete(idathlete).stream().collect(Collectors.toList());
+    }
 
 }

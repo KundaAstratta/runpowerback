@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -26,6 +27,8 @@ public class StatisticsActivityService {
         return this.statisticsActivityRepository.findOneStatisticsActivity(idathlete, idpoweractivity);
     }
 
-
+    public List<StatisticsActivity> findAllStatisticsActivityForOneAthlete (Long idathlete) {
+        return this.statisticsActivityRepository.findAllStatisticsActivityForOneAthlete(idathlete);
+    }
 
 }

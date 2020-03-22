@@ -40,6 +40,7 @@ public class PowerActivityService {
 
     public void fromPowerActivityToStatistics(Long idathlete, Long idpoweractivity) {
         List<PowerActivity> runpower;
+        idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         runpower = this.powerActivityRepository.findOnePowerActivity(idathlete,idpoweractivity);
         this.fromPowerActivityToStatisticsService.toStatistics(runpower);
     }

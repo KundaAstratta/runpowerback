@@ -43,7 +43,6 @@ public class FromActivityToPowerActivityService {
         float massVolumic;
         massVolumic = toTransformMassVolumic(percentHumidity,pressureSaturation,pressureATM,temperature);
 
-
         int i = 1;
         logger.info("taille : " + run.size());
 
@@ -56,6 +55,16 @@ public class FromActivityToPowerActivityService {
 
 
         while(i <= run.size()-1) {
+
+            logger.info("idathlete " + idathlete);
+            logger.info("idpoweractivity" + idpoweractivity);
+
+            logger.info("speedWind " + speedWind);
+            logger.info("temperature " + temperature);
+            logger.info("pressureATM " + pressureATM);
+            logger.info("pressureSaturation" + pressureSaturation);
+            logger.info("percentHumidity " + percentHumidity );
+            logger.info("massVolumic " + massVolumic);
 
             float deltaDistancePowerActivity =
                     getDistanceFromLatLontoMeter(

@@ -1,0 +1,6 @@
+@BeforeAll - one times before all tests
+@BeforeEach - before each test
+Pressure saturation
+PressureSaturation{id=1, temperature=18.0, pressure=2063.0}
+@AfterEach - end of test...
+@AfterAll - all tests done

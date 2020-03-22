@@ -2,6 +2,9 @@ package com.runpowerback.runpowerback.exposition;
 
 import com.runpowerback.runpowerback.domaine.StatisticsActivity;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class StatisticsActivityMapper {
 
     public StatisticsActivityMapper() {
@@ -15,7 +18,8 @@ public class StatisticsActivityMapper {
           statisticsActivityDTO.poweraverage,
           statisticsActivityDTO.powermedian,
           statisticsActivityDTO.deviation,
-          statisticsActivityDTO.powerscore
+          statisticsActivityDTO.powerscore,
+          statisticsActivityDTO.date
         );
     }
 
@@ -27,8 +31,13 @@ public class StatisticsActivityMapper {
           statisticsActivity.getPoweraverage(),
           statisticsActivity.getPowermedian(),
           statisticsActivity.getDeviation(),
-          statisticsActivity.getPowerscore()
+          statisticsActivity.getPowerscore(),
+          statisticsActivity.getDate()
         );
+    }
+
+    public static List<StatisticsActivityDTO> mapToListStatisticsActivityDTO (List<StatisticsActivity> statisticsActivityList) {
+        return statisticsActivityList.stream().map(StatisticsActivityMapper::mapToOneStatisticsActivityDTO).collect(Collectors.toList());
     }
 
 }

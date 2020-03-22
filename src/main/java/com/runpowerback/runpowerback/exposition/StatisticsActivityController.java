@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class StatisticsActivityController {
@@ -22,6 +23,11 @@ public class StatisticsActivityController {
    @RequestMapping(method = RequestMethod.GET, path = {"/statisticsactivity/athlete/{idathlete}/activity/{idpoweractivity}"})
     public StatisticsActivityDTO findOneStatisticsActivity(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity ) {
        return StatisticsActivityMapper.mapToOneStatisticsActivityDTO(this.statisticsActivityService.findOneStatisticsActivity(idathlete,idpoweractivity));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = {"/statisticsactivity/athlete/{idathlete}"})
+    public List<StatisticsActivityDTO> findAllStatistcisActivityForOneAthlete(@PathVariable("idathlete") Long idathlete) {
+        return StatisticsActivityMapper.mapToListStatisticsActivityDTO(this.statisticsActivityService.findAllStatisticsActivityForOneAthlete(idathlete));
     }
 
 }
