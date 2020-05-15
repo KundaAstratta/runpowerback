@@ -14,7 +14,11 @@ public class AthleteService {
     @Autowired
     AthleteRepository athleteRepository;
 
+    @Autowired
+    FromHearthmaxToZoneService fromHearthmaxToZoneService;
+
     public Long createOneAthlete(Athlete athlete) {
+        this.fromHearthmaxToZoneService.toTransform(athlete);
         return this.athleteRepository.save(athlete);
     }
 

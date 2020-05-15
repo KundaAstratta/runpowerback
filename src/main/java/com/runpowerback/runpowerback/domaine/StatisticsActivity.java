@@ -28,10 +28,41 @@ public class StatisticsActivity {
     @Column(name="POWERSCORE")
     private float powerscore;
 
+    @Column(name="NBROFEASY")
+    private int nbrofeasy;
+
+    @Column(name="NBROFMARATHON")
+    private int nbrofmarathon;
+
+    @Column(name="NBROFTHRESHHOLD")
+    private int nbrofthreshold;
+
+    @Column(name="NBROFINTERVAL")
+    private int nbrofinterval;
+
+    @Column(name="NBROFREPETITION")
+    private int nbrofrepetition;
+
     @Column(name="DATE")
     private String date;
 
     public StatisticsActivity() {}
+
+    public StatisticsActivity(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian, float deviation, float powerscore, int nbrofeasy, int nbrofmarathon, int nbrofthreshold, int nbrofinterval, int nbrofrepetition, String date) {
+        this.id = id;
+        this.idathlete = idathlete;
+        this.idpoweractivity = idpoweractivity;
+        this.poweraverage = poweraverage;
+        this.powermedian = powermedian;
+        this.deviation = deviation;
+        this.powerscore = powerscore;
+        this.nbrofeasy = nbrofeasy;
+        this.nbrofmarathon = nbrofmarathon;
+        this.nbrofthreshold = nbrofthreshold;
+        this.nbrofinterval = nbrofinterval;
+        this.nbrofrepetition = nbrofrepetition;
+        this.date = date;
+    }
 
     public StatisticsActivity(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian, float deviation, float powerscore, String date) {
         this.id = id;
@@ -86,6 +117,26 @@ public class StatisticsActivity {
         return powerscore;
     }
 
+    public int getNbrofeasy() {
+        return nbrofeasy;
+    }
+
+    public int getNbrofmarathon() {
+        return nbrofmarathon;
+    }
+
+    public int getNbrofthreshold() {
+        return nbrofthreshold;
+    }
+
+    public int getNbrofinterval() {
+        return nbrofinterval;
+    }
+
+    public int getNbrofrepetition() {
+        return nbrofrepetition;
+    }
+
     public String getDate() {
         return date;
     }
@@ -100,7 +151,12 @@ public class StatisticsActivity {
         sb.append(", powermedian=").append(powermedian);
         sb.append(", deviation=").append(deviation);
         sb.append(", powerscore=").append(powerscore);
-        sb.append(", date=").append(date);
+        sb.append(", nbrofeasy=").append(nbrofeasy);
+        sb.append(", nbrofmarathon=").append(nbrofmarathon);
+        sb.append(", nbrofthreshold=").append(nbrofthreshold);
+        sb.append(", nbrofinterval=").append(nbrofinterval);
+        sb.append(", nbrofrepetition=").append(nbrofrepetition);
+        sb.append(", date='").append(date).append('\'');
         sb.append('}');
         return sb.toString();
     }

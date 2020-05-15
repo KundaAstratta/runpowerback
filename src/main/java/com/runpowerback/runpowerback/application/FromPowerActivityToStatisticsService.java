@@ -1,9 +1,6 @@
 package com.runpowerback.runpowerback.application;
 
-import com.runpowerback.runpowerback.domaine.PowerActivity;
-import com.runpowerback.runpowerback.domaine.PowerActivityRepository;
-import com.runpowerback.runpowerback.domaine.StatisticsActivity;
-import com.runpowerback.runpowerback.domaine.StatisticsActivityRepository;
+import com.runpowerback.runpowerback.domaine.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +20,12 @@ public class FromPowerActivityToStatisticsService {
     @Autowired
     PowerActivityRepository powerActivityRepository;
 
+    @Autowired
+    AthleteRepository athleteRepository;
+
     private static final Logger logger = LogManager.getLogger();
 
-    public void toStatistics (List<PowerActivity> runpower) {
+    public void toStatistics (List<PowerActivity> runpower, Long idathlete) {
         List<Float> runpowerSorted = new ArrayList<>();
         logger.info("here");
         logger.info(runpower);
@@ -44,8 +44,51 @@ public class FromPowerActivityToStatisticsService {
 
         runpowerSorted.add(runpower.get(1).getPower());
 
+        Athlete athlete = new Athlete();
+        athlete = athleteRepository.findOneAthlete(idathlete);
+
+        float easyMin = athlete.getEasyhearthmin();
+        float easyMax = athlete.getEasyhearthmax();
+        float marathonMin = athlete.getMarathonhearthmin();
+        float marathonMax = athlete.getMarathonhearthmax();
+        float thresholdMin = athlete.getThresholdhearthmin();
+        float thresholdMax = athlete.getThresholdhearthmax();
+        float intervalMin = athlete.getIntervalhearthmin();
+        float intervalMax = athlete.getIntervalhearthmax();
+        float repetitionMin = athlete.getRepetitionhearthmin();
+        float repetitionMax = athlete.getRepetitionhearthmax();
+
+        int numberOfEasy = 0;
+        int numberOfMarathon = 0;
+        int numberOfThreshold = 0;
+        int numberOfInterval = 0;
+        int numberOfRepetition = 0;
+
+
+
         while(i <= runpower.size()-1) {
             currentPower = runpower.get(i).getPower();
+
+            if (runpower.get(i).getHearthrate() <= easyMax) {
+                numberOfEasy = numberOfEasy + 1;
+            } else {
+                if ((marathonMin >= runpower.get(i).getHearthrate()) && (runpower.get(i).getHearthrate() <= marathonMax)) {
+                    numberOfMarathon = numberOfMarathon + 1;
+                } else {
+                    if ((thresholdMin >= runpower.get(i).getHearthrate()) && (runpower.get(i).getHearthrate() <= thresholdMax)) {
+                        numberOfThreshold = numberOfThreshold + 1;
+                    } else {
+                        if ((intervalMin >= runpower.get(i).getHearthrate()) && (runpower.get(i).getHearthrate()<= intervalMax)) {
+                            numberOfInterval = numberOfInterval + 1;
+                        } else {
+                            if (repetitionMin >= runpower.get(i).getHearthrate()) {
+                                numberOfRepetition = numberOfRepetition + 1;
+                            }
+                        }
+                    }
+                }
+            }
+
             runpowerSorted.add(currentPower);
             sumOfPower = sumOfPower + currentPower;
 
@@ -79,13 +122,31 @@ public class FromPowerActivityToStatisticsService {
         float powerScore = (powerAverage - powerMedian) * (powerAverage - powerMedian) * deviation;
         logger.info("power Score : " + powerScore);
 
-        Long idathlete = runpower.get(runpower.size()-1).getIdathlete();
+        idathlete = runpower.get(runpower.size()-1).getIdathlete();
 
         Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         logger.info("idathlete : "  + idathlete + "idpoweractivity : " + idpoweractivity);
 
-        StatisticsActivity statisticsActivity = new StatisticsActivity(null,idathlete,idpoweractivity, powerAverage, powerMedian,deviation,powerScore, DateOfStatisticActivity);
+        StatisticsActivity statisticsActivity = new StatisticsActivity(
+                null,
+                idathlete,
+                idpoweractivity,
+                powerAverage,
+                powerMedian,deviation,
+                powerScore, numberOfEasy,
+                numberOfMarathon,
+                numberOfThreshold,
+                numberOfInterval,
+                numberOfRepetition,
+                DateOfStatisticActivity);
         this.statisticsActivityRepository.save(statisticsActivity);
+
+        logger.info("number of Esay : " +  numberOfEasy);
+        logger.info("number of Marathon : " + numberOfMarathon);
+        logger.info("number of Threshold : " + numberOfThreshold);
+        logger.info("number of Interval : " + numberOfInterval);
+        logger.info("number of Repetition : " + numberOfRepetition);
+
     }
 
 }

@@ -60,7 +60,7 @@ class PowerActivityToStatisticsTests {
 		this.powerActivityRepository.save(powerActivity);
 		List<PowerActivity> runpower = this.powerActivityRepository.findOnePowerActivity(1L,1L);
 		logger.info(runpower);
-		this.fromPowerActivityToStatisticsService.toStatistics(runpower);
+		this.fromPowerActivityToStatisticsService.toStatistics(runpower,1L);
 		StatisticsActivity statisticsActivity = this.statisticsActivityRepository.findOneStatisticsActivity(1l,1L);
 		logger.info(statisticsActivity);
 		assertAll(
@@ -94,7 +94,7 @@ class PowerActivityToStatisticsTests {
 		this.powerActivityRepository.save(powerActivity);
 		List<PowerActivity> runpower = this.powerActivityRepository.findOnePowerActivity(1L,2L);
 		logger.info(runpower);
-		this.fromPowerActivityToStatisticsService.toStatistics(runpower);
+		this.fromPowerActivityToStatisticsService.toStatistics(runpower,1L);
 		StatisticsActivity statisticsActivity = this.statisticsActivityRepository.findOneStatisticsActivity(1L,2L);
 		logger.info(statisticsActivity);
 		assertAll(
