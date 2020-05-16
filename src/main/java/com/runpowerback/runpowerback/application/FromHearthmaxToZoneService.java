@@ -1,6 +1,6 @@
 package com.runpowerback.runpowerback.application;
 
-xximport com.runpowerback.runpowerback.domaine.Athlete;
+import com.runpowerback.runpowerback.domaine.Athlete;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
