@@ -26,11 +26,28 @@ public class StatisticsActivityDTO {
     public float powerscore;
 
     @JsonProperty
+    public int nbrofeasy;
+
+    @JsonProperty
+    public int nbrofmarathon;
+
+    @JsonProperty
+    public int nbrofthreshold;
+
+    @JsonProperty
+    public int nbrofinterval;
+
+    @JsonProperty
+    public int nbrofrepetition;
+
+    @JsonProperty
     public String date;
 
     public StatisticsActivityDTO() {}
 
-    public StatisticsActivityDTO(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian, float deviation, float powerscore, String date) {
+    public StatisticsActivityDTO(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian,
+            float deviation, float powerscore, int nbrofeasy, int nbrofmarathon, int nbrofthreshold,
+            int nbrofinterval, int nbrofrepetition, String date) {
         this.id = id;
         this.idathlete = idathlete;
         this.idpoweractivity = idpoweractivity;
@@ -38,8 +55,14 @@ public class StatisticsActivityDTO {
         this.powermedian = powermedian;
         this.deviation = deviation;
         this.powerscore = powerscore;
+        this.nbrofeasy = nbrofeasy;
+        this.nbrofmarathon = nbrofmarathon;
+        this.nbrofthreshold = nbrofthreshold;
+        this.nbrofinterval = nbrofinterval;
+        this.nbrofrepetition = nbrofrepetition;
         this.date = date;
     }
+    
 
     public Long getId() {
         return id;
@@ -69,6 +92,26 @@ public class StatisticsActivityDTO {
         return powerscore;
     }
 
+    public int getNbrofeasy() {
+        return nbrofeasy;
+    }
+
+    public int getNbrofmarathon() {
+        return nbrofmarathon;
+    }
+
+    public int getNbrofthreshold() {
+        return nbrofthreshold;
+    }
+
+   public int getNbrofinterval() {
+        return nbrofinterval;
+    }
+
+    public int getNbrofrepetition() {
+        return nbrofrepetition;
+    }
+
     public String getDate() {
         return date;
     }
@@ -83,8 +126,17 @@ public class StatisticsActivityDTO {
         sb.append(", powermedian=").append(powermedian);
         sb.append(", deviation=").append(deviation);
         sb.append(", powerscore=").append(powerscore);
+        sb.append(", nbrofeasy=").append(nbrofeasy);
+        sb.append(", nbrofmarathon=").append(nbrofmarathon);
+        sb.append(", nbrofthreshold=").append(nbrofthreshold);
+        sb.append(", nbrofinterval=").append(nbrofinterval);
+        sb.append(", nbrofrepetition=").append(nbrofrepetition);
+        sb.append(", powerscore=").append(powerscore);
         sb.append(", date=").append(date);
         sb.append('}');
         return sb.toString();
     }
+
+   
+
 }

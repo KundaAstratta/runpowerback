@@ -19,6 +19,11 @@ public class StatisticsActivityMapper {
           statisticsActivityDTO.powermedian,
           statisticsActivityDTO.deviation,
           statisticsActivityDTO.powerscore,
+          statisticsActivityDTO.nbrofeasy,
+          statisticsActivityDTO.nbrofmarathon,
+          statisticsActivityDTO.nbrofthreshold,
+          statisticsActivityDTO.nbrofinterval,
+          statisticsActivityDTO.nbrofrepetition,
           statisticsActivityDTO.date
         );
     }
@@ -32,6 +37,11 @@ public class StatisticsActivityMapper {
           statisticsActivity.getPowermedian(),
           statisticsActivity.getDeviation(),
           statisticsActivity.getPowerscore(),
+          statisticsActivity.getNbrofeasy(),
+          statisticsActivity.getNbrofmarathon(),
+          statisticsActivity.getNbrofthreshold(),
+          statisticsActivity.getNbrofinterval(),
+          statisticsActivity.getNbrofrepetition(),
           statisticsActivity.getDate()
         );
     }

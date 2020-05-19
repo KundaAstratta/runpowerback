@@ -34,7 +34,7 @@ public class StatisticsActivity {
     @Column(name="NBROFMARATHON")
     private int nbrofmarathon;
 
-    @Column(name="NBROFTHRESHHOLD")
+    @Column(name="NBROFTHRESHOLD")
     private int nbrofthreshold;
 
     @Column(name="NBROFINTERVAL")

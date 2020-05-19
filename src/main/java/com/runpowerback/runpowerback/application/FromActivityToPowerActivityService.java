@@ -106,7 +106,8 @@ public class FromActivityToPowerActivityService {
             timeFromStart = timeFromStart +
                     getDeltaTimeFromTimezoneString(run.get(i-1).getTimezone(), run.get(i).getTimezone());
 
-            if ((power > 0) && (powerCurrent < (1.5f * powerPrevious))) {
+            if (((power > 0) && (powerCurrent < (1.5f * powerPrevious))) && (hearthratePowerActivity > 0))
+            {
                 PowerActivity powerActivity = new PowerActivity(null,
                                                                 idathlete,
                                                                 idpoweractivity,
