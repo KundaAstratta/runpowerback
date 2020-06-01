@@ -64,8 +64,6 @@ public class FromPowerActivityToStatisticsService {
         int numberOfInterval = 0;
         int numberOfRepetition = 0;
 
-
-
         while(i <= runpower.size()-1) {
             currentPower = runpower.get(i).getPower();
 
@@ -119,8 +117,60 @@ public class FromPowerActivityToStatisticsService {
         float powerMedian = runpowerSorted.get(averageNumber-1);
         logger.info("power Median : " + powerMedian);
 
+        double firstQuartil;
+        float powerFirstQuartil = 0;
+        firstQuartil = (runpowerSorted.size() + 3) / 4;
+        logger.info("first Quartil " + firstQuartil);
+        double numberFirstQuartil = firstQuartil - Math.floor(firstQuartil) ;
+        logger.info("numberFirstQuartil  " +  numberFirstQuartil);
+        if (numberFirstQuartil == 0) {
+            powerFirstQuartil = runpowerSorted.get((int)firstQuartil);
+        } 
+        if (numberFirstQuartil == 0.25) {
+            firstQuartil = firstQuartil - 0.25;
+            powerFirstQuartil = ( 3 * runpowerSorted.get((int)firstQuartil) + runpowerSorted.get((int)firstQuartil + 1) ) / 4;
+        }  
+        if (numberFirstQuartil == 0.5) {
+            firstQuartil = firstQuartil - 0.5;
+            powerFirstQuartil = ( runpowerSorted.get((int)firstQuartil) + runpowerSorted.get((int)firstQuartil + 1) ) / 2;
+        } 
+        if (numberFirstQuartil == 0.75) {
+            firstQuartil = firstQuartil - 0.75;
+            powerFirstQuartil = ( runpowerSorted.get((int)firstQuartil) + 3 * runpowerSorted.get((int)firstQuartil + 1) ) / 4;
+        }  
+        logger.info("Power first Quartil " + powerFirstQuartil);
+
+        double thirdQuartil;
+        float powerThirdQuartil = 0;
+        thirdQuartil = (3 * runpowerSorted.size() + 1) / 4;
+        double numberThirdQuartil = thirdQuartil - Math.floor(thirdQuartil);
+        logger.info("third Quartil " + numberThirdQuartil);
+        if (numberThirdQuartil == 0) {
+            powerThirdQuartil = runpowerSorted.get((int)thirdQuartil);
+        }
+        if (numberThirdQuartil == 0.25) {
+            thirdQuartil = thirdQuartil - 0.25;
+            powerThirdQuartil = ( 3 * runpowerSorted.get((int)thirdQuartil) + runpowerSorted.get((int)thirdQuartil +1) ) / 4;
+        }
+        if (numberThirdQuartil == 0.5) {
+            thirdQuartil = thirdQuartil - 0.5;
+            powerThirdQuartil = ( runpowerSorted.get((int)thirdQuartil) + runpowerSorted.get((int)thirdQuartil +1) ) / 2;
+        }
+        if (numberThirdQuartil == 0.75) {
+            thirdQuartil = thirdQuartil - 0.75;
+            powerThirdQuartil = ( runpowerSorted.get((int)thirdQuartil) + 3 * runpowerSorted.get((int)thirdQuartil +1) ) / 4;
+        }
+        logger.info("Power thrid Quartil " + powerThirdQuartil);
+
+        
         float powerScore = (powerAverage - powerMedian) * (powerAverage - powerMedian) * deviation;
         logger.info("power Score : " + powerScore);
+
+        float deltaFirstQuartil = (powerMedian - powerFirstQuartil) ;
+        logger.info("delta first quartil" + deltaFirstQuartil);
+
+        float deltaThirdQuartil = (powerThirdQuartil - powerMedian);
+        logger.info("delta third quartil " + deltaThirdQuartil);
 
         idathlete = runpower.get(runpower.size()-1).getIdathlete();
 
@@ -138,7 +188,13 @@ public class FromPowerActivityToStatisticsService {
                 numberOfThreshold,
                 numberOfInterval,
                 numberOfRepetition,
-                DateOfStatisticActivity);
+                DateOfStatisticActivity,
+                powerFirstQuartil,
+                deltaFirstQuartil,
+                powerThirdQuartil,
+                deltaThirdQuartil
+                );
+
         this.statisticsActivityRepository.save(statisticsActivity);
 
         logger.info("number of Esay : " +  numberOfEasy);

@@ -24,7 +24,11 @@ public class StatisticsActivityMapper {
           statisticsActivityDTO.nbrofthreshold,
           statisticsActivityDTO.nbrofinterval,
           statisticsActivityDTO.nbrofrepetition,
-          statisticsActivityDTO.date
+          statisticsActivityDTO.date,
+          statisticsActivityDTO.powerfirstquartil,
+          statisticsActivityDTO.deltafirstquartil,
+          statisticsActivityDTO.powerthirdquartil,
+          statisticsActivityDTO.deltathirdquartil
         );
     }
 
@@ -42,7 +46,11 @@ public class StatisticsActivityMapper {
           statisticsActivity.getNbrofthreshold(),
           statisticsActivity.getNbrofinterval(),
           statisticsActivity.getNbrofrepetition(),
-          statisticsActivity.getDate()
+          statisticsActivity.getDate(),
+          statisticsActivity.getPowerfirstquartil(),
+          statisticsActivity.getDeltafirstquartil(),
+          statisticsActivity.getPowerthirdquartil(),
+          statisticsActivity.getDeltathirdquartil()
         );
     }
 

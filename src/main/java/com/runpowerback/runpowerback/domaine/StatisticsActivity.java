@@ -46,7 +46,45 @@ public class StatisticsActivity {
     @Column(name="DATE")
     private String date;
 
+    @Column(name="POWERFIRSTQUARTIL")
+    private float powerfirstquartil;
+
+    @Column(name="DELTAFIRSTQUARTIL")
+    private float deltafirstquartil;
+
+    @Column(name="POWERTHIRDQUARTIL")
+    private float powerthirdquartil;
+
+    @Column(name="DELTATHIRDQUARTIL")
+    private float deltathirdquartil;
+
     public StatisticsActivity() {}
+
+
+    
+    public StatisticsActivity(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian,
+            float deviation, float powerscore, int nbrofeasy, int nbrofmarathon, int nbrofthreshold, int nbrofinterval,
+            int nbrofrepetition, String date, float powerfirstquartil, float deltafirstquartil, float powerthirdquartil,
+            float deltathirdquartil) {
+        this.id = id;
+        this.idathlete = idathlete;
+        this.idpoweractivity = idpoweractivity;
+        this.poweraverage = poweraverage;
+        this.powermedian = powermedian;
+        this.deviation = deviation;
+        this.powerscore = powerscore;
+        this.nbrofeasy = nbrofeasy;
+        this.nbrofmarathon = nbrofmarathon;
+        this.nbrofthreshold = nbrofthreshold;
+        this.nbrofinterval = nbrofinterval;
+        this.nbrofrepetition = nbrofrepetition;
+        this.date = date;
+        this.powerfirstquartil = powerfirstquartil;
+        this.deltafirstquartil = deltafirstquartil;
+        this.powerthirdquartil = powerthirdquartil;
+        this.deltathirdquartil = deltathirdquartil;
+    }
+
 
     public StatisticsActivity(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian, float deviation, float powerscore, int nbrofeasy, int nbrofmarathon, int nbrofthreshold, int nbrofinterval, int nbrofrepetition, String date) {
         this.id = id;
@@ -141,6 +179,22 @@ public class StatisticsActivity {
         return date;
     }
 
+    public float getPowerfirstquartil() {
+        return powerfirstquartil;
+    }
+
+    public float getDeltafirstquartil() {
+        return deltafirstquartil;
+    }
+
+    public float getPowerthirdquartil() {
+        return powerthirdquartil;
+    }
+
+    public float getDeltathirdquartil() {
+        return deltathirdquartil;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("StatisticsActivity{");
@@ -157,6 +211,10 @@ public class StatisticsActivity {
         sb.append(", nbrofinterval=").append(nbrofinterval);
         sb.append(", nbrofrepetition=").append(nbrofrepetition);
         sb.append(", date='").append(date).append('\'');
+        sb.append(", powerfirstquartil=").append(powerfirstquartil).append('\'');
+        sb.append(", deltafirstquartil=").append(deltafirstquartil).append('\'');
+        sb.append(", pwoerthirdquartil=").append(powerthirdquartil).append('\'');
+        sb.append(", deltathirdquartil=").append(deltathirdquartil).append('\'');
         sb.append('}');
         return sb.toString();
     }

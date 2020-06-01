@@ -43,11 +43,26 @@ public class StatisticsActivityDTO {
     @JsonProperty
     public String date;
 
+    @JsonProperty
+    public float powerfirstquartil;
+
+    @JsonProperty
+    public float deltafirstquartil;
+
+    @JsonProperty
+    public float powerthirdquartil;
+
+    @JsonProperty
+    public float deltathirdquartil;
+
+
+
     public StatisticsActivityDTO() {}
 
     public StatisticsActivityDTO(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian,
             float deviation, float powerscore, int nbrofeasy, int nbrofmarathon, int nbrofthreshold,
-            int nbrofinterval, int nbrofrepetition, String date) {
+            int nbrofinterval, int nbrofrepetition, String date, float powerfirstquartil, float deltafirstquartil,
+            float powerthirdqurtil, float deltathirdquartil) {
         this.id = id;
         this.idathlete = idathlete;
         this.idpoweractivity = idpoweractivity;
@@ -61,6 +76,10 @@ public class StatisticsActivityDTO {
         this.nbrofinterval = nbrofinterval;
         this.nbrofrepetition = nbrofrepetition;
         this.date = date;
+        this.powerfirstquartil = powerfirstquartil;
+        this.deltafirstquartil = deltafirstquartil;
+        this.powerthirdquartil = powerthirdqurtil;
+        this.deltathirdquartil = deltathirdquartil;
     }
     
 
@@ -116,6 +135,22 @@ public class StatisticsActivityDTO {
         return date;
     }
 
+    public float getPowerfirstquartil() {
+        return powerfirstquartil;
+    }
+
+    public float getDeltafirstquartil() {
+        return deltafirstquartil;
+    }
+
+    public float getPowerthirdquartil() {
+        return powerthirdquartil;
+    }
+
+    public float getDeltathirdquartil() {
+        return deltathirdquartil;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("StatisticsActivityDTO{");
@@ -133,9 +168,14 @@ public class StatisticsActivityDTO {
         sb.append(", nbrofrepetition=").append(nbrofrepetition);
         sb.append(", powerscore=").append(powerscore);
         sb.append(", date=").append(date);
+        sb.append(", powerfirstquartil=").append(powerfirstquartil);
+        sb.append(", deltafirstquartil=").append(deltafirstquartil);
+        sb.append(", powerthirdquartil=").append(powerthirdquartil);
+        sb.append(", deltathirdquartil=").append(deltathirdquartil);
         sb.append('}');
         return sb.toString();
     }
+
 
    
 
