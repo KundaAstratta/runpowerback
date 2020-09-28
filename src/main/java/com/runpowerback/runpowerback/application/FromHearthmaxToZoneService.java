@@ -1,6 +1,8 @@
 package com.runpowerback.runpowerback.application;
 
 import com.runpowerback.runpowerback.domaine.Athlete;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -9,15 +11,17 @@ import javax.transaction.Transactional;
 @Transactional
 public class FromHearthmaxToZoneService {
 
+    private static final Logger logger = LogManager.getLogger();
+
     public void toTransform (Athlete athlete) {
-        System.out.println(athlete.getHearthmax() * 65 / 100);
-        System.out.println(athlete.getHearthmax() * 79 / 100);
-        System.out.println(athlete.getHearthmax() * 80 / 100);
-        System.out.println(athlete.getHearthmax() * 90 / 100);
-        System.out.println(athlete.getHearthmax() * 88 / 100);
-        System.out.println(athlete.getHearthmax() * 92 / 100);
-        System.out.println(athlete.getHearthmax() * 98 / 100);
-        System.out.println(athlete.getHearthmax());
+        logger.info(athlete.getHearthmax() * 65 / 100);
+        logger.info(athlete.getHearthmax() * 79 / 100);
+        logger.info(athlete.getHearthmax() * 80 / 100);
+        logger.info(athlete.getHearthmax() * 90 / 100);
+        logger.info(athlete.getHearthmax() * 88 / 100);
+        logger.info(athlete.getHearthmax() * 92 / 100);
+        logger.info(athlete.getHearthmax() * 98 / 100);
+        logger.info(athlete.getHearthmax());
         athlete.setEasyhearthmin(athlete.getHearthmax() * 65 / 100);
         athlete.setEasyhearthmax(athlete.getHearthmax() * 79 / 100);
         athlete.setMarathonhearthmin(athlete.getHearthmax() * 80 / 100);
