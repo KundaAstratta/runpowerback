@@ -1,9 +1,11 @@
 package com.runpowerback.runpowerback.application;
 
+
 import com.runpowerback.runpowerback.domaine.PowerActivity;
 import com.runpowerback.runpowerback.domaine.PowerActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.runpowerback.runpowerback.domaine.StatisticsActivity;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -17,6 +19,12 @@ public class PowerActivityService {
 
     @Autowired
     FromPowerActivityToStatisticsService fromPowerActivityToStatisticsService;
+
+    @Autowired
+    StatisticsActivityService statisticsActivityService;
+
+    @Autowired
+    FromStatisticsToPredictionsService fromStatisticsToPredictionsService;
 
     public Long createOnePointOfPowerActivity(PowerActivity powerActivity) {
         return this.powerActivityRepository.save(powerActivity);
@@ -43,6 +51,8 @@ public class PowerActivityService {
         idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         runpower = this.powerActivityRepository.findOnePowerActivity(idathlete,idpoweractivity);
         this.fromPowerActivityToStatisticsService.toStatistics(runpower, idathlete);
+        List<StatisticsActivity> statisticsActivityList = this.statisticsActivityService.findAllStatisticsActivityForOneAthlete(idathlete);
+        this.fromStatisticsToPredictionsService.toPredictions(statisticsActivityList,idathlete);
     }
 
     public Long findMaxIdPowerActivity(Long idathlete) {

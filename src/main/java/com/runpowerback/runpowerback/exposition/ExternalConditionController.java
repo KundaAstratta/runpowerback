@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 public class ExternalConditionController {
@@ -17,6 +18,12 @@ public class ExternalConditionController {
     @ResponseStatus(HttpStatus.CREATED)
     public Long createOneExternalCondition (@Valid @RequestBody ExternalConditionDTO externalConditionDTO) {
       return this.externalConditionService.createOneExternalCondition(ExternalConditionMapper.mapToOneExternalCondition(externalConditionDTO));
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = {"/fromexternalconditiontoprediction"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public void fromexternalconditiontoprediction (@Valid @RequestBody ExternalConditionDTO externalConditionDTO) throws IOException {
+        this.externalConditionService.fromExternalConditionToPrediction(ExternalConditionMapper.mapToOneExternalCondition(externalConditionDTO));
     }
 
     @RequestMapping(method = RequestMethod.GET, path = {"/externalcondition/athlete/{idathlete}/activity/{idpoweractivity}"})

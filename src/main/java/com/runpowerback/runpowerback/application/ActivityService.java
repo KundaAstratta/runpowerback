@@ -37,13 +37,12 @@ public class ActivityService {
         return this.activityRepository.findAll();
     }
 
-    public void fromXMLtoActivity() throws IOException {
+    public String fromXMLtoActivity(String fileXML) throws IOException {
         this.activityRepository.deleteAll();
-        this.fromXMLtoActivityService.toReadXMLService();
+        return this.fromXMLtoActivityService.toReadXMLService(fileXML);
     }
 
     public void fromActivityToPowerActivity(Long idathlete, Long idpoweractivity) {
-     //   this.powerActivityRepository.deleteOnePowerActivity(idathlete,idpoweractivity);
         List<Activity> run;
         run = this.activityRepository.findAll();
         float mass = this.athleteRepository.findOneAthlete(idathlete).getMass();

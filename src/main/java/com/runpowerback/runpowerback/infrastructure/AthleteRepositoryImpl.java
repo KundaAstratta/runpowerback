@@ -20,11 +20,24 @@ public class AthleteRepositoryImpl implements AthleteRepository {
     }
 
     @Override
-    public Athlete findOneAthlete(Long idthlete) {
-        if (this.athleteDAO.findOneAthlete(idthlete) == null) {
+    public Long update(Long id, Athlete athlete) {
+        athlete.setId(id);
+        athlete.setIdathlete(id);
+        this.athleteDAO.save(athlete);
+        return athlete.getId();
+    }
+
+    @Override
+    public Athlete findOneAthlete(Long idathlete) {
+        if (this.athleteDAO.findOneAthlete(idathlete) == null) {
             throw new MyProjectException500(ErrorCodes.NOT_FOUND);
         } else {
-            return this.athleteDAO.findOneAthlete(idthlete);
+            return this.athleteDAO.findOneAthlete(idathlete);
         }
+    }
+
+    @Override
+    public Athlete findById(Long id) {
+        return this.athleteDAO.findById(id).orElseThrow(()-> new MyProjectException500(ErrorCodes.NOT_FOUND));
     }
 }

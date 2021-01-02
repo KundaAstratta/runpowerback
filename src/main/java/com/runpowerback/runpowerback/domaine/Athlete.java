@@ -88,8 +88,16 @@ public class Athlete {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getIdathlete() {
         return idathlete;
+    }
+
+    public void setIdathlete(Long idathlete) {
+        this.idathlete = idathlete;
     }
 
     public String getName() {

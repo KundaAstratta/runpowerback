@@ -1,6 +1,7 @@
 package com.runpowerback.runpowerback.exposition;
 
 import com.runpowerback.runpowerback.application.ActivityService;
+import com.runpowerback.runpowerback.exposition.exception.MessageFileXML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,12 @@ public class ActivityController {
         return this.activityService.createOnePointOfActivity(ActivityMapper.mapToOnePointActivity(activityDTO));
     }
 
-    @RequestMapping(method =RequestMethod.GET, path = {"/fromXMLtoActivity"})
-    public void fromXMLtoActivity() throws IOException {
-        this.activityService.fromXMLtoActivity();
+    @RequestMapping(method = RequestMethod.GET, path = {"/fromXMLtoActivity/{fileXML}"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public MessageFileXML fromXMLtoActivity(@PathVariable("fileXML") String fileXML) throws IOException {
+        MessageFileXML messageFileXML = new MessageFileXML(this.activityService.fromXMLtoActivity(fileXML));
+        return messageFileXML;
+
     }
 
    @RequestMapping(method = RequestMethod.GET, path = {"/fromActivityToPowerActivity/athlete/{idathlete}/activity/{idpoweractivity}"})
