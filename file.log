@@ -1,0 +1,19 @@
+@BeforeAll - one times before all tests
+@BeforeEach - before each test
+url : https://api.openweathermap.org/data/2.5/onecall?lat=48.79152&lon=2.336916&exclude=minutely,hourly,daily,alerts&appid=10ff1046f6a9b5d3de165965efaddd46
+temperature from API Weather 276.01
+pressure from API Weather 994.0
+humidity from API Weather 87.0
+speed wind from API Weather 6.17
+@AfterEach - end of test...
+@BeforeEach - before each test
+Pressure saturation
+PressureSaturation{id=1, temperature=18.0, pressure=2063.0}
+pressure Saturation Value : 2091.0908
+@AfterEach - end of test...
+@BeforeEach - before each test
+Pressure saturation
+PressureSaturation{id=1, temperature=-7.0, pressure=370.0}
+pressure Saturation Value : 360.07672
+@AfterEach - end of test...
+@AfterAll - all tests done

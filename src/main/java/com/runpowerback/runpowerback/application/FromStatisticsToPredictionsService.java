@@ -98,19 +98,13 @@ public class FromStatisticsToPredictionsService {
         logger.info("speed 10 km {}" , speedTenKm);
         String paceTenKm = getPaceFromSpeed(getSpeedPredictionFromDistance(10000, speedOptimal,speedMin,speedMax));
         logger.info("Pace {}" , paceTenKm);
-        String  timeForTenKm = getCalculateTimeFromSecondes((long) (10000 / speedHalfMarathon));
+        String  timeForTenKm = getCalculateTimeFromSecondes((long) (10000 / speedTenKm));
         logger.info("10km {}" , timeForTenKm);
-
-
-
-
 
         Prediction prediction = new Prediction(null,idathlete,idPowerActivity,powerOptimal,speedOptimal, paceOptimal,paceEasy,paceThreshold,
                 paceHard, paceMin, paceMax,paceMarathon,timeForMarathon,paceHalfMarathon,timeForHalfMarathon,
                 paceTenKm,timeForTenKm);
         logger.info("prediction {}" , prediction.toString());
-
-
 
         predictionRepository.save(prediction);
 

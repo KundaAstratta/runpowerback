@@ -32,14 +32,5 @@ public class FromHearthmaxToZoneService {
         athlete.setIntervalhearthmax(athlete.getHearthmax() * 97 / 100);
         athlete.setRepetitionhearthmin(athlete.getHearthmax() * 98 / 100);
         athlete.setRepetitionhearthmax(athlete.getHearthmax());
-
-
-
-
-
-
-
-
     }
-
 }

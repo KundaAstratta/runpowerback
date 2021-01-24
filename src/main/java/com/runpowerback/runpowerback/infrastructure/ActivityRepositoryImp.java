@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class ActivityRepositoryImp implements ActivityRepository {
 
     @Autowired
-    ActivityDAO activityDAO;
+    ActivityDAO  activityDAO;
 
     @Override
     public Long save(Activity activity) {

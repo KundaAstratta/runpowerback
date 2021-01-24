@@ -21,8 +21,8 @@ public class ExternalConditionService {
     @Autowired
     ActivityRepository activityRepository;
 
-    @Autowired
-    FromXMLtoActivityService fromXMLtoActivityService;
+//    @Autowired
+//    FromXMLtoActivityService fromXMLtoActivityService;
 
     @Autowired
     AthleteRepository athleteRepository;
@@ -39,23 +39,39 @@ public class ExternalConditionService {
     @Autowired
     FromStatisticsToPredictionsService fromStatisticsToPredictionsService;
 
+    @Autowired
+    FromWeatherAPItoExternalConditionService fromWeatherAPItoExternalConditionService;
 
-    public Long createOneExternalCondition (ExternalCondition externalCondition) {
-        Long idathlete = externalCondition.getIdathlete();
+    public Long createOneExternalCondition (Long idathlete,ExternalCondition externalCondition) {
+    //  Long idathlete = externalCondition.getIdathlete();
         Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         externalCondition.setIdpoweractivity(idpoweractivity+1);
         return this.externalConditionRepository.save(externalCondition);
     }
 
-    public void fromExternalConditionToPrediction(ExternalCondition externalCondition) throws IOException {
+    public void fromExternalConditionToPrediction(Long idathlete,ExternalCondition externalCondition) throws IOException {
 
-        Long idathlete = externalCondition.getIdathlete();
+     // Long idathlete = externalCondition.getIdathlete();
         Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         externalCondition.setIdpoweractivity(idpoweractivity+1);
-        this.externalConditionRepository.save(externalCondition);
 
         List<Activity> run;
         run = this.activityRepository.findAll();
+
+        // Call the Weather API only in the case we have the default values
+        if ((externalCondition.getPressureatm() == 100000) &&
+            (externalCondition.getTemperature() == 10) &&
+            (externalCondition.getHumidity() == 50) &&
+            (externalCondition.getSpeedwind() == 0)) {
+                ExternalCondition externalConditionFromWeatherAPI;
+                externalConditionFromWeatherAPI = fromWeatherAPItoExternalConditionService.toCallWeatherAPI(run.get(0).getLatitude(),run.get(0).getLongitude());
+                externalCondition.setPressureatm(externalConditionFromWeatherAPI.getPressureatm());
+                externalCondition.setTemperature(externalConditionFromWeatherAPI.getTemperature());
+                externalCondition.setHumidity(externalConditionFromWeatherAPI.getHumidity());
+                externalCondition.setSpeedwind(externalConditionFromWeatherAPI.getSpeedwind());
+        }
+        this.externalConditionRepository.save(externalCondition);
+
         float mass = this.athleteRepository.findOneAthlete(idathlete).getMass();
         idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete) + 1;
         this.fromActivityToPowerActivityService.toTransform(idathlete,idpoweractivity,run,mass);

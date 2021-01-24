@@ -38,8 +38,9 @@ public class FromActivityToPowerActivityService {
         float speedWind = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getSpeedwind();
         float temperature = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getTemperature();
         float pressureATM = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getPressureatm();
-        float pressureSaturation = this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure();
+        float pressureSaturation = toBuckEquation(temperature);
         float percentHumidity = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getHumidity();
+
         float massVolumic;
         massVolumic = toTransformMassVolumic(percentHumidity,pressureSaturation,pressureATM,temperature);
 
@@ -167,8 +168,6 @@ public class FromActivityToPowerActivityService {
                mass * gravity * rateElevation * (deltaDistance / deltaTime);
     }
 
-
-
     public float toTransformMassVolumic (float percentHumidity, float pressureSaturation, float pressureATM, float temperature) {
         float temperatureKelvin = temperature + 273.15f;
         float Rs = 287.058f;
@@ -177,6 +176,9 @@ public class FromActivityToPowerActivityService {
         return (1.0f - (0.3783f * Humidity * pressureSaturation) / pressureATM) * pressureATM / (Rs * temperatureKelvin);
     }
 
-
+    public float toBuckEquation (float temperature) {
+        double forBuckEquation = (18.878f - (temperature / 234.5f)) * (temperature / (257.14f + temperature));
+        return (float)(611.21f * Math.exp(forBuckEquation));
+    }
 
 }

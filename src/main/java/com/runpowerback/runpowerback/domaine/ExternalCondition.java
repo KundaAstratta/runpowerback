@@ -53,10 +53,6 @@ public class ExternalCondition {
         return idpoweractivity;
     }
 
-    public void setIdpoweractivity(Long idpoweractivity) {
-        this.idpoweractivity = idpoweractivity;
-    }
-
     public float getPressureatm() {
         return pressureatm;
     }
@@ -71,6 +67,26 @@ public class ExternalCondition {
 
     public float getSpeedwind() {
         return speedwind;
+    }
+
+    public void setIdpoweractivity(Long idpoweractivity) {
+        this.idpoweractivity = idpoweractivity;
+    }
+
+    public void setPressureatm(float pressureatm) {
+        this.pressureatm = pressureatm;
+    }
+
+    public void setTemperature(float temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setHumidity(float humidity) {
+        this.humidity = humidity;
+    }
+
+    public void setSpeedwind(float speedwind) {
+        this.speedwind = speedwind;
     }
 
     @Override

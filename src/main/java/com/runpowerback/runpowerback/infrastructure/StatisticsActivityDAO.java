@@ -11,7 +11,7 @@ public interface StatisticsActivityDAO extends JpaRepository<StatisticsActivity,
    @Query(value = "SELECT * FROM statisticsactivity WHERE (idathlete = :idathlete AND idpoweractivity = :idpoweractivity) ;", nativeQuery = true)
    StatisticsActivity findOneStatisticsActivity(Long idathlete, Long idpoweractivity);
 
-   @Query(value = "SELECT * FROM statisticsactivity WHERE (idathlete = :idathlete) ;", nativeQuery = true)
+   @Query(value = "SELECT * FROM statisticsactivity WHERE (idathlete = :idathlete) ORDER BY idpoweractivity DESC;", nativeQuery = true)
    List<StatisticsActivity> findAllStatisticsActivityForOneAthlete(Long idathlete);
 
 }

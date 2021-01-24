@@ -31,6 +31,7 @@ public class AthleteService {
     }
 
     public Long updateOneAthlete(Long id, Athlete athlete) {
+        this.fromHearthmaxToZoneService.toTransform(athlete);
         return this.athleteRepository.update(id,athlete);
     }
 
