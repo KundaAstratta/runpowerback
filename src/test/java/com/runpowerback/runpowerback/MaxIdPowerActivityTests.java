@@ -1,15 +1,14 @@
 package com.runpowerback.runpowerback;
 
-import com.runpowerback.runpowerback.domaine.PowerActivity;
-import com.runpowerback.runpowerback.domaine.PowerActivityRepository;
+import com.runpowerback.runpowerback.domaine.entity.PowerActivity;
+import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class MaxIdPowerActivityTests {
@@ -39,9 +38,8 @@ public class MaxIdPowerActivityTests {
         this.powerActivityRepository.save(powerActivity);
         powerActivity = new PowerActivity(4L,1L,2L,185,10,142,4,2,4);
         this.powerActivityRepository.save(powerActivity);
-        assertAll(
-                () ->assertEquals(4L,this.powerActivityRepository.findMaxIdPowerActivity(1L))
-        );
+
+        assertThat(4L).isEqualTo(this.powerActivityRepository.findMaxIdPowerActivity(1L));
     }
 
 

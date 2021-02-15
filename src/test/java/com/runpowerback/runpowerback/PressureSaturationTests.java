@@ -1,8 +1,8 @@
 package com.runpowerback.runpowerback;
 
-import com.runpowerback.runpowerback.application.FromWeatherAPItoExternalConditionService;
-import com.runpowerback.runpowerback.domaine.PressureSaturation;
-import com.runpowerback.runpowerback.domaine.PressureSaturationRepository;
+import com.runpowerback.runpowerback.application.service.FromWeatherAPItoExternalConditionService;
+import com.runpowerback.runpowerback.domaine.entity.PressureSaturation;
+import com.runpowerback.runpowerback.domaine.repository.PressureSaturationRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class PressureSaturationTests {
@@ -52,10 +51,12 @@ public class PressureSaturationTests {
         float pressureSaturationValue = toBuckEquation(temperature);
         logger.info("pressure Saturation Value : {}", pressureSaturationValue);
 
+        assertThat(2063.0).isEqualTo(this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure());
+/*
         assertAll(
                 () -> assertEquals(2063, this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure())
         );
-    }
+*/    }
 
 
     @Test
@@ -69,10 +70,12 @@ public class PressureSaturationTests {
         float pressureSaturationValue = toBuckEquation(temperature);
         logger.info("pressure Saturation Value : {}", pressureSaturationValue);
 
+        assertThat(370.0).isEqualTo(this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure());
+/*
         assertAll(
                 () -> assertEquals(370, this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure())
         );
-    }
+*/    }
 
     @Test
     void call_the_weather_api_with_the_service () {

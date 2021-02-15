@@ -1,19 +1,17 @@
 package com.runpowerback.runpowerback;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import com.runpowerback.runpowerback.application.FromStatisticsToPredictionsService;
-import com.runpowerback.runpowerback.application.PredictionService;
-import com.runpowerback.runpowerback.domaine.Athlete;
-import com.runpowerback.runpowerback.domaine.AthleteRepository;
-import com.runpowerback.runpowerback.domaine.Prediction;
-import com.runpowerback.runpowerback.domaine.PredictionRepository;
-import com.runpowerback.runpowerback.domaine.StatisticsActivity;
-import com.runpowerback.runpowerback.domaine.StatisticsActivityRepository;
+import com.runpowerback.runpowerback.application.service.FromStatisticsToPredictionsService;
+import com.runpowerback.runpowerback.application.service.PredictionService;
+import com.runpowerback.runpowerback.domaine.entity.Athlete;
+import com.runpowerback.runpowerback.domaine.repository.AthleteRepository;
+import com.runpowerback.runpowerback.domaine.entity.Prediction;
+import com.runpowerback.runpowerback.domaine.repository.PredictionRepository;
+import com.runpowerback.runpowerback.domaine.entity.StatisticsActivity;
+import com.runpowerback.runpowerback.domaine.repository.StatisticsActivityRepository;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,13 +60,11 @@ public class PredictionTests {
 
         logger.info(prediction.toString());
 
-        assertAll(
-            () -> assertEquals(1L, prediction.getId()),
-            () -> assertEquals(2L,prediction.getIdathlete()),
-            () -> assertEquals(3L,prediction.getIdpoweractivity()),
-            () -> assertEquals(4.0f, prediction.getPowerOptimal()),
-            () -> assertEquals(5.0f,prediction.getSpeedOptimal())
-        );
+        assertThat(1L).isEqualTo(prediction.getId());
+        assertThat(2L).isEqualTo(prediction.getIdathlete());
+        assertThat(3L).isEqualTo(prediction.getIdpoweractivity());
+        assertThat(4.0f).isEqualTo(prediction.getPowerOptimal());
+        assertThat(5.0f).isEqualTo(prediction.getSpeedOptimal());
     }
 
     @Test
@@ -82,13 +78,8 @@ public class PredictionTests {
 
         logger.info(idReturned);
 
-        assertAll(
-            () -> assertEquals(2L,idReturned)
-        );
-
+        assertThat(2L).isEqualTo(idReturned);
     }
-
-   
 
     @Test
     void save_Object_With_Service() {
@@ -101,11 +92,8 @@ public class PredictionTests {
 
         logger.info(idReturned);
 
-        assertAll(
-            () -> assertEquals(3L, idReturned),
-            () -> assertNotEquals(2L,idReturned)
-        );
-
+        assertThat(3L).isEqualTo(idReturned);
+        assertThat(4L).isNotEqualTo(idReturned);
     }
 
     @Test
@@ -119,10 +107,8 @@ public class PredictionTests {
         ,"6:10","2h50m6s","6:00","60m");
         predictionService.createOnePrediction(prediction);
 
-        assertAll(
-            () -> assertEquals(1L, predictionService.findOnePrediction(1L, 1L).getId()),
-            () -> assertEquals(2L, predictionService.findOnePrediction(1L,2L).getId())
-        );        
+        assertThat(1L).isEqualTo(predictionService.findOnePrediction(1L, 1L).getId());
+        assertThat(2L).isEqualTo(predictionService.findOnePrediction(1L,2L).getId());
     }
 
     @Test
@@ -140,8 +126,7 @@ public class PredictionTests {
 
         logger.info("All Prediction {}", predictionService.findAllPredictionForOneAthlete(1L));
 
-        assertEquals(3, predictionService.findAllPredictionForOneAthlete(1L).size());
-
+        assertThat(3).isEqualTo(predictionService.findAllPredictionForOneAthlete(1L).size());
     }
 
 
@@ -160,8 +145,7 @@ public class PredictionTests {
 
         logger.info("Last Prediction {}", predictionService.findLastPrediction(1L));
 
-        assertEquals(3L, predictionService.findLastPrediction(1L).getId());
-
+        assertThat(3L).isEqualTo(predictionService.findLastPrediction(1L).getId());
     }
 
     @Test
@@ -204,35 +188,31 @@ public class PredictionTests {
         logger.info("onePrediction with two records {}" , onePrediction);
 
         Prediction lastEndPrediction = predictionRepository.findLastPrediction(1L);
-   //     Long idReturnedLastPrediction = lastPrediction.getIdpoweractivity();
         logger.info("lastPrediction with two records {}" , lastEndPrediction);
 
         List<Prediction> predictionsList = predictionRepository.findAllPredictionForOneAthlete(1L);
         logger.info("List {} " , predictionsList.toString());
 
-        assertAll(
-            () -> assertEquals(5L, lastEndPrediction.getIdpoweractivity()),
-            () -> assertEquals("7:10", lastEndPrediction.getPaceEasy()),
-            () -> assertEquals("5:43", lastEndPrediction.getPaceThreshold()),
-            () -> assertEquals("5:13", lastEndPrediction.getPaceHard()),
-            () -> assertEquals("8:10", lastEndPrediction.getPaceMin()),
-            () -> assertEquals("4:48", lastEndPrediction.getPaceMax()),
-            () -> assertEquals("7:16", lastEndPrediction.getPaceMarathon()),
-            () -> assertEquals("5h6m46s", lastEndPrediction.getTimeForMarathon()),
-            () -> assertEquals("5:47", lastEndPrediction.getPaceHalfMarathon()),
-            () -> assertEquals("2h2m9s", lastEndPrediction.getTimeForHalfMarathon()),
-            () -> assertEquals("5:13", lastEndPrediction.getPaceTenKm()),
-            () -> assertEquals("57m54s", lastEndPrediction.getTimeForTenKm())
-
-         );
-
+        assertThat(5L).isEqualTo(lastEndPrediction.getIdpoweractivity());
+        assertThat("7:10").isEqualTo(lastEndPrediction.getPaceEasy());
+        assertThat("5:43").isEqualTo(lastEndPrediction.getPaceThreshold());
+        assertThat("5:13").isEqualTo(lastEndPrediction.getPaceHard());
+        assertThat("8:10").isEqualTo(lastEndPrediction.getPaceMin());
+        assertThat("4:48").isEqualTo(lastEndPrediction.getPaceMax());
+        assertThat("7:16").isEqualTo(lastEndPrediction.getPaceMarathon());
+        assertThat("5h6m46s").isEqualTo(lastEndPrediction.getTimeForMarathon());
+        assertThat("5:47").isEqualTo(lastEndPrediction.getPaceHalfMarathon());
+        assertThat("2h2m9s").isEqualTo(lastEndPrediction.getTimeForHalfMarathon());
+        assertThat("5:13").isEqualTo(lastEndPrediction.getPaceTenKm());
+        assertThat("52m18s").isEqualTo(lastEndPrediction.getTimeForTenKm());
     }
 
     @Test
     void get_Pace_From_Speed () {
         String paceFromSpeed = FromStatisticsToPredictionsService.getPaceFromSpeed(3.0f);
         logger.info(paceFromSpeed);
-        assertEquals("5:33", paceFromSpeed);
+
+        assertThat("5:33").isEqualTo(paceFromSpeed);
     }
 
     @Test
@@ -243,11 +223,9 @@ public class PredictionTests {
         logger.info("speedPredictionFromDistanceReaachMin {}", speedPredictionFromDistanceReachMin);
         float speedPredictionFromDistanceReachMax = FromStatisticsToPredictionsService.getSpeedPredictionFromDistance(5000f, 4f, speedMin, speedMax);
         logger.info("speedPredictionFromDistanceReaachMax {}", speedPredictionFromDistanceReachMax);
-        assertAll(
-            () -> assertEquals(speedMin, speedPredictionFromDistanceReachMin),
-            () -> assertEquals(speedMax, speedPredictionFromDistanceReachMax)
-        );
 
+        assertThat(speedMin).isEqualTo(speedPredictionFromDistanceReachMin);
+        assertThat(speedMax).isEqualTo(speedPredictionFromDistanceReachMax);
     }
 
     @AfterEach

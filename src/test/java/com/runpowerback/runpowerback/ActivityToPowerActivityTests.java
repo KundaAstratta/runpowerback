@@ -1,15 +1,16 @@
 package com.runpowerback.runpowerback;
 
-import com.runpowerback.runpowerback.application.FromActivityToPowerActivityService;
-import com.runpowerback.runpowerback.domaine.*;
+import com.runpowerback.runpowerback.application.service.FromActivityToPowerActivityService;
+import com.runpowerback.runpowerback.domaine.entity.*;
+import com.runpowerback.runpowerback.domaine.repository.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;;
 
 import java.util.List;
 
@@ -36,7 +37,6 @@ public class ActivityToPowerActivityTests {
 
     private static final Logger logger = LogManager.getLogger("File");
 
-
     @BeforeAll
     static void setup() {
         logger.info("@BeforeAll - one times before all tests" );
@@ -54,8 +54,6 @@ public class ActivityToPowerActivityTests {
 
         logger.info("External condition for one day");
         this.externalConditionRepository.save(new ExternalCondition(1L,1l,1L,100000,18,70,0));
-
-
 
         Athlete athlete = new Athlete (1L,1L,"Name","Surname",70,188);
         this.athleteRepository.save(athlete);
@@ -75,54 +73,16 @@ public class ActivityToPowerActivityTests {
         this.fromActivityToPowerActivityService.toTransform(1L, 1L,run,mass);
         List<PowerActivity> runpower = this.powerActivityRepository.findOnePowerActivity(1l,1L);
         logger.info(runpower);
-        assertAll(
-                () -> assertEquals(1L,runpower.get(0).getIdathlete()),
-                () -> assertEquals(1L,runpower.get(0).getIdpoweractivity()),
-                () -> assertEquals(265.91632080078125,runpower.get(0).getPower()),
-                () -> assertEquals(3.69582462310791,runpower.get(0).getSpeed()),
-                () -> assertEquals(4.509593963623047,runpower.get(0).getPace()),
-                () -> assertEquals(121,runpower.get(0).getHearthrate()),
-                () -> assertEquals(7.778759002685547,runpower.get(0).getDistance()),
-                () -> assertEquals(2.0,runpower.get(0).getTimezone())
-        );
 
+        assertThat(1L).isEqualTo(runpower.get(0).getIdathlete());
+        assertThat(1L).isEqualTo(runpower.get(0).getIdpoweractivity());
+        assertThat(265.91632080078125).isCloseTo(runpower.get(0).getPower(), Percentage.withPercentage(0.1));
+        assertThat(3.69582462310791).isCloseTo(runpower.get(0).getSpeed(), Percentage.withPercentage(0.1));
+        assertThat(4.509593963623047).isCloseTo(runpower.get(0).getPace(),Percentage.withPercentage(0.1));
+        assertThat(121.0).isEqualTo(runpower.get(0).getHearthrate());
+        assertThat(7.778759002685547).isCloseTo(runpower.get(0).getDistance(), Percentage.withPercentage(0.1));
+        assertThat(2.0).isCloseTo(runpower.get(0).getTimezone(),Percentage.withPercentage(0.1));
     }
-
-
-    @Test
-    void oneActivityToPowerActivity_fixedIdathlete_fixedIdpoweractivity_same_as_abpve_but_with_windSpeed () {
-        logger.info("External condition for other day");
-        this.externalConditionRepository.save(new ExternalCondition(2L,1l,2L,100000,18,70,10));
-
-        this.activityRepository.deleteAll();
-
-        Activity activity = new Activity (1L,48.79152f,2.336916f,51.6f,121,"2020-01-22T05:25:44Z");
-        this.activityRepository.save(activity);
-        activity = new Activity(2L,48.79155f,2.336947f,51.6f,121,"2020-01-22T05:25:45Z");
-        this.activityRepository.save(activity);
-        activity = new Activity(3L,48.791576f,2.336977f,51.6f,121,"2020-01-22T05:25:46Z");
-        this.activityRepository.save(activity);
-        List<Activity> run = this.activityRepository.findAll();
-        logger.info(run);
-
-        float mass = this.athleteRepository.findOneAthlete(1L).getMass();
-
-        this.fromActivityToPowerActivityService.toTransform(1L, 2L,run,mass);
-        List<PowerActivity> runpower = this.powerActivityRepository.findOnePowerActivity(1l,2L);
-        logger.info(runpower);
-        assertAll(
-                () -> assertEquals(1L,runpower.get(0).getIdathlete()),
-                () -> assertEquals(2L,runpower.get(0).getIdpoweractivity()),
-                () -> assertEquals(357.70050048828125,runpower.get(0).getPower()),
-                () -> assertEquals(3.69582462310791,runpower.get(0).getSpeed()),
-                () -> assertEquals(4.509593963623047,runpower.get(0).getPace()),
-                () -> assertEquals(121,runpower.get(0).getHearthrate()),
-                () -> assertEquals(7.778759002685547,runpower.get(0).getDistance()),
-                () -> assertEquals(2.0,runpower.get(0).getTimezone())
-        );
-
-    }
-
 
     @AfterEach
     void endoftest() {

@@ -1,18 +1,17 @@
 package com.runpowerback.runpowerback;
 
-import com.runpowerback.runpowerback.application.FromActivityToPowerActivityService;
-import com.runpowerback.runpowerback.domaine.ExternalCondition;
-import com.runpowerback.runpowerback.domaine.ExternalConditionRepository;
-import com.runpowerback.runpowerback.domaine.PressureSaturation;
-import com.runpowerback.runpowerback.domaine.PressureSaturationRepository;
+import com.runpowerback.runpowerback.application.service.FromActivityToPowerActivityService;
+import com.runpowerback.runpowerback.domaine.entity.ExternalCondition;
+import com.runpowerback.runpowerback.domaine.repository.ExternalConditionRepository;
+import com.runpowerback.runpowerback.domaine.entity.PressureSaturation;
+import com.runpowerback.runpowerback.domaine.repository.PressureSaturationRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class CalculateMassVolumicTests {
@@ -72,9 +71,7 @@ public class CalculateMassVolumicTests {
 
         logger.info("mass Volumic fromActivityToPowerActivityService " + fromActivityToPowerActivityServiceMassVolumic);
 
-        assertAll(
-                () -> assertEquals(massVolumic,fromActivityToPowerActivityServiceMassVolumic)
-        );
+        assertThat(massVolumic).isEqualTo(fromActivityToPowerActivityServiceMassVolumic);
     }
 
     @AfterEach
