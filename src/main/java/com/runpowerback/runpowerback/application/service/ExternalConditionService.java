@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -56,7 +57,7 @@ public class ExternalConditionService {
         return this.externalConditionRepository.save(externalCondition);
     }
 
-    public void fromExternalConditionToPrediction(Long idathlete,ExternalCondition externalCondition) throws IOException {
+    public void fromExternalConditionToPrediction(Long idathlete,ExternalCondition externalCondition) throws IOException, ExecutionException, InterruptedException {
 
      // Long idathlete = externalCondition.getIdathlete();
         Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);

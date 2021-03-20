@@ -9,6 +9,7 @@ import com.runpowerback.runpowerback.domaine.entity.StatisticsActivity;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -46,7 +47,7 @@ public class PowerActivityService {
         return this.powerActivityRepository.findOnePowerActivity(idathlete, idpoweractivity);
     }
 
-    public void fromPowerActivityToStatistics(Long idathlete, Long idpoweractivity) {
+    public void fromPowerActivityToStatistics(Long idathlete, Long idpoweractivity) throws ExecutionException, InterruptedException {
         List<PowerActivity> runpower;
         idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         runpower = this.powerActivityRepository.findOnePowerActivity(idathlete,idpoweractivity);

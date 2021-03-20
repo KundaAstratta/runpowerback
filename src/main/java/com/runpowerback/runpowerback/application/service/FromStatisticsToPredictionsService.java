@@ -1,20 +1,19 @@
 package com.runpowerback.runpowerback.application.service;
 
+import com.runpowerback.runpowerback.domaine.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.transaction.Transactional;
 
-import com.runpowerback.runpowerback.domaine.entity.Athlete;
 import com.runpowerback.runpowerback.domaine.repository.AthleteRepository;
-import com.runpowerback.runpowerback.domaine.entity.Prediction;
 import com.runpowerback.runpowerback.domaine.repository.PredictionRepository;
-import com.runpowerback.runpowerback.domaine.entity.StatisticsActivity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -28,8 +27,11 @@ public class FromStatisticsToPredictionsService {
     @Autowired
     AthleteRepository athleteRepository;
 
+    @Autowired
+    FireBaseService fireBaseService;
 
-    public void toPredictions(List<StatisticsActivity> statisticsActivites, Long idathlete) {
+
+    public void toPredictions(List<StatisticsActivity> statisticsActivites, Long idathlete) throws ExecutionException, InterruptedException {
         logger.info("to Predictions begin....");
 
         /*
@@ -108,8 +110,43 @@ public class FromStatisticsToPredictionsService {
 
         predictionRepository.save(prediction);
 
+        //FireBase : created a Prediction : begin
+        PredictionFireBase predictionFireBase =
+                new PredictionFireBase(
+                        getStringFromLong(idathlete) + getStringFromLong(idPowerActivity),
+                        getStringFromFloat(powerOptimal),
+                        getStringFromFloat(speedOptimal),
+                        paceOptimal,
+                        paceEasy,
+                        paceThreshold,
+                        paceHard,
+                        paceMin,
+                        paceMax,
+                        paceMarathon,
+                        timeForMarathon,
+                        paceHalfMarathon,
+                        timeForHalfMarathon,
+                        paceTenKm,
+                        timeForTenKm
+                );
+
+        fireBaseService.savePredictionDetailsToFirebase(predictionFireBase);
+        //FireBase : created a Prediction : end
+
         logger.info("to Prediction end...");
 
+    }
+
+    public static String getStringFromLong (Long number) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(number);
+        return stringBuffer.toString();
+    }
+
+    public static String getStringFromFloat(float number) {
+        StringBuffer stringBuffer =  new StringBuffer();
+        stringBuffer.append(number);
+        return stringBuffer.toString();
     }
 
     public static String getPaceFromSpeed(float speed) {

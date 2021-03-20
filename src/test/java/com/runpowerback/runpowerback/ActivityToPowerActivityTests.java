@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @SpringBootTest
 public class ActivityToPowerActivityTests {
@@ -48,7 +49,7 @@ public class ActivityToPowerActivityTests {
     }
 
     @Test
-    void oneActivityToPowerActivity_fixedIdathlete_fixedIdpoweractivity () {
+    void oneActivityToPowerActivity_fixedIdathlete_fixedIdpoweractivity () throws ExecutionException, InterruptedException {
         logger.info("Initiate pressure saturation table...");
         this.pressureSaturationRepository.save(new PressureSaturation(1L, 18, 2063));
 

@@ -2,6 +2,7 @@ package com.runpowerback.runpowerback.application.service;
 
 import com.runpowerback.runpowerback.domaine.entity.Activity;
 import com.runpowerback.runpowerback.domaine.entity.PowerActivity;
+import com.runpowerback.runpowerback.domaine.entity.PowerActivityFireBase;
 import com.runpowerback.runpowerback.domaine.repository.ExternalConditionRepository;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
 import com.runpowerback.runpowerback.domaine.repository.PressureSaturationRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -29,8 +31,10 @@ public class FromActivityToPowerActivityService {
     @Autowired
     PressureSaturationRepository pressureSaturationRepository;
 
+    @Autowired
+    FireBaseService fireBaseService;
 
-    public void toTransform(Long idathlete, Long idpoweractivity, List<Activity> run, float mass) {
+    public void toTransform(Long idathlete, Long idpoweractivity, List<Activity> run, float mass) throws ExecutionException, InterruptedException {
 
         float distanceFromStart = 0;
         float timeFromStart = 0;
@@ -57,6 +61,15 @@ public class FromActivityToPowerActivityService {
 
         String TimeOfPowerActivity = ZonedDateTime.parse(run.get(i).getTimezone()).getHour() + ":"+
                 ZonedDateTime.parse(run.get(i).getTimezone()).getMinute();
+
+
+        PowerActivityFireBase powerActivityFireBase = new PowerActivityFireBase(
+                getStringFromLong(idathlete) + getStringFromLong(idpoweractivity),
+                DateOfPowerActivity
+        );
+
+        fireBaseService.savePowerActivityDetailsToFireBase(powerActivityFireBase);
+
 
 
         while(i <= run.size()-1) {
@@ -127,11 +140,18 @@ public class FromActivityToPowerActivityService {
                 logger.info("Object power : " + powerActivity);
 
                 this.powerActivityRepository.save(powerActivity);
+
             }
 
             i=i+1;
 
         }
+    }
+
+    public static String getStringFromLong (Long number) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(number);
+        return stringBuffer.toString();
     }
 
     static float getDistanceFromLatLontoMeter(float lat1, float lon1, float lat2, float lon2) {

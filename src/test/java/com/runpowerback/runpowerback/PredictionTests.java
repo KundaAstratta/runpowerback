@@ -3,6 +3,7 @@ package com.runpowerback.runpowerback;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import com.runpowerback.runpowerback.application.service.FromStatisticsToPredictionsService;
 import com.runpowerback.runpowerback.application.service.PredictionService;
@@ -85,8 +86,10 @@ public class PredictionTests {
     void save_Object_With_Service() {
         logger.info("save Object with Service");
 
-        Prediction prediction  = new Prediction(3L,2L,3L,4.0f,5.0f,"3:40", "4:45","3:30","3:10","6:05", "3:00","5:30","4h0m0s"
-        ,"5:10","1h50m6s","5:00","50m");
+        Prediction prediction  = new Prediction(3L,2L,3L,4.0f,
+                5.0f,"3:40", "4:45","3:30","3:10",
+                "6:05", "3:00","5:30","4h0m0s",
+                "5:10","1h50m6s","5:00","50m");
 
         Long idReturned = predictionService.createOnePrediction(prediction);
 
@@ -149,7 +152,7 @@ public class PredictionTests {
     }
 
     @Test
-    void to_Predictions() {
+    void to_Predictions() throws ExecutionException, InterruptedException {
         StatisticsActivity statisticsActivity = new StatisticsActivity(1L,1L,1L, 0, 180, 20, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0);
         statisticsActivityRepository.save(statisticsActivity);
         statisticsActivity = new StatisticsActivity(2L,1L,2L, 0, 185, 25, 0, 0, 0, 0, 0, 0, null, 0, 0, 0, 0);

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 public class PowerActivityController {
@@ -33,7 +34,7 @@ public class PowerActivityController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = {"/fromPowerActivityToStatistics/athlete/{idathlete}/activity/{idpoweractivity}"})
-    public void fromPowerActivityToStatistics(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity) {
+    public void fromPowerActivityToStatistics(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity) throws ExecutionException, InterruptedException {
         this.powerActivityService.fromPowerActivityToStatistics(idathlete,idpoweractivity);
     }
 

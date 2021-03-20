@@ -3,6 +3,7 @@ package com.runpowerback.runpowerback.application.service;
 import com.runpowerback.runpowerback.domaine.entity.Athlete;
 import com.runpowerback.runpowerback.domaine.entity.PowerActivity;
 import com.runpowerback.runpowerback.domaine.entity.StatisticsActivity;
+import com.runpowerback.runpowerback.domaine.entity.StatisticsActivityFireBase;
 import com.runpowerback.runpowerback.domaine.repository.AthleteRepository;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
 import com.runpowerback.runpowerback.domaine.repository.StatisticsActivityRepository;
@@ -14,6 +15,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -28,9 +30,12 @@ public class FromPowerActivityToStatisticsService {
     @Autowired
     AthleteRepository athleteRepository;
 
+    @Autowired
+    FireBaseService fireBaseService;
+
     private static final Logger logger = LogManager.getLogger();
 
-    public void toStatistics (List<PowerActivity> runpower, Long idathlete) {
+    public void toStatistics (List<PowerActivity> runpower, Long idathlete) throws ExecutionException, InterruptedException {
         List<Float> runpowerSorted = new ArrayList<>();
         logger.info("here");
         logger.info(runpower);
@@ -202,6 +207,20 @@ public class FromPowerActivityToStatisticsService {
 
         this.statisticsActivityRepository.save(statisticsActivity);
 
+        //FireBase : created a Prediction : begin
+        StatisticsActivityFireBase statisticsActivityFireBase =
+                new StatisticsActivityFireBase(
+                        getStringFromLong(idathlete) + getStringFromLong(idpoweractivity),
+                        getStringFromFloat(numberOfEasy),
+                        getStringFromFloat(numberOfMarathon),
+                        getStringFromFloat(numberOfThreshold),
+                        getStringFromFloat(numberOfInterval),
+                        getStringFromFloat(numberOfRepetition)
+                );
+
+        fireBaseService.saveStatisticsDetailsToFirebase(statisticsActivityFireBase);
+        //FireBase : created a Prediction : end
+
         logger.info("number of Esay : " +  numberOfEasy);
         logger.info("number of Marathon : " + numberOfMarathon);
         logger.info("number of Threshold : " + numberOfThreshold);
@@ -209,5 +228,18 @@ public class FromPowerActivityToStatisticsService {
         logger.info("number of Repetition : " + numberOfRepetition);
 
     }
+
+    public static String getStringFromLong (Long number) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(number);
+        return stringBuffer.toString();
+    }
+
+    public static String getStringFromFloat(float number) {
+        StringBuffer stringBuffer =  new StringBuffer();
+        stringBuffer.append(number);
+        return stringBuffer.toString();
+    }
+
 
 }
