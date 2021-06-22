@@ -29,4 +29,9 @@ public class ExternalConditionRepositoryImpl implements ExternalConditionReposit
         }
     }
 
+    @Override
+    public void deleteOneExternalCondition(Long idathlete, Long idpoweractivity) {
+        this.externalConditionDAO.deleteOneExternalCondition(idathlete, idpoweractivity);
+    }
+
 }

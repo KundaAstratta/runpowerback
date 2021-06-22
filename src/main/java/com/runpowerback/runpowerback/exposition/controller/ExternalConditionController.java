@@ -8,30 +8,36 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
 @RestController
 public class ExternalConditionController {
 
     @Autowired
     ExternalConditionService externalConditionService;
 
-    @RequestMapping(method = RequestMethod.POST, path = {"/externalcondition/athlete/{idathlete}"})
+
+    @RequestMapping(method = RequestMethod.POST, path = {"/externalcondition"})
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createOneExternalCondition (@PathVariable("idathlete") Long idathlete, @Valid @RequestBody ExternalConditionDTO externalConditionDTO) {
-      return this.externalConditionService.createOneExternalCondition(idathlete, ExternalConditionMapper.mapToOneExternalCondition(externalConditionDTO));
+    public Long createOneExternalCondition (@Valid @RequestBody ExternalConditionDTO externalConditionDTO) {
+        return this.externalConditionService.createOneExternalCondition(ExternalConditionMapper.mapToOneExternalCondition(externalConditionDTO));
+
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = {"/fromexternalconditiontoprediction/athlete/{idathlete}"})
+    @RequestMapping(method = RequestMethod.POST, path = {"/externalconditionwithincrement"})
     @ResponseStatus(HttpStatus.CREATED)
-    public void fromexternalconditiontoprediction (@PathVariable("idathlete") Long idathlete, @Valid @RequestBody ExternalConditionDTO externalConditionDTO) throws IOException, ExecutionException, InterruptedException {
-        this.externalConditionService.fromExternalConditionToPrediction(idathlete,ExternalConditionMapper.mapToOneExternalCondition(externalConditionDTO));
+    public Long createOneExternalConditionWithIncrement (@Valid @RequestBody ExternalConditionDTO externalConditionDTO) {
+        return this.externalConditionService.createOneExternalConditionWithIncrement(ExternalConditionMapper.mapToOneExternalCondition(externalConditionDTO));
+
     }
 
     @RequestMapping(method = RequestMethod.GET, path = {"/externalcondition/athlete/{idathlete}/activity/{idpoweractivity}"})
     public ExternalConditionDTO findOneExternalCondition(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity) {
         return ExternalConditionMapper.mapToExternalConditionDTO(this.externalConditionService.findOneExternalCondition(idathlete, idpoweractivity));
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = {"/externalcondition/delete/athlete/{idathlete}/activity/{idpoweractivity}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOneExternalCondition(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity ) {
+        this.externalConditionService.deleteOneExternalCondition(idathlete,idpoweractivity);
     }
 
 }

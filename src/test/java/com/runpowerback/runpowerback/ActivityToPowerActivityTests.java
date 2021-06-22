@@ -10,7 +10,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.assertj.core.api.Assertions.assertThat;;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -60,19 +60,19 @@ public class ActivityToPowerActivityTests {
         this.athleteRepository.save(athlete);
         logger.info(athlete);
 
-        Activity activity = new Activity (1L,48.79152f,2.336916f,51.6f,121,"2020-01-22T05:25:44Z");
+        ActivityPointOf activity = new ActivityPointOf (1L,48.79152f,2.336916f,51.6f,121,"2020-01-22T05:25:44Z");
         this.activityRepository.save(activity);
-        activity = new Activity(2L,48.79155f,2.336947f,51.6f,121,"2020-01-22T05:25:45Z");
+        activity = new ActivityPointOf(2L,48.79155f,2.336947f,51.6f,121,"2020-01-22T05:25:45Z");
         this.activityRepository.save(activity);
-        activity = new Activity(3L,48.791576f,2.336977f,51.6f,121,"2020-01-22T05:25:46Z");
+        activity = new ActivityPointOf(3L,48.791576f,2.336977f,51.6f,121,"2020-01-22T05:25:46Z");
         this.activityRepository.save(activity);
-        List<Activity> run = this.activityRepository.findAll();
+        List<ActivityPointOf> run = this.activityRepository.findAll();
         logger.info(run);
         
         float mass = this.athleteRepository.findOneAthlete(1L).getMass();
 
         this.fromActivityToPowerActivityService.toTransform(1L, 1L,run,mass);
-        List<PowerActivity> runpower = this.powerActivityRepository.findOnePowerActivity(1l,1L);
+        List<PowerActivityPointOf> runpower = this.powerActivityRepository.findOnePowerActivity(1l,1L);
         logger.info(runpower);
 
         assertThat(1L).isEqualTo(runpower.get(0).getIdathlete());

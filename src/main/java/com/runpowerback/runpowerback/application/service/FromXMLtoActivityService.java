@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.runpowerback.runpowerback.domaine.entity.Activity;
+import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
 
 
 import javax.transaction.Transactional;
@@ -114,7 +114,7 @@ public class FromXMLtoActivityService {
 
                     }
                     if (xmlTag.startsWith(trkptEnd)) {
-                        Activity activity = new Activity(null, latitude, longitude, elevation, hearthrate, timezone);
+                        ActivityPointOf activity = new ActivityPointOf(null, latitude, longitude, elevation, hearthrate, timezone);
                         this.activityRepository.save(activity);
                         logger.info("Activity" + activity);
                     }

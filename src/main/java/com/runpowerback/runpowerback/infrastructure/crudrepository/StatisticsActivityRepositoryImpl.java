@@ -37,4 +37,19 @@ public class StatisticsActivityRepositoryImpl implements StatisticsActivityRepos
         return this.statisticsActivityDAO.findAllStatisticsActivityForOneAthlete(idathlete).stream().collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteOneStatisticsActivity(Long idathlete, Long idpoweractivity) {
+        // TODO Auto-generated method stub
+        statisticsActivityDAO.deleteOneStatisticsActivity(idathlete, idpoweractivity);
+    }
+
+    @Override
+    public StatisticsActivity findLastStatisticsActivity(Long idathlete) {
+        // TODO Auto-generated method stub
+        if (this.statisticsActivityDAO.findLastStatisticsActivity(idathlete) == null) {
+            throw new MyProjectException500(ErrorCodes.NOT_FOUND);
+        } else {
+            return this.statisticsActivityDAO.findLastStatisticsActivity(idathlete);
+        }    }
+
 }

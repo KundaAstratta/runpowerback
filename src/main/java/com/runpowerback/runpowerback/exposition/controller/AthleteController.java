@@ -17,13 +17,13 @@ public class AthleteController {
 
     @RequestMapping(method = RequestMethod.POST, path = {"/athlete"})
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createOneAthlete (@Valid @RequestBody AthleteDTO athleteDTO) {
+    public Long createOneAthleteWithGivenBody (@Valid @RequestBody AthleteDTO athleteDTO) {
         return this.athleteService.createOneAthlete(AthleteMapper.mapToOneAthlete(athleteDTO));
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = {"/fromsavetoupdate"})
+    @RequestMapping(method = RequestMethod.POST, path = {"/athlete/newathlete"})
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createAndUpdate (@Valid @RequestBody AthleteDTO athleteDTO) {
+    public Long createNewAthleteWithNewIncrementedIdathete (@Valid @RequestBody AthleteDTO athleteDTO) {
         return this.athleteService.createAndUpdate(AthleteMapper.mapToOneAthlete(athleteDTO));
     }
 
@@ -42,5 +42,12 @@ public class AthleteController {
     public AthleteDTO findById (@PathVariable("id") Long id) {
         return AthleteMapper.mapToOneAthleteDTO(this.athleteService.findById(id));
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = {"/athlete/delete/{idathlete}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOneAthlete(@PathVariable("idathlete") Long idathlete) {
+        this.athleteService.deleteOneAthlete(idathlete);
+    }
+
 
 }

@@ -43,5 +43,8 @@ public class AthleteService {
         return this.athleteRepository.findById(id);
     }
 
+    public void deleteOneAthlete(Long idathlete) {
+        this.athleteRepository.deleteOneAthlete(idathlete);
+    }
 
  }

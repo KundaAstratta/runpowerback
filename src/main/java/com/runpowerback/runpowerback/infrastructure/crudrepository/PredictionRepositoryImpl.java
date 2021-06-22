@@ -49,6 +49,12 @@ public class PredictionRepositoryImpl implements PredictionRepository {
         }
     }
 
+    @Override
+    public void deleteOnePrediction(Long idathlete, Long idpoweractivity) {
+        // TODO Auto-generated method stub
+        predictionDAO.deleteOnePrediction(idathlete, idpoweractivity);
+    }
+
 
 
 }

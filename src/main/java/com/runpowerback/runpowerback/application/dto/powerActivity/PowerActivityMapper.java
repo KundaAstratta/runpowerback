@@ -1,6 +1,6 @@
 package com.runpowerback.runpowerback.application.dto.powerActivity;
 
-import com.runpowerback.runpowerback.domaine.entity.PowerActivity;
+import com.runpowerback.runpowerback.domaine.entity.PowerActivityPointOf;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,8 +8,8 @@ public class PowerActivityMapper {
 
     public PowerActivityMapper() {}
 
-    public static PowerActivity mapToOnePointOfPowerActivity(PowerActivityDTO powerActivityDTO) {
-        return new PowerActivity(null,
+    public static PowerActivityPointOf mapToOnePointOfPowerActivity(PowerActivityPointOfDTO powerActivityDTO) {
+        return new PowerActivityPointOf(null,
                 powerActivityDTO.idathlete,
                 powerActivityDTO.idpoweractivity,
                 powerActivityDTO.power,
@@ -21,8 +21,8 @@ public class PowerActivityMapper {
         );
     }
 
-    public static PowerActivityDTO mapToOnePointOfPowerActivityDTO(PowerActivity powerActivity) {
-        return new PowerActivityDTO(powerActivity.getId(),
+    public static PowerActivityPointOfDTO mapToOnePointOfPowerActivityDTO(PowerActivityPointOf powerActivity) {
+        return new PowerActivityPointOfDTO(powerActivity.getId(),
                                     powerActivity.getIdathlete(),
                                     powerActivity.getIdpoweractivity(),
                                     powerActivity.getPower(),
@@ -33,7 +33,7 @@ public class PowerActivityMapper {
                                     powerActivity.getTimezone());
     }
 
-    public static List<PowerActivityDTO> mapToOnePowerActivity (List<PowerActivity> onePowerActivity) {
+    public static List<PowerActivityPointOfDTO> mapToOnePowerActivity (List<PowerActivityPointOf> onePowerActivity) {
         return onePowerActivity.stream().map(PowerActivityMapper::mapToOnePointOfPowerActivityDTO).collect(Collectors.toList());
     }
 

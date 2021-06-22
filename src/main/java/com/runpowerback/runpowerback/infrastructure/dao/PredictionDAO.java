@@ -5,9 +5,14 @@ import java.util.List;
 import com.runpowerback.runpowerback.domaine.entity.Prediction;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface PredictionDAO extends JpaRepository<Prediction , Long>{
+
+    @Modifying
+    @Query(value = "DELETE FROM prediction WHERE (idathlete = :idathlete AND idpoweractivity = :idpoweractivity) ;", nativeQuery = true)
+    void deleteOnePrediction(Long idathlete, Long idpoweractivity);
 
     @Query(value = "SELECT * FROM prediction WHERE (idathlete = :idathlete AND idpoweractivity = :idpoweractivity) ;", nativeQuery = true)
     Prediction findOnePrediction(Long idathlete, Long idpoweractivity);

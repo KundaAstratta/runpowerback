@@ -1,6 +1,6 @@
 package com.runpowerback.runpowerback.application.dto.activity;
 
-import com.runpowerback.runpowerback.domaine.entity.Activity;
+import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,8 +10,8 @@ public class ActivityMapper {
     public ActivityMapper() {
     }
 
-    public static Activity mapToOnePointActivity(ActivityDTO activityDTO) {
-        return new Activity(null,
+    public static ActivityPointOf mapToOnePointActivity(ActivityPoinfOfDTO activityDTO) {
+        return new ActivityPointOf(null,
                             activityDTO.latitude,
                             activityDTO.longitude,
                             activityDTO.elevation,
@@ -20,8 +20,8 @@ public class ActivityMapper {
         );
     }
 
-    public static ActivityDTO mapToOnePointActivityDTO(Activity activity) {
-        return new ActivityDTO(activity.getId(),
+    public static ActivityPoinfOfDTO mapToOnePointActivityDTO(ActivityPointOf activity) {
+        return new ActivityPoinfOfDTO(activity.getId(),
                                 activity.getLatitude(),
                                 activity.getLongitude(),
                                 activity.getElevation(),
@@ -30,7 +30,7 @@ public class ActivityMapper {
         );
     }
 
-    public static List<ActivityDTO> mapToOneActivity (List<Activity> oneActivity) {
+    public static List<ActivityPoinfOfDTO> mapToOneActivity (List<ActivityPointOf> oneActivity) {
         return oneActivity.stream().map(ActivityMapper::mapToOnePointActivityDTO).collect(Collectors.toList());
     }
 

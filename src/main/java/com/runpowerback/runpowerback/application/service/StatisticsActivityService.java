@@ -23,8 +23,16 @@ public class StatisticsActivityService {
         return this.statisticsActivityRepository.findOneStatisticsActivity(idathlete, idpoweractivity);
     }
 
+    public void deleteOneStatisticsActivity(Long idathlete, Long idpoweractivity) {
+        this.statisticsActivityRepository.deleteOneStatisticsActivity(idathlete,idpoweractivity);
+    }
+
     public List<StatisticsActivity> findAllStatisticsActivityForOneAthlete (Long idathlete) {
         return this.statisticsActivityRepository.findAllStatisticsActivityForOneAthlete(idathlete);
+    }
+
+    public StatisticsActivity findLastStatisticsActivity(Long idathlete) {
+        return this.statisticsActivityRepository.findLastStatisticsActivity(idathlete);
     }
 
 }

@@ -29,6 +29,12 @@ public class PredictionController {
         return PredictionMapper.mapToOnePredictionDTO(this.predictionService.findOnePrediction(idathlete,idpoweractivity));
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, path = {"/prediction/delete/athlete/{idathlete}/activity/{idpoweractivity}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOnePrediction(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity ) {
+        this.predictionService.deleteOnePrediction(idathlete,idpoweractivity);
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = {"/prediction/last/{idathlete}"})
     public PredictionDTO findLastPrediction(@PathVariable("idathlete") Long idathlete) {
         return PredictionMapper.mapToOnePredictionDTO(this.predictionService.findLastPrediction(idathlete));

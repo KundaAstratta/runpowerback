@@ -1,12 +1,12 @@
 package com.runpowerback.runpowerback.infrastructure.dao;
 
-import com.runpowerback.runpowerback.domaine.entity.Activity;
+import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ActivityDAO extends JpaRepository<Activity, Long> {
+public interface ActivityDAO extends JpaRepository<ActivityPointOf, Long> {
 
-    List<Activity> findByOrderByIdAsc();
+    List<ActivityPointOf> findByOrderByIdAsc();
 
 }

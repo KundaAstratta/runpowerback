@@ -8,6 +8,7 @@ public interface PredictionRepository {
 
     Long save (Prediction prediction);
     Prediction findOnePrediction (Long idathlete, Long idpoweractivity);
+    void deleteOnePrediction(Long idathlete, Long idpoweractivity);
     List<Prediction> findAllPredictionForOneAthlete (Long idathlete);
     Prediction findLastPrediction(Long idathlete);
 

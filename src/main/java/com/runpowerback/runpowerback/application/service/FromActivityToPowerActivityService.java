@@ -1,8 +1,8 @@
 package com.runpowerback.runpowerback.application.service;
 
-import com.runpowerback.runpowerback.domaine.entity.Activity;
-import com.runpowerback.runpowerback.domaine.entity.PowerActivity;
-import com.runpowerback.runpowerback.domaine.entity.PowerActivityFireBase;
+import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
+import com.runpowerback.runpowerback.domaine.entity.PowerActivityPointOf;
+//import com.runpowerback.runpowerback.domaine.entity.PowerActivityFireBase;
 import com.runpowerback.runpowerback.domaine.repository.ExternalConditionRepository;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
 import com.runpowerback.runpowerback.domaine.repository.PressureSaturationRepository;
@@ -31,10 +31,10 @@ public class FromActivityToPowerActivityService {
     @Autowired
     PressureSaturationRepository pressureSaturationRepository;
 
-    @Autowired
-    FireBaseService fireBaseService;
+    //@Autowired
+    //FireBaseService fireBaseService;
 
-    public void toTransform(Long idathlete, Long idpoweractivity, List<Activity> run, float mass) throws ExecutionException, InterruptedException {
+    public void toTransform(Long idathlete, Long idpoweractivity, List<ActivityPointOf> run, float mass) throws ExecutionException, InterruptedException {
 
         float distanceFromStart = 0;
         float timeFromStart = 0;
@@ -63,14 +63,12 @@ public class FromActivityToPowerActivityService {
                 ZonedDateTime.parse(run.get(i).getTimezone()).getMinute();
 
 
-        PowerActivityFireBase powerActivityFireBase = new PowerActivityFireBase(
-                getStringFromLong(idathlete) + getStringFromLong(idpoweractivity),
-                DateOfPowerActivity
-        );
+        //PowerActivityFireBase powerActivityFireBase = new PowerActivityFireBase(
+        //        getStringFromLong(idathlete) + getStringFromLong(idpoweractivity),
+        //        DateOfPowerActivity
+        //);
 
-        fireBaseService.savePowerActivityDetailsToFireBase(powerActivityFireBase);
-
-
+        //fireBaseService.savePowerActivityDetailsToFireBase(powerActivityFireBase);
 
         while(i <= run.size()-1) {
 
@@ -126,7 +124,7 @@ public class FromActivityToPowerActivityService {
 
             if (((power > 0) && (powerCurrent < (1.5f * powerPrevious))) && (hearthratePowerActivity > 0) && (pacePowerActivity < 20.0f))
             {
-                PowerActivity powerActivity = new PowerActivity(null,
+                PowerActivityPointOf powerActivity = new PowerActivityPointOf(null,
                                                                 idathlete,
                                                                 idpoweractivity,
                                                                 power,

@@ -1,7 +1,7 @@
 package com.runpowerback.runpowerback.application.service;
 
 
-import com.runpowerback.runpowerback.domaine.entity.PowerActivity;
+import com.runpowerback.runpowerback.domaine.entity.PowerActivityPointOf;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +27,11 @@ public class PowerActivityService {
     @Autowired
     FromStatisticsToPredictionsService fromStatisticsToPredictionsService;
 
-    public Long createOnePointOfPowerActivity(PowerActivity powerActivity) {
+    public Long createOnePointOfPowerActivity(PowerActivityPointOf powerActivity) {
         return this.powerActivityRepository.save(powerActivity);
     }
 
-    public List<PowerActivity> findAll() {
+    public List<PowerActivityPointOf> findAll() {
         return this.powerActivityRepository.findAll();
     }
 
@@ -43,12 +43,12 @@ public class PowerActivityService {
         this.powerActivityRepository.deleteOnePowerActivity(idathlete,idpoweractivity);
     }
 
-    public List<PowerActivity> findOnePowerActivity(Long idathlete, Long idpoweractivity) {
+    public List<PowerActivityPointOf> findOnePowerActivity(Long idathlete, Long idpoweractivity) {
         return this.powerActivityRepository.findOnePowerActivity(idathlete, idpoweractivity);
     }
 
-    public void fromPowerActivityToStatistics(Long idathlete, Long idpoweractivity) throws ExecutionException, InterruptedException {
-        List<PowerActivity> runpower;
+    public void fromPowerActivityToStatisticsAndPredictions(Long idathlete, Long idpoweractivity) throws ExecutionException, InterruptedException {
+        List<PowerActivityPointOf> runpower;
         idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         runpower = this.powerActivityRepository.findOnePowerActivity(idathlete,idpoweractivity);
         this.fromPowerActivityToStatisticsService.toStatistics(runpower, idathlete);

@@ -25,6 +25,10 @@ public class PredictionService {
         return this.predictionRepository.findOnePrediction(idathlete, idpoweractivity);
     }
 
+    public void deleteOnePrediction (Long idathlete, Long idpoweractivity) {
+        this.predictionRepository.deleteOnePrediction(idathlete,idpoweractivity);
+    }
+
     public List<Prediction> findAllPredictionForOneAthlete (Long idathlete) {
         return this.predictionRepository.findAllPredictionForOneAthlete(idathlete);
     }

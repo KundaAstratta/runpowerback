@@ -27,6 +27,17 @@ public class StatisticsActivityController {
        return StatisticsActivityMapper.mapToOneStatisticsActivityDTO(this.statisticsActivityService.findOneStatisticsActivity(idathlete,idpoweractivity));
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, path = {"/statisticsactivity/delete/athlete/{idathlete}/activity/{idpoweractivity}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOneStatisticsActivity(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity ) {
+        this.statisticsActivityService.deleteOneStatisticsActivity(idathlete,idpoweractivity);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = {"/statisticsactivity/last/{idathlete}"})
+    public StatisticsActivityDTO findLastStatisticsActivity(@PathVariable("idathlete") Long idathlete) {
+        return StatisticsActivityMapper.mapToOneStatisticsActivityDTO(this.statisticsActivityService.findLastStatisticsActivity(idathlete));
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = {"/statisticsactivity/athlete/{idathlete}"})
     public List<StatisticsActivityDTO> findAllStatistcisActivityForOneAthlete(@PathVariable("idathlete") Long idathlete) {
         return StatisticsActivityMapper.mapToListStatisticsActivityDTO(this.statisticsActivityService.findAllStatisticsActivityForOneAthlete(idathlete));

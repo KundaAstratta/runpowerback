@@ -1,6 +1,6 @@
 package com.runpowerback.runpowerback.infrastructure.crudrepository;
 
-import com.runpowerback.runpowerback.domaine.entity.PowerActivity;
+import com.runpowerback.runpowerback.domaine.entity.PowerActivityPointOf;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
 import com.runpowerback.runpowerback.infrastructure.dao.PowerActivityDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,13 @@ public class PowerActivityRepositoryImpl implements PowerActivityRepository {
     PowerActivityDAO powerActivityDAO;
 
     @Override
-    public Long save(PowerActivity powerActivity) {
+    public Long save(PowerActivityPointOf powerActivity) {
        this.powerActivityDAO.save(powerActivity);
        return powerActivity.getId();
     }
 
     @Override
-    public List<PowerActivity> findAll() {
+    public List<PowerActivityPointOf> findAll() {
         return this.powerActivityDAO.findByOrderByIdAsc().stream().collect(Collectors.toList());
     }
 
@@ -36,7 +36,7 @@ public class PowerActivityRepositoryImpl implements PowerActivityRepository {
     }
 
     @Override
-    public List<PowerActivity> findOnePowerActivity(Long idathlete, Long idpoweractivity) {
+    public List<PowerActivityPointOf> findOnePowerActivity(Long idathlete, Long idpoweractivity) {
         return this.powerActivityDAO.findOnePowerActivity(idathlete,idpoweractivity).stream().collect(Collectors.toList());
     }
 

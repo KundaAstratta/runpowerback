@@ -41,4 +41,9 @@ public class AthleteRepositoryImpl implements AthleteRepository {
     public Athlete findById(Long id) {
         return this.athleteDAO.findById(id).orElseThrow(()-> new MyProjectException500(ErrorCodes.NOT_FOUND));
     }
+
+    @Override
+    public void deleteOneAthlete(Long idathlete) {
+        athleteDAO.deleteOneAthlete(idathlete);
+    }
 }

@@ -1,8 +1,8 @@
 package com.runpowerback.runpowerback.application.service;
 
-import com.runpowerback.runpowerback.domaine.entity.Activity;
+import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
 import com.runpowerback.runpowerback.domaine.entity.ExternalCondition;
-import com.runpowerback.runpowerback.domaine.entity.PowerActivity;
+import com.runpowerback.runpowerback.domaine.entity.PowerActivityPointOf;
 import com.runpowerback.runpowerback.domaine.entity.StatisticsActivity;
 import com.runpowerback.runpowerback.domaine.repository.ActivityRepository;
 import com.runpowerback.runpowerback.domaine.repository.AthleteRepository;
@@ -50,11 +50,18 @@ public class ExternalConditionService {
     @Autowired
     FromWeatherAPItoExternalConditionService fromWeatherAPItoExternalConditionService;
 
-    public Long createOneExternalCondition (Long idathlete, ExternalCondition externalCondition) {
-    //  Long idathlete = externalCondition.getIdathlete();
-        Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
+    public Long createOneExternalCondition (ExternalCondition externalCondition) {
+        return this.externalConditionRepository.save(externalCondition);
+    }
+
+    public Long createOneExternalConditionWithIncrement (ExternalCondition externalCondition) {
+        Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(externalCondition.getIdathlete());
         externalCondition.setIdpoweractivity(idpoweractivity+1);
         return this.externalConditionRepository.save(externalCondition);
+    }
+
+    public void deleteOneExternalCondition(Long idathlete, Long idpoweractivity) {
+        this.externalConditionRepository.deleteOneExternalCondition(idathlete,idpoweractivity);
     }
 
     public void fromExternalConditionToPrediction(Long idathlete,ExternalCondition externalCondition) throws IOException, ExecutionException, InterruptedException {
@@ -63,7 +70,7 @@ public class ExternalConditionService {
         Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         externalCondition.setIdpoweractivity(idpoweractivity+1);
 
-        List<Activity> run;
+        List<ActivityPointOf> run;
         run = this.activityRepository.findAll();
 
         // Call the Weather API only in the case we have the default values
@@ -84,7 +91,7 @@ public class ExternalConditionService {
         idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete) + 1;
         this.fromActivityToPowerActivityService.toTransform(idathlete,idpoweractivity,run,mass);
 
-        List<PowerActivity> runpower;
+        List<PowerActivityPointOf> runpower;
         idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         runpower = this.powerActivityRepository.findOnePowerActivity(idathlete,idpoweractivity);
         this.fromPowerActivityToStatisticsService.toStatistics(runpower, idathlete);

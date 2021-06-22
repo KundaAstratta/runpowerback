@@ -1,6 +1,6 @@
 package com.runpowerback.runpowerback.application.service;
 
-import com.runpowerback.runpowerback.domaine.entity.Activity;
+import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
 import com.runpowerback.runpowerback.domaine.repository.ActivityRepository;
 import com.runpowerback.runpowerback.domaine.repository.AthleteRepository;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
@@ -30,11 +30,11 @@ public class ActivityService {
     @Autowired
     FromXMLtoActivityService fromXMLtoActivityService;
 
-    public Long createOnePointOfActivity (Activity activity) {
+    public Long createOnePointOfActivity (ActivityPointOf activity) {
         return this.activityRepository.save(activity);
     }
 
-     public List<Activity> findAll() {
+     public List<ActivityPointOf> findAll() {
         return this.activityRepository.findAll();
     }
 
@@ -44,10 +44,10 @@ public class ActivityService {
     }
 
     public void fromActivityToPowerActivity(Long idathlete, Long idpoweractivity) throws ExecutionException, InterruptedException {
-        List<Activity> run;
+        List<ActivityPointOf> run;
         run = this.activityRepository.findAll();
         float mass = this.athleteRepository.findOneAthlete(idathlete).getMass();
-        idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete) + 1;
+      //  Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete) + 1;
         this.fromActivityToPowerActivityService.toTransform(idathlete,idpoweractivity,run,mass);
     }
 

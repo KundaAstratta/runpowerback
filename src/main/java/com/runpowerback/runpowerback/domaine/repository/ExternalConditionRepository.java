@@ -6,5 +6,7 @@ public interface ExternalConditionRepository {
 
     Long save (ExternalCondition externalCondition);
     ExternalCondition findOneExternalCondition(Long idathlete, Long idpoweractivity);
+    void deleteOneExternalCondition(Long idathlete, Long idpoweractivity);
+
 
 }

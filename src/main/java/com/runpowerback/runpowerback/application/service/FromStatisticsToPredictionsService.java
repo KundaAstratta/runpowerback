@@ -27,8 +27,8 @@ public class FromStatisticsToPredictionsService {
     @Autowired
     AthleteRepository athleteRepository;
 
-    @Autowired
-    FireBaseService fireBaseService;
+    //@Autowired
+    //FireBaseService fireBaseService;
 
 
     public void toPredictions(List<StatisticsActivity> statisticsActivites, Long idathlete) throws ExecutionException, InterruptedException {
@@ -111,7 +111,7 @@ public class FromStatisticsToPredictionsService {
         predictionRepository.save(prediction);
 
         //FireBase : created a Prediction : begin
-        PredictionFireBase predictionFireBase =
+        /*PredictionFireBase predictionFireBase =
                 new PredictionFireBase(
                         getStringFromLong(idathlete) + getStringFromLong(idPowerActivity),
                         getStringFromFloat(powerOptimal),
@@ -131,6 +131,7 @@ public class FromStatisticsToPredictionsService {
                 );
 
         fireBaseService.savePredictionDetailsToFirebase(predictionFireBase);
+        */
         //FireBase : created a Prediction : end
 
         logger.info("to Prediction end...");
