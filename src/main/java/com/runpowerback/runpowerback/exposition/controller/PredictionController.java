@@ -40,7 +40,7 @@ public class PredictionController {
         return PredictionMapper.mapToOnePredictionDTO(this.predictionService.findLastPrediction(idathlete));
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = {"/prediction//athlete/{idathlete}"})
+    @RequestMapping(method = RequestMethod.GET, path = {"/prediction/athlete/{idathlete}"})
     public List<PredictionDTO> findAllPredictionForOneAthlete(@PathVariable("idathlete") Long idathlete) {
         return PredictionMapper.mapToListPredictionDTO(this.predictionService.findAllPredictionForOneAthlete(idathlete));
     }

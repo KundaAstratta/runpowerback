@@ -17,7 +17,7 @@ public class AthleteController {
 
     @RequestMapping(method = RequestMethod.POST, path = {"/athlete"})
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createOneAthleteWithGivenBody (@Valid @RequestBody AthleteDTO athleteDTO) {
+    public Long createOneAthlete (@Valid @RequestBody AthleteDTO athleteDTO) {
         return this.athleteService.createOneAthlete(AthleteMapper.mapToOneAthlete(athleteDTO));
     }
 

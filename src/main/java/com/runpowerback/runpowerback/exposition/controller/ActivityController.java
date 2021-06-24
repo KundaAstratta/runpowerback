@@ -1,7 +1,7 @@
 package com.runpowerback.runpowerback.exposition.controller;
 
 import com.runpowerback.runpowerback.application.service.ActivityService;
-import com.runpowerback.runpowerback.application.dto.activity.ActivityPoinfOfDTO;
+import com.runpowerback.runpowerback.application.dto.activity.ActivityPointOfDTO;
 import com.runpowerback.runpowerback.application.dto.activity.ActivityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,12 +18,12 @@ public class ActivityController {
 
     @RequestMapping(method = RequestMethod.POST, path = {"/activity"})
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createOnePointOfActivity (@Valid @RequestBody ActivityPoinfOfDTO activityDTO){
+    public Long createOnePointOfActivity (@Valid @RequestBody ActivityPointOfDTO activityDTO){
         return this.activityService.createOnePointOfActivity(ActivityMapper.mapToOnePointActivity(activityDTO));
     }
 
     @RequestMapping(method = RequestMethod.GET, path = {"/activity"})
-    public List<ActivityPoinfOfDTO> findActivity() {
+    public List<ActivityPointOfDTO> findActivity() {
         return ActivityMapper.mapToOneActivity(this.activityService.findAll());
     }
 

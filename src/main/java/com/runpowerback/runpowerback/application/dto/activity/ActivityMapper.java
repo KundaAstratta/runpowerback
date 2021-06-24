@@ -10,7 +10,7 @@ public class ActivityMapper {
     public ActivityMapper() {
     }
 
-    public static ActivityPointOf mapToOnePointActivity(ActivityPoinfOfDTO activityDTO) {
+    public static ActivityPointOf mapToOnePointActivity(ActivityPointOfDTO activityDTO) {
         return new ActivityPointOf(null,
                             activityDTO.latitude,
                             activityDTO.longitude,
@@ -20,8 +20,8 @@ public class ActivityMapper {
         );
     }
 
-    public static ActivityPoinfOfDTO mapToOnePointActivityDTO(ActivityPointOf activity) {
-        return new ActivityPoinfOfDTO(activity.getId(),
+    public static ActivityPointOfDTO mapToOnePointActivityDTO(ActivityPointOf activity) {
+        return new ActivityPointOfDTO(activity.getId(),
                                 activity.getLatitude(),
                                 activity.getLongitude(),
                                 activity.getElevation(),
@@ -30,7 +30,7 @@ public class ActivityMapper {
         );
     }
 
-    public static List<ActivityPoinfOfDTO> mapToOneActivity (List<ActivityPointOf> oneActivity) {
+    public static List<ActivityPointOfDTO> mapToOneActivity (List<ActivityPointOf> oneActivity) {
         return oneActivity.stream().map(ActivityMapper::mapToOnePointActivityDTO).collect(Collectors.toList());
     }
 

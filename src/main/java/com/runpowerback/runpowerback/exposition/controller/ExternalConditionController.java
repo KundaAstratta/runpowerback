@@ -19,7 +19,6 @@ public class ExternalConditionController {
     @ResponseStatus(HttpStatus.CREATED)
     public Long createOneExternalCondition (@Valid @RequestBody ExternalConditionDTO externalConditionDTO) {
         return this.externalConditionService.createOneExternalCondition(ExternalConditionMapper.mapToOneExternalCondition(externalConditionDTO));
-
     }
 
     @RequestMapping(method = RequestMethod.POST, path = {"/externalconditionwithincrement"})
@@ -39,5 +38,7 @@ public class ExternalConditionController {
     public void deleteOneExternalCondition(@PathVariable("idathlete") Long idathlete, @PathVariable("idpoweractivity") Long idpoweractivity ) {
         this.externalConditionService.deleteOneExternalCondition(idathlete,idpoweractivity);
     }
+
+
 
 }
