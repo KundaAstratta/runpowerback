@@ -21,7 +21,7 @@ public class ActivityMapper {
     }
 
     public static ActivityPointOfDTO mapToOnePointActivityDTO(ActivityPointOf activity) {
-        return new ActivityPointOfDTO(activity.getId(),
+        return new ActivityPointOfDTO(
                                 activity.getLatitude(),
                                 activity.getLongitude(),
                                 activity.getElevation(),

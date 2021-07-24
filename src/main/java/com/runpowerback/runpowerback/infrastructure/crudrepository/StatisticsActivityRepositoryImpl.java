@@ -6,11 +6,13 @@ import com.runpowerback.runpowerback.domaine.exception.ErrorCodes;
 import com.runpowerback.runpowerback.domaine.exception.MyProjectException500;
 import com.runpowerback.runpowerback.infrastructure.dao.StatisticsActivityDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Profile({"cloud"})
 @Repository
 public class StatisticsActivityRepositoryImpl implements StatisticsActivityRepository {
 

@@ -21,7 +21,6 @@ public class ExternalConditionMapper {
 
     public static ExternalConditionDTO mapToExternalConditionDTO (ExternalCondition externalCondition) {
         return new ExternalConditionDTO(
-                externalCondition.getId(),
                 externalCondition.getIdathlete(),
                 externalCondition.getIdpoweractivity(),
                 externalCondition.getPressureatm(),

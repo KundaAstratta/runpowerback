@@ -20,7 +20,6 @@ public class AthleteMapper {
 
     public static AthleteDTO mapToOneAthleteDTO (Athlete athlete) {
         return new AthleteDTO(
-                athlete.getId(),
                 athlete.getIdathlete(),
                 athlete.getName(),
                 athlete.getSurname(),

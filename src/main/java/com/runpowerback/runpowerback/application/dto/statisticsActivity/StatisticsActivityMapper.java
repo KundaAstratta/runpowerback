@@ -34,7 +34,6 @@ public class StatisticsActivityMapper {
 
     public static StatisticsActivityDTO mapToOneStatisticsActivityDTO (StatisticsActivity statisticsActivity) {
         return new StatisticsActivityDTO(
-          statisticsActivity.getId(),
           statisticsActivity.getIdathlete(),
           statisticsActivity.getIdpoweractivity(),
           statisticsActivity.getPoweraverage(),

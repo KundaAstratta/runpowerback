@@ -24,33 +24,33 @@ public class FromWeatherAPItoExternalConditionService {
 
     public ExternalCondition toCallWeatherAPI (float latitude , float longitude) {
 
-        StringBuilder url = new StringBuilder(urlWeatherPath);
-        url.append("lat=");
-        url.append(latitude);
-        url.append("&lon=");
-        url.append(longitude);
-        url.append("&exclude=minutely,hourly,daily,alerts");
-        url.append("&appid=");
-        url.append(urlWeatherPathKey);
-        logger.info("url : {}", url);
+            StringBuilder url = new StringBuilder(urlWeatherPath);
+            url.append("lat=");
+            url.append(latitude);
+            url.append("&lon=");
+            url.append(longitude);
+            url.append("&exclude=minutely,hourly,daily,alerts");
+            url.append("&appid=");
+            url.append(urlWeatherPathKey);
+            logger.info("url : {}", url);
 
-        RestTemplate restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
 
-        WeatherCurrentAPI result = restTemplate.getForObject(url.toString(), WeatherCurrentAPI.class);
+            WeatherCurrentAPI result = restTemplate.getForObject(url.toString(), WeatherCurrentAPI.class);
 
-        ExternalCondition externalCondition = new ExternalCondition();
+            ExternalCondition externalCondition = new ExternalCondition();
 
-        externalCondition.setTemperature((int)(result.getCurrent().getTemp()-273.15f));
-        externalCondition.setPressureatm(result.getCurrent().getPressure() * 100);
-        externalCondition.setHumidity(result.getCurrent().getHumidity());
-        externalCondition.setSpeedwind(result.getCurrent().getWindSpeed());
+            externalCondition.setTemperature((int)(result.getCurrent().getTemp()-273.15f));
+            externalCondition.setPressureatm(result.getCurrent().getPressure() * 100);
+            externalCondition.setHumidity(result.getCurrent().getHumidity());
+            externalCondition.setSpeedwind(result.getCurrent().getWindSpeed());
 
-        logger.info("temperature from API Weather {}", result.getCurrent().getTemp());
-        logger.info("pressure from API Weather {}", result.getCurrent().getPressure());
-        logger.info("humidity from API Weather {}", result.getCurrent().getHumidity());
-        logger.info("speed wind from API Weather {}", result.getCurrent().getWindSpeed());
+            logger.info("temperature from API Weather {}", result.getCurrent().getTemp());
+            logger.info("pressure from API Weather {}", result.getCurrent().getPressure());
+            logger.info("humidity from API Weather {}", result.getCurrent().getHumidity());
+            logger.info("speed wind from API Weather {}", result.getCurrent().getWindSpeed());
 
-        return externalCondition;
+            return externalCondition;
     }
 
 }

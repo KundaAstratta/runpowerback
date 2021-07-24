@@ -1,34 +1,18 @@
 package com.runpowerback.runpowerback;
 
-import com.runpowerback.runpowerback.application.service.FromWeatherAPItoExternalConditionService;
 import com.runpowerback.runpowerback.domaine.entity.PressureSaturation;
-import com.runpowerback.runpowerback.domaine.repository.PressureSaturationRepository;
+import com.runpowerback.runpowerback.infrastructure.inmemory.PressureSaturationInMemoryRepositoryImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+
 public class PressureSaturationTests {
 
     private static final Logger logger = LogManager.getLogger("File");
-
-    @Autowired
-    PressureSaturationRepository pressureSaturationRepository;
-
-    @Autowired
-    FromWeatherAPItoExternalConditionService fromWeatherAPItoExternalConditionService;
-
-    @Value("${runpower.url.weather}")
-    private String urlWeatherPath;
-
-    @Value("${runpower.url.weather.key}")
-    private String urlWeatherPathKey;
 
     @BeforeAll
     static void setup() {
@@ -44,45 +28,32 @@ public class PressureSaturationTests {
     void found_PressureSaturation_for_one_Temperature () {
         logger.info("Pressure saturation");
         PressureSaturation pressureSaturation = new PressureSaturation(1L,18,2063);
-        this.pressureSaturationRepository.save(pressureSaturation);
+        PressureSaturationInMemoryRepositoryImpl pressureSaturationRepository = new PressureSaturationInMemoryRepositoryImpl();
+        pressureSaturationRepository.save(pressureSaturation);
         logger.info(pressureSaturation);
         float temperature = 18;
 
         float pressureSaturationValue = toBuckEquation(temperature);
         logger.info("pressure Saturation Value : {}", pressureSaturationValue);
 
-        assertThat(2063.0).isEqualTo(this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure());
-/*
-        assertAll(
-                () -> assertEquals(2063, this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure())
-        );
-*/    }
+        assertThat(2063.0).isEqualTo(pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure());
+   }
 
 
     @Test
     void found_PressureSaturation_for_other_Temperature () {
         logger.info("Pressure saturation");
         PressureSaturation pressureSaturation = new PressureSaturation(1L,-7,370);
-        this.pressureSaturationRepository.save(pressureSaturation);
+        PressureSaturationInMemoryRepositoryImpl pressureSaturationRepository = new PressureSaturationInMemoryRepositoryImpl();
+        pressureSaturationRepository.save(pressureSaturation);
         logger.info(pressureSaturation);
         float temperature = -7;
 
         float pressureSaturationValue = toBuckEquation(temperature);
         logger.info("pressure Saturation Value : {}", pressureSaturationValue);
 
-        assertThat(370.0).isEqualTo(this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure());
-/*
-        assertAll(
-                () -> assertEquals(370, this.pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure())
-        );
-*/    }
-
-    @Test
-    void call_the_weather_api_with_the_service () {
-        float latitude = 48.7915210f;
-        float longitude = 2.3369160f;
-        fromWeatherAPItoExternalConditionService.toCallWeatherAPI(latitude,longitude);
-    }
+        assertThat(370.0).isEqualTo(pressureSaturationRepository.findOnePressureSaturation(temperature).getPressure());
+  }
 
     @AfterEach
     void endoftest() {

@@ -2,6 +2,7 @@ package com.runpowerback.runpowerback.application.service;
 
 
 import com.runpowerback.runpowerback.domaine.entity.PowerActivityPointOf;
+import com.runpowerback.runpowerback.domaine.entity.Prediction;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,11 +50,10 @@ public class PowerActivityService {
 
     public void fromPowerActivityToStatisticsAndPredictions(Long idathlete, Long idpoweractivity) throws ExecutionException, InterruptedException {
         List<PowerActivityPointOf> runpower;
-        idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         runpower = this.powerActivityRepository.findOnePowerActivity(idathlete,idpoweractivity);
         this.fromPowerActivityToStatisticsService.toStatistics(runpower, idathlete);
         List<StatisticsActivity> statisticsActivityList = this.statisticsActivityService.findAllStatisticsActivityForOneAthlete(idathlete);
-        this.fromStatisticsToPredictionsService.toPredictions(statisticsActivityList,idathlete);
+        Prediction prediction = this.fromStatisticsToPredictionsService.toPredictions(statisticsActivityList,idathlete);
     }
 
     public Long findMaxIdPowerActivity(Long idathlete) {

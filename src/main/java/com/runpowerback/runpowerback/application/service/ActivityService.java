@@ -1,9 +1,9 @@
 package com.runpowerback.runpowerback.application.service;
 
 import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
+import com.runpowerback.runpowerback.domaine.entity.PowerActivityPointOf;
 import com.runpowerback.runpowerback.domaine.repository.ActivityRepository;
 import com.runpowerback.runpowerback.domaine.repository.AthleteRepository;
-import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -20,9 +20,6 @@ public class ActivityService {
 
     @Autowired
     ActivityRepository activityRepository;
-
-    @Autowired
-    PowerActivityRepository powerActivityRepository;
 
     @Autowired
     FromActivityToPowerActivityService fromActivityToPowerActivityService;
@@ -47,8 +44,7 @@ public class ActivityService {
         List<ActivityPointOf> run;
         run = this.activityRepository.findAll();
         float mass = this.athleteRepository.findOneAthlete(idathlete).getMass();
-      //  Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete) + 1;
-        this.fromActivityToPowerActivityService.toTransform(idathlete,idpoweractivity,run,mass);
+        List<PowerActivityPointOf> runpower = this.fromActivityToPowerActivityService.toTransform(idathlete, idpoweractivity, run, mass);
     }
 
     public void deleteAll () {

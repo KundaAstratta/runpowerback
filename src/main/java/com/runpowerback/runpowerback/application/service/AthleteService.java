@@ -17,22 +17,15 @@ public class AthleteService {
     @Autowired
     FromHearthmaxToZoneService fromHearthmaxToZoneService;
 
-    @Autowired
-    FromSaveToUpdateService fromSaveToUpdateService;
-
     public Long createOneAthlete(Athlete athlete) {
         this.fromHearthmaxToZoneService.toTransform(athlete);
         return this.athleteRepository.save(athlete);
     }
 
-    public Long createAndUpdate(Athlete athlete) {
+    public Long updateOneAthlete(Athlete athlete) {
+        this.athleteRepository.deleteOneAthlete(athlete.getIdathlete());
         this.fromHearthmaxToZoneService.toTransform(athlete);
-        return this.fromSaveToUpdateService.toCreate(athlete);
-    }
-
-    public Long updateOneAthlete(Long id, Athlete athlete) {
-        this.fromHearthmaxToZoneService.toTransform(athlete);
-        return this.athleteRepository.update(id,athlete);
+        return this.athleteRepository.save(athlete);
     }
 
     public Athlete findOneAthlete(Long idathlete) {

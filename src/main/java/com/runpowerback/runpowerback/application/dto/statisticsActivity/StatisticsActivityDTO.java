@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class StatisticsActivityDTO {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public Long id;
-
     @JsonProperty
     public Long idathlete;
 
@@ -54,14 +51,11 @@ public class StatisticsActivityDTO {
 
     @JsonProperty
     public float deltathirdquartil;
-/*
-    public StatisticsActivityDTO() {}
-*/
-    public StatisticsActivityDTO(Long id, Long idathlete, Long idpoweractivity, float poweraverage, float powermedian,
+
+    public StatisticsActivityDTO(Long idathlete, Long idpoweractivity, float poweraverage, float powermedian,
             float deviation, float powerscore, int nbrofeasy, int nbrofmarathon, int nbrofthreshold,
             int nbrofinterval, int nbrofrepetition, String date, float powerfirstquartil, float deltafirstquartil,
             float powerthirdqurtil, float deltathirdquartil) {
-        this.id = id;
         this.idathlete = idathlete;
         this.idpoweractivity = idpoweractivity;
         this.poweraverage = poweraverage;
@@ -79,11 +73,6 @@ public class StatisticsActivityDTO {
         this.powerthirdquartil = powerthirdqurtil;
         this.deltathirdquartil = deltathirdquartil;
     }
-    
-
-    public Long getId() {
-        return id;
-    }
 
     public Long getIdathlete() {
         return idathlete;
@@ -96,7 +85,6 @@ public class StatisticsActivityDTO {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("StatisticsActivityDTO{");
-        sb.append("id=").append(id);
         sb.append(", idathlete=").append(idathlete);
         sb.append(", idpoweractivity=").append(idpoweractivity);
         sb.append(", poweraverage=").append(poweraverage);

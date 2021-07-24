@@ -27,17 +27,8 @@ public class FromStatisticsToPredictionsService {
     @Autowired
     AthleteRepository athleteRepository;
 
-    //@Autowired
-    //FireBaseService fireBaseService;
-
-
-    public void toPredictions(List<StatisticsActivity> statisticsActivites, Long idathlete) throws ExecutionException, InterruptedException {
+    public Prediction toPredictions(List<StatisticsActivity> statisticsActivites, Long idathlete) throws ExecutionException, InterruptedException {
         logger.info("to Predictions begin....");
-
-        /*
-         * List<Float> deviationList = new ArrayList<>();
-         * deviationList = statisticsActivites.stream().map(p -> p.getDeviation() * p.getPowermedian()).collect(Collectors.toList());
-         */
 
         Double upperBarrycentre = statisticsActivites.stream().mapToDouble(p -> p.getDeviation() * p.getPowermedian()).sum();
 
@@ -53,7 +44,7 @@ public class FromStatisticsToPredictionsService {
         logger.info("idPowerActivity {}" , idPowerActivity);
 
         Athlete athlete = new Athlete();
-        athlete = athleteRepository.findOneAthlete(idathlete);
+        athlete = this.athleteRepository.findOneAthlete(idathlete);
         logger.info("athlete {}" , athlete);
 
         float speedOptimal = powerOptimal / athlete.getMass();
@@ -108,33 +99,11 @@ public class FromStatisticsToPredictionsService {
                 paceTenKm,timeForTenKm);
         logger.info("prediction {}" , prediction.toString());
 
-        predictionRepository.save(prediction);
-
-        //FireBase : created a Prediction : begin
-        /*PredictionFireBase predictionFireBase =
-                new PredictionFireBase(
-                        getStringFromLong(idathlete) + getStringFromLong(idPowerActivity),
-                        getStringFromFloat(powerOptimal),
-                        getStringFromFloat(speedOptimal),
-                        paceOptimal,
-                        paceEasy,
-                        paceThreshold,
-                        paceHard,
-                        paceMin,
-                        paceMax,
-                        paceMarathon,
-                        timeForMarathon,
-                        paceHalfMarathon,
-                        timeForHalfMarathon,
-                        paceTenKm,
-                        timeForTenKm
-                );
-
-        fireBaseService.savePredictionDetailsToFirebase(predictionFireBase);
-        */
-        //FireBase : created a Prediction : end
+        this.predictionRepository.save(prediction);
 
         logger.info("to Prediction end...");
+
+        return prediction;
 
     }
 

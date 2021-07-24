@@ -22,7 +22,7 @@ public class PowerActivityMapper {
     }
 
     public static PowerActivityPointOfDTO mapToOnePointOfPowerActivityDTO(PowerActivityPointOf powerActivity) {
-        return new PowerActivityPointOfDTO(powerActivity.getId(),
+        return new PowerActivityPointOfDTO(
                                     powerActivity.getIdathlete(),
                                     powerActivity.getIdpoweractivity(),
                                     powerActivity.getPower(),

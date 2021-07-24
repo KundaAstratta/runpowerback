@@ -2,10 +2,8 @@ package com.runpowerback.runpowerback.application.service;
 
 import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
 import com.runpowerback.runpowerback.domaine.entity.PowerActivityPointOf;
-//import com.runpowerback.runpowerback.domaine.entity.PowerActivityFireBase;
 import com.runpowerback.runpowerback.domaine.repository.ExternalConditionRepository;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
-import com.runpowerback.runpowerback.domaine.repository.PressureSaturationRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -28,13 +27,9 @@ public class FromActivityToPowerActivityService {
     @Autowired
     ExternalConditionRepository externalConditionRepository;
 
-    @Autowired
-    PressureSaturationRepository pressureSaturationRepository;
+    List<PowerActivityPointOf> powerActivityPointOfList = new ArrayList<>();
 
-    //@Autowired
-    //FireBaseService fireBaseService;
-
-    public void toTransform(Long idathlete, Long idpoweractivity, List<ActivityPointOf> run, float mass) throws ExecutionException, InterruptedException {
+    public List<PowerActivityPointOf> toTransform(Long idathlete, Long idpoweractivity, List<ActivityPointOf> run, float mass) throws ExecutionException, InterruptedException {
 
         float distanceFromStart = 0;
         float timeFromStart = 0;
@@ -43,12 +38,17 @@ public class FromActivityToPowerActivityService {
         float Ar = 0.24f;
         float gravity = 9.81f;
 
-        float speedWind = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getSpeedwind();
-        float temperature = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getTemperature();
-        float pressureATM = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getPressureatm();
-        float pressureSaturation = toBuckEquation(temperature);
-        float percentHumidity = this.externalConditionRepository.findOneExternalCondition(idathlete,idpoweractivity).getHumidity();
+        float speedWind;
+        float temperature;
+        float pressureATM;
+        float pressureSaturation;
+        float percentHumidity;
 
+        speedWind = this.externalConditionRepository.findOneExternalCondition(idathlete, idpoweractivity).getSpeedwind();
+        temperature = this.externalConditionRepository.findOneExternalCondition(idathlete, idpoweractivity).getTemperature();
+        pressureATM = this.externalConditionRepository.findOneExternalCondition(idathlete, idpoweractivity).getPressureatm();
+        pressureSaturation = toBuckEquation(temperature);
+        percentHumidity = this.externalConditionRepository.findOneExternalCondition(idathlete, idpoweractivity).getHumidity();
         float massVolumic;
         massVolumic = toTransformMassVolumic(percentHumidity,pressureSaturation,pressureATM,temperature);
 
@@ -61,14 +61,6 @@ public class FromActivityToPowerActivityService {
 
         String TimeOfPowerActivity = ZonedDateTime.parse(run.get(i).getTimezone()).getHour() + ":"+
                 ZonedDateTime.parse(run.get(i).getTimezone()).getMinute();
-
-
-        //PowerActivityFireBase powerActivityFireBase = new PowerActivityFireBase(
-        //        getStringFromLong(idathlete) + getStringFromLong(idpoweractivity),
-        //        DateOfPowerActivity
-        //);
-
-        //fireBaseService.savePowerActivityDetailsToFireBase(powerActivityFireBase);
 
         while(i <= run.size()-1) {
 
@@ -138,18 +130,15 @@ public class FromActivityToPowerActivityService {
                 logger.info("Object power : " + powerActivity);
 
                 this.powerActivityRepository.save(powerActivity);
+                powerActivityPointOfList.add(powerActivity);
 
             }
 
             i=i+1;
 
         }
-    }
 
-    public static String getStringFromLong (Long number) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(number);
-        return stringBuffer.toString();
+        return powerActivityPointOfList;
     }
 
     static float getDistanceFromLatLontoMeter(float lat1, float lon1, float lat2, float lon2) {

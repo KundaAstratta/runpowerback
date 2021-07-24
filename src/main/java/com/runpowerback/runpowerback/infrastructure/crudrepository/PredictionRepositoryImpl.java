@@ -10,8 +10,10 @@ import com.runpowerback.runpowerback.domaine.exception.MyProjectException500;
 
 import com.runpowerback.runpowerback.infrastructure.dao.PredictionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
+@Profile({"cloud"})
 @Repository
 public class PredictionRepositoryImpl implements PredictionRepository {
 

@@ -4,13 +4,15 @@ import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
 import com.runpowerback.runpowerback.domaine.repository.ActivityRepository;
 import com.runpowerback.runpowerback.infrastructure.dao.ActivityDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Profile({"cloud"})
 @Repository
-public class ActivityRepositoryImp implements ActivityRepository {
+public class ActivityRepositoryImpl implements ActivityRepository {
 
     @Autowired
     ActivityDAO activityDAO;

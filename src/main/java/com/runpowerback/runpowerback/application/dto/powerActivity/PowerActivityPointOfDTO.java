@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PowerActivityPointOfDTO {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public Long id;
-
     @JsonProperty
     public Long idathlete;
 
@@ -31,8 +28,7 @@ public class PowerActivityPointOfDTO {
     @JsonProperty
     public float timezone;
 
-    public PowerActivityPointOfDTO(Long id, Long idathlete, Long idpoweractivity, float power, float speed, float hearthrate, float distance, float pace, float timezone) {
-        this.id = id;
+    public PowerActivityPointOfDTO(Long idathlete, Long idpoweractivity, float power, float speed, float hearthrate, float distance, float pace, float timezone) {
         this.idathlete = idathlete;
         this.idpoweractivity = idpoweractivity;
         this.power = power;
@@ -41,10 +37,6 @@ public class PowerActivityPointOfDTO {
         this.distance = distance;
         this.pace = pace;
         this.timezone = timezone;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getIdathlete() {
@@ -58,7 +50,6 @@ public class PowerActivityPointOfDTO {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("PowerActivityDTO{");
-        sb.append("id=").append(id);
         sb.append(", idathlete=").append(idathlete);
         sb.append(", idpoweractivity=").append(idpoweractivity);
         sb.append(", power=").append(power);

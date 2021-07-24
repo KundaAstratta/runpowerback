@@ -34,7 +34,6 @@ public class PredictionMapper {
 
     public static PredictionDTO mapToOnePredictionDTO (Prediction prediction) {
         return new PredictionDTO(
-                prediction.getId(),
                 prediction.getIdathlete(),
                 prediction.getIdpoweractivity(),
                 prediction.getPowerOptimal(),

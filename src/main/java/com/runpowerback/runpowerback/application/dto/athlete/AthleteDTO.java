@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AthleteDTO {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public Long id;
-
     @JsonProperty
     public Long idathlete;
 
@@ -22,17 +19,12 @@ public class AthleteDTO {
     @JsonProperty
     public float hearthmax;
 
-    public AthleteDTO(Long id, Long idathlete, String name, String surname, float mass, float hearthmax) {
-        this.id = id;
+    public AthleteDTO(Long idathlete, String name, String surname, float mass, float hearthmax) {
         this.idathlete = idathlete;
         this.name = name;
         this.surname = surname;
         this.mass = mass;
         this.hearthmax = hearthmax;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getIdathlete() {
@@ -46,7 +38,6 @@ public class AthleteDTO {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("AthleteDTO{");
-        sb.append("id=").append(id);
         sb.append(", idathlete=").append(idathlete);
         sb.append(", name='").append(name).append('\'');
         sb.append(", surname='").append(surname).append('\'');

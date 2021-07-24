@@ -4,10 +4,12 @@ import com.runpowerback.runpowerback.domaine.entity.PowerActivityPointOf;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
 import com.runpowerback.runpowerback.infrastructure.dao.PowerActivityDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Profile({"cloud"})
 @Repository
 public class PowerActivityRepositoryImpl implements PowerActivityRepository {
 
@@ -48,6 +50,5 @@ public class PowerActivityRepositoryImpl implements PowerActivityRepository {
             return this.powerActivityDAO.findMaxIdPowerActivity(idathlete);
         }
     }
-
 
 }

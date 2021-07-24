@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PredictionDTO {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    public Long id;
-
     @JsonProperty
     public Long idathlete;
 
@@ -54,15 +51,11 @@ public class PredictionDTO {
 
     @JsonProperty
     public String timeForTenKm;
-/*
-    public PredictionDTO() {
-    }
-*/
-    public PredictionDTO(Long id, Long idathlete, Long idpoweractivity, float powerOptimal, float speedOptimal,
+
+    public PredictionDTO(Long idathlete, Long idpoweractivity, float powerOptimal, float speedOptimal,
                          String paceOptimal, String paceEasy, String paceThreshold, String paceHard, String paceMin, String paceMax,
                          String paceMarathon, String timeForMarathon, String paceHalfMarathon, String timeForHalfMarathon,
                          String paceTenKm, String timeForTenKm) {
-        this.id = id;
         this.idathlete = idathlete;
         this.idpoweractivity = idpoweractivity;
         this.powerOptimal = powerOptimal;
@@ -79,14 +72,6 @@ public class PredictionDTO {
         this.timeForHalfMarathon = timeForHalfMarathon;
         this.paceTenKm = paceTenKm;
         this.timeForTenKm = timeForTenKm;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getIdathlete() {
@@ -107,17 +92,13 @@ public class PredictionDTO {
 
     @Override
     public String toString() {
-        return "PredictionDTO [id=" + id + ", idathlete=" + idathlete + ", idpoweractivity=" + idpoweractivity
+        return "PredictionDTO [idathlete=" + idathlete + ", idpoweractivity=" + idpoweractivity
                 + ", paceEasy=" + paceEasy + ", paceHalfMarathon=" + paceHalfMarathon + ", paceHard=" + paceHard
                 + ", paceMarathon=" + paceMarathon + ", paceMax=" + paceMax + ", paceMin=" + paceMin + ", paceOptimal="
                 + paceOptimal + ", paceTenKm=" + paceTenKm + ", paceThreshold=" + paceThreshold + ", powerOptimal="
                 + powerOptimal + ", speedOptimal=" + speedOptimal + ", timeForHalfMarathon=" + timeForHalfMarathon
                 + ", timeForMarathon=" + timeForMarathon + ", timeForTenKm=" + timeForTenKm + "]";
     }
-
-
-
-
 
 }
 

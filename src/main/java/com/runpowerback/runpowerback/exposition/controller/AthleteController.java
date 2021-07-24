@@ -21,16 +21,10 @@ public class AthleteController {
         return this.athleteService.createOneAthlete(AthleteMapper.mapToOneAthlete(athleteDTO));
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = {"/athlete/newathlete"})
-    @ResponseStatus(HttpStatus.CREATED)
-    public Long createNewAthleteWithNewIncrementedIdathete (@Valid @RequestBody AthleteDTO athleteDTO) {
-        return this.athleteService.createAndUpdate(AthleteMapper.mapToOneAthlete(athleteDTO));
-    }
-
-    @RequestMapping(method = RequestMethod.PUT, path = {"/athlete/update/id/{id}"})
+    @RequestMapping(method = RequestMethod.PUT, path = {"/athlete/update"})
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Long updateOneAthlete (@PathVariable("id") Long id, @Valid @RequestBody AthleteDTO athleteDTO) {
-        return this.athleteService.updateOneAthlete(id,AthleteMapper.mapToOneAthlete(athleteDTO));
+    public Long updateOneAthlete (@Valid @RequestBody AthleteDTO athleteDTO) {
+        return this.athleteService.updateOneAthlete(AthleteMapper.mapToOneAthlete(athleteDTO));
     }
 
     @RequestMapping(method = RequestMethod.GET,path ={"/athlete/{idathlete}"})
