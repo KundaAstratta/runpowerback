@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Profile({"cloud"})
+@Profile({"local","cloud"})
 @Repository
 public class StatisticsActivityRepositoryImpl implements StatisticsActivityRepository {
 
