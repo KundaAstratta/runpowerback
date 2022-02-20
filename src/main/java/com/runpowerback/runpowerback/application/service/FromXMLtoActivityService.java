@@ -57,19 +57,23 @@ public class FromXMLtoActivityService {
                 String readLineOfXML = "";
                 String xmlTag = "";
 
+                // Extract trkpt
                 String trkptLatLonBegin = "<trkpt ";
                 String trkptLatLonEnd = ">";
 
+                // Extract latitude from trkpt
                 float latitude = 0;
                 String extractLatBegin = "lat=\"";
                 String extractLatEnd = "\"";
                 int posLat = 0;
 
+                // Extract longitude from trkpt
                 float longitude = 0;
                 String extractLonBegin = "lon=\"";
                 String extractLonEnd = "\"";
                 int posLon = 1;
 
+                // Extract elevation in trkpt balise
                 float elevation = 0;
                 String trkptEleBegin = "<ele>";
                 String trkptEleEnd = "</ele>";

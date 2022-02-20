@@ -6,6 +6,7 @@ import com.runpowerback.runpowerback.domaine.entity.StatisticsActivity;
 //import com.runpowerback.runpowerback.domaine.entity.StatisticsActivityFireBase;
 import com.runpowerback.runpowerback.domaine.repository.AthleteRepository;
 import com.runpowerback.runpowerback.domaine.repository.PowerActivityRepository;
+import com.runpowerback.runpowerback.domaine.repository.PredictionRepository;
 import com.runpowerback.runpowerback.domaine.repository.StatisticsActivityRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,6 +30,9 @@ public class FromPowerActivityToStatisticsService {
 
     @Autowired
     AthleteRepository athleteRepository;
+
+    @Autowired
+    PredictionRepository predictionRepository;
 
     //@Autowired
     //FireBaseService fireBaseService;
@@ -57,45 +61,8 @@ public class FromPowerActivityToStatisticsService {
         Athlete athlete = new Athlete();
         athlete = athleteRepository.findOneAthlete(idathlete);
 
-        float easyMin = athlete.getEasyhearthmin();
-        float easyMax = athlete.getEasyhearthmax();
-        float marathonMin = athlete.getMarathonhearthmin();
-        float marathonMax = athlete.getMarathonhearthmax();
-        float thresholdMin = athlete.getThresholdhearthmin();
-        float thresholdMax = athlete.getThresholdhearthmax();
-        float intervalMin = athlete.getIntervalhearthmin();
-        float intervalMax = athlete.getIntervalhearthmax();
-        float repetitionMin = athlete.getRepetitionhearthmin();
-        float repetitionMax = athlete.getRepetitionhearthmax();
-
-        int numberOfEasy = 0;
-        int numberOfMarathon = 0;
-        int numberOfThreshold = 0;
-        int numberOfInterval = 0;
-        int numberOfRepetition = 0;
-
         while(i <= runpower.size()-1) {
             currentPower = runpower.get(i).getPower();
-
-            if (runpower.get(i).getHearthrate() <= easyMax) {
-                numberOfEasy = numberOfEasy + 1;
-            } else {
-                if ((marathonMin >= runpower.get(i).getHearthrate()) && (runpower.get(i).getHearthrate() <= marathonMax)) {
-                    numberOfMarathon = numberOfMarathon + 1;
-                } else {
-                    if ((thresholdMin >= runpower.get(i).getHearthrate()) && (runpower.get(i).getHearthrate() <= thresholdMax)) {
-                        numberOfThreshold = numberOfThreshold + 1;
-                    } else {
-                        if ((intervalMin >= runpower.get(i).getHearthrate()) && (runpower.get(i).getHearthrate()<= intervalMax)) {
-                            numberOfInterval = numberOfInterval + 1;
-                        } else {
-                            if (repetitionMin >= runpower.get(i).getHearthrate()) {
-                                numberOfRepetition = numberOfRepetition + 1;
-                            }
-                        }
-                    }
-                }
-            }
 
             runpowerSorted.add(currentPower);
             sumOfPower = sumOfPower + currentPower;
@@ -104,6 +71,7 @@ public class FromPowerActivityToStatisticsService {
 
             i = i + 1;
         }
+
 
         Collections.sort(runpowerSorted);
         logger.info(runpowerSorted);
@@ -187,6 +155,61 @@ public class FromPowerActivityToStatisticsService {
         Long idpoweractivity = this.powerActivityRepository.findMaxIdPowerActivity(idathlete);
         logger.info("idathlete : "  + idathlete + "idpoweractivity : " + idpoweractivity);
 
+        float speedOptimal;
+        if (predictionRepository.findAllPredictionForOneAthlete(idathlete).isEmpty()) {
+            speedOptimal = powerMedian / athleteRepository.findOneAthlete(idathlete).getMass();
+        } else {
+            speedOptimal = predictionRepository.findLastPrediction(idathlete).getSpeedOptimal();
+        }
+        logger.info("speed optimal {}", speedOptimal);
+
+        float speedMin = speedOptimal - 1f / 1.8f;
+        logger.info("speedMin {}" , speedMin);
+
+        float speedMax = speedOptimal + 1f / 1.2f;
+        logger.info("speedMax {}" , speedMax);
+
+        float speed40Km =  getSpeedPredictionFromDistance(40000,speedOptimal,speedMin,speedMax);
+
+        float speed20Km = getSpeedPredictionFromDistance(20000,speedOptimal,speedMin,speedMax);
+
+        float speed1OKm = getSpeedPredictionFromDistance(10000,speedOptimal,speedMin,speedMax);
+
+        float speed5Km = getSpeedPredictionFromDistance(5000,speedOptimal,speedMin,speedMax);
+
+        int numberOfEasy = 0;
+        int numberOfModerate = 0;
+        int numberOfThreshold = 0;
+        int numberOfInterval = 0;
+        int numberOfRepetition = 0;
+
+        i = 2;
+        while(i <= runpower.size()-1) {
+
+            if (runpower.get(i).getSpeed() < speed40Km) {
+                numberOfEasy = numberOfEasy + 1;
+            } else {
+                if ((speed40Km <= runpower.get(i).getSpeed()) && (runpower.get(i).getSpeed() < speed20Km)) {
+                    numberOfModerate = numberOfModerate + 1;
+                } else {
+                    if ((speed20Km <= runpower.get(i).getSpeed()) && (runpower.get(i).getSpeed() < speed1OKm)) {
+                        numberOfThreshold = numberOfThreshold + 1;
+                    } else {
+                        if ((speed1OKm <= runpower.get(i).getSpeed()) && (runpower.get(i).getSpeed()< speed5Km)) {
+                            numberOfInterval = numberOfInterval + 1;
+                        } else {
+                            if (speed5Km <= runpower.get(i).getSpeed()) {
+                                numberOfRepetition = numberOfRepetition + 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+        i = i + 1;
+
+        }
+
         StatisticsActivity statisticsActivity = new StatisticsActivity(
                 null,
                 idathlete,
@@ -194,7 +217,7 @@ public class FromPowerActivityToStatisticsService {
                 powerAverage,
                 powerMedian,deviation,
                 powerScore, numberOfEasy,
-                numberOfMarathon,
+                numberOfModerate,
                 numberOfThreshold,
                 numberOfInterval,
                 numberOfRepetition,
@@ -223,7 +246,7 @@ public class FromPowerActivityToStatisticsService {
         //FireBase : created a Prediction : end
 
         logger.info("number of Esay : " +  numberOfEasy);
-        logger.info("number of Marathon : " + numberOfMarathon);
+        logger.info("number of Marathon : " + numberOfModerate);
         logger.info("number of Threshold : " + numberOfThreshold);
         logger.info("number of Interval : " + numberOfInterval);
         logger.info("number of Repetition : " + numberOfRepetition);
@@ -241,6 +264,18 @@ public class FromPowerActivityToStatisticsService {
         stringBuffer.append(number);
         return stringBuffer.toString();
     }
+
+    public static float getSpeedPredictionFromDistance(float distance, float speedOptimal, float speedMin, float speedMax) {
+        float speedReturned = speedOptimal + (5f / 6f) - (1f / 36000f) * distance;
+        if (speedReturned < speedMin) {
+            speedReturned = speedMin;
+        }
+        if (speedReturned > speedMax) {
+            speedReturned = speedMax;
+        }
+        return speedReturned;
+    }
+
 
 
 }
