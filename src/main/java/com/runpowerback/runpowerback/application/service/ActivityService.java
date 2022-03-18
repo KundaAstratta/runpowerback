@@ -31,7 +31,7 @@ public class ActivityService {
         return this.activityRepository.save(activity);
     }
 
-     public List<ActivityPointOf> findAll() {
+    public List<ActivityPointOf> findAll() {
         return this.activityRepository.findAll();
     }
 

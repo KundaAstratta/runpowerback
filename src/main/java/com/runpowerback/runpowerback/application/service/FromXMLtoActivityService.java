@@ -1,9 +1,11 @@
 package com.runpowerback.runpowerback.application.service;
 
+import com.runpowerback.runpowerback.application.StorageService;
 import com.runpowerback.runpowerback.domaine.repository.ActivityRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.runpowerback.runpowerback.domaine.entity.ActivityPointOf;
 
@@ -27,14 +29,24 @@ public class FromXMLtoActivityService {
     @Autowired
     ActivityRepository activityRepository;
 
-        public String toReadXMLService(String fileXML) throws IOException {
+    @Autowired
+    StorageService storageService;
+
+    @Value("${runpower.upload.location}")
+    private String location;
+
+    public String toReadXMLService(String fileXML) throws IOException {
 
         try {
 
             String fileSeparator = System.getProperty("file.separator");
 
-            Path someDirectory = Paths.get(fileSeparator+"Users"+fileSeparator+"runpower");
-            final String subdirectoryName = "tmp";
+    //        Path someDirectory = Paths.get(fileSeparator+"Users"+fileSeparator+"runpower");
+            Path someDirectory = Paths.get(location);
+
+    //        final String subdirectoryName = "tmp";
+            final String subdirectoryName = "";
+
             Path someSubdirectory = someDirectory.resolve(subdirectoryName);
             try {
                 Files.createDirectory(someSubdirectory);
@@ -45,10 +57,14 @@ public class FromXMLtoActivityService {
             }
 
             logger.info("file separator : {}",  fileSeparator);
-            String absoluteFilePath = fileSeparator+"Users"+fileSeparator+"runpower"+fileSeparator+"tmp"+fileSeparator+fileXML;
-            logger.info("absoluteFilePath :{}", absoluteFilePath);
+//            String absoluteFilePath = fileSeparator+"Users"+fileSeparator+"runpower"+fileSeparator+"tmp"+fileSeparator+fileXML;
+            String relativeFilePath = location + fileSeparator + fileXML;
+ //           logger.info("absoluteFilePath :{}", absoluteFilePath);
+            logger.info("relativeFilePath :{}", relativeFilePath);
 
-            File f =  new File(absoluteFilePath);
+
+ //           File f =  new File(absoluteFilePath);
+            File f =  new File(relativeFilePath);
 
             if (f.exists()) {
                 System.out.println("exist");
@@ -126,7 +142,10 @@ public class FromXMLtoActivityService {
 
                 }
 
-              return "exist";
+                storageService.deleteAll();
+                storageService.init();
+
+                return "exist";
             } else {
                 System.out.println("not exist");
               return "notexist";
@@ -136,6 +155,8 @@ public class FromXMLtoActivityService {
             e.getMessage();
             return e.getMessage();
         }
+
+
 
     }
 
