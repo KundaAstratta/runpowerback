@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+//Power Activity to Statistics with VDOT
 @Service
 @Transactional
 public class FromPowerActivityToStatisticsService {

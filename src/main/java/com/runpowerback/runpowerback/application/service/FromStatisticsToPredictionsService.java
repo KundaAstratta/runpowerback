@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+//Power Statistics to Predictions with VDOT
 @Service
 @Transactional
 public class FromStatisticsToPredictionsService {
@@ -152,7 +153,7 @@ public class FromStatisticsToPredictionsService {
 
         return paceOptimalString;
     }
- 
+
     public static String getCalculateTimeFromSecondes(long seconds) {
         long sec = seconds % 60;
         long min = seconds % 3600 / 60;

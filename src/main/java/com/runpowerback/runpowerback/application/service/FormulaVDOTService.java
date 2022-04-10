@@ -3,6 +3,7 @@ package com.runpowerback.runpowerback.application.service;
 import org.springframework.stereotype.Service;
 
 @Service
+// calculus with VDOT
 public class FormulaVDOTService {
 
     // with time in minutes
