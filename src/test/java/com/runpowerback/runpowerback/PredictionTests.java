@@ -66,19 +66,6 @@ public class PredictionTests {
         assertThat("5:33").isEqualTo(paceFromSpeed);
     }
 
-    @Test
-    void get_Speed_Prediction_From_Distance () {
-        float speedMin = 3.5f;
-        float speedMax = 4.5f;
-        float speedPredictionFromDistanceReachMin = FromStatisticsToPredictionsService.getSpeedPredictionFromDistance(50000f, 4f,speedMin, speedMax);
-        logger.info("speedPredictionFromDistanceReaachMin {}", speedPredictionFromDistanceReachMin);
-        float speedPredictionFromDistanceReachMax = FromStatisticsToPredictionsService.getSpeedPredictionFromDistance(5000f, 4f, speedMin, speedMax);
-        logger.info("speedPredictionFromDistanceReaachMax {}", speedPredictionFromDistanceReachMax);
-
-        assertThat(speedMin).isEqualTo(speedPredictionFromDistanceReachMin);
-        assertThat(speedMax).isEqualTo(speedPredictionFromDistanceReachMax);
-    }
-
     @AfterEach
     void endoftest() {
         logger.info("@AfterEach - end of test...");

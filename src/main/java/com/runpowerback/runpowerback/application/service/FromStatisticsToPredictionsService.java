@@ -27,6 +27,9 @@ public class FromStatisticsToPredictionsService {
     @Autowired
     AthleteRepository athleteRepository;
 
+    @Autowired
+    FormulaVDOTService formulaVDOTService;
+
     public Prediction toPredictions(List<StatisticsActivity> statisticsActivites, Long idathlete) throws ExecutionException, InterruptedException {
         logger.info("to Predictions begin....");
 
@@ -52,47 +55,56 @@ public class FromStatisticsToPredictionsService {
         String paceOptimal = getPaceFromSpeed(speedOptimal);
         logger.info("paceOptimal {}" , paceOptimal);
 
-        float speedMin = speedOptimal - 1f / 1.8f;
-        logger.info("speedMin {}" , speedMin);
+        float vo2 = formulaVDOTService.VO2(60 * speedOptimal);
+        logger.info("vo2 {}" , vo2);
+        float vdot = formulaVDOTService.VDOT(vo2,0.85f);
+        logger.info("vdot {}" , vdot);
 
-        float speedMax = speedOptimal + 1f / 1.2f;
-        logger.info("speedMax {}" , speedMax);
+        String paceEasy = getStringFromPace(formulaVDOTService.target(1000,0.67f,vdot));
+        logger.info("paceEasy {}",paceEasy);
 
-        String paceEasy = getPaceFromSpeed(getSpeedPredictionFromDistance(40000, speedOptimal,speedMin,speedMax));
-        logger.info("Easy {}" , paceEasy);
+        String paceThreshold = getStringFromPace(formulaVDOTService.target(1000,0.88f,vdot));
+        logger.info("paceThreshold {}",paceThreshold);
 
-        String paceThreshold = getPaceFromSpeed(getSpeedPredictionFromDistance(20000, speedOptimal,speedMin,speedMax));
-        logger.info("Threshold {}" , paceThreshold);
+        String paceRepetition = getStringFromPace(formulaVDOTService.target(1000,1.2f,vdot));
+        logger.info("paceRepetition {}",paceRepetition);
+        String paceHard = paceRepetition;
 
-        String paceHard = getPaceFromSpeed(getSpeedPredictionFromDistance(10000, speedOptimal,speedMin,speedMax));
-        logger.info("Hard {}" , paceHard);
+        String paceModerate = getStringFromPace(formulaVDOTService.target(1000,0.82f,vdot));
+        logger.info("paceModerate {}",paceModerate);
+        String paceMin = paceModerate;
 
-        String paceMin = getPaceFromSpeed(speedOptimal - 1f / 1.8f);
-        logger.info("paceMin {}" , paceMin);
+        String paceInterval = getStringFromPace(formulaVDOTService.target(1000,0.975f,vdot));
+        logger.info("paceInterval {}",paceInterval);
+        String paceMax = paceInterval;
 
-        String paceMax = getPaceFromSpeed(speedOptimal + 1f / 1.2f);
-        logger.info("paceMax {}" , paceMax);
+        float timeMarathon = formulaVDOTService.target(42195,0.811f,vdot);
+        logger.info("timeMarathon {}" , timeMarathon);
+        String timeForMarathon = getCalculateTimeFromSecondes((long) (timeMarathon * 60));
+        float speedMarathon = 42195f / (timeMarathon * 60);
+        String paceMarathon = getPaceFromSpeed(speedMarathon);
+        logger.info("speedMarathon {}" , speedMarathon);
+        logger.info("paceMarathon {}" , paceMarathon);
+        logger.info("timeForMarathon {}" , timeForMarathon);
 
-        float speedMarathon = getSpeedPredictionFromDistance(42195, speedOptimal,speedMin,speedMax);
-        logger.info("speed 42,195 km {}" , speedMarathon);
-        String paceMarathon = getPaceFromSpeed(getSpeedPredictionFromDistance(42195, speedOptimal,speedMin,speedMax));
-        logger.info("Pace {}" , paceMarathon);
-        String timeForMarathon = getCalculateTimeFromSecondes((long) (42195 / speedMarathon));
-        logger.info("marathon time {}" , timeForMarathon);
+        float timeHalfMarathon = formulaVDOTService.target(21097.5f,0.849f,vdot);
+        logger.info("timeHalfMarathon {}" , timeHalfMarathon);
+        String timeForHalfMarathon = getCalculateTimeFromSecondes((long) (timeHalfMarathon * 60));
+        float speedHalfMarathon = 21097.5f / (timeHalfMarathon * 60);
+        String paceHalfMarathon = getPaceFromSpeed(speedHalfMarathon);
+        logger.info("speedHalfMarathon {}" , speedHalfMarathon);
+        logger.info("paceHalfMarathon {}" , paceHalfMarathon);
+        logger.info("timeForHalfMarathon {}" , timeForHalfMarathon);
 
-        float speedHalfMarathon = getSpeedPredictionFromDistance(21097.5f, speedOptimal,speedMin,speedMax);
-        logger.info("speed 21,0975 km {}" , speedHalfMarathon);
-        String paceHalfMarathon = getPaceFromSpeed(getSpeedPredictionFromDistance(21097.5f, speedOptimal,speedMin,speedMax));
-        logger.info("Pace {}" , paceHalfMarathon);
-        String  timeForHalfMarathon = getCalculateTimeFromSecondes((long) (21097.5f / speedHalfMarathon));
-        logger.info("half marathon {}" , timeForHalfMarathon);
+        float timeTenKm = formulaVDOTService.target(10000f,0.903f,vdot);
+        logger.info("timeTenKm {}" , timeTenKm);
+        String timeForTenKm = getCalculateTimeFromSecondes((long) (timeTenKm * 60));
+        float speedTenKm = 10000f / (timeTenKm * 60);
+        String paceTenKm = getPaceFromSpeed(speedTenKm);
+        logger.info("speedTenKm {}" , speedTenKm);
+        logger.info("paceTenKm {}" , paceTenKm);
+        logger.info("timeForTenKm {}" , timeForTenKm);
 
-        float speedTenKm = getSpeedPredictionFromDistance(10000, speedOptimal,speedMin,speedMax);
-        logger.info("speed 10 km {}" , speedTenKm);
-        String paceTenKm = getPaceFromSpeed(getSpeedPredictionFromDistance(10000, speedOptimal,speedMin,speedMax));
-        logger.info("Pace {}" , paceTenKm);
-        String  timeForTenKm = getCalculateTimeFromSecondes((long) (10000 / speedTenKm));
-        logger.info("10km {}" , timeForTenKm);
 
         Prediction prediction = new Prediction(null,idathlete,idPowerActivity,powerOptimal,speedOptimal, paceOptimal,paceEasy,paceThreshold,
                 paceHard, paceMin, paceMax,paceMarathon,timeForMarathon,paceHalfMarathon,timeForHalfMarathon,
@@ -107,47 +119,40 @@ public class FromStatisticsToPredictionsService {
 
     }
 
-    public static String getStringFromLong (Long number) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(number);
-        return stringBuffer.toString();
-    }
-
-    public static String getStringFromFloat(float number) {
-        StringBuffer stringBuffer =  new StringBuffer();
-        stringBuffer.append(number);
-        return stringBuffer.toString();
+    public static String getStringFromPace(float pace) {
+        int paceInteger = (int)pace;
+        float paceDecimal = (pace - paceInteger) * 60f;
+        StringBuffer sbPace = new StringBuffer("");
+        sbPace.append(paceInteger);
+        sbPace.append(":");
+        if (paceDecimal < 10f) {
+            sbPace.append("0");
+            sbPace.append(paceDecimal);
+        } else {
+            sbPace.append(paceDecimal);
+        }
+        return sbPace.toString().substring(0,4);
     }
 
     public static String getPaceFromSpeed(float speed) {
+        float paceFromSpeed = (60f / (speed * 3.6f));
+        int paceFromSpeedInteger = (int)paceFromSpeed;
+        float paceFromSpeedDecimal = (paceFromSpeed - paceFromSpeedInteger) * 60f;
+        StringBuffer sbPaceFromSpeed = new StringBuffer("");
+        sbPaceFromSpeed.append(paceFromSpeedInteger);
+        sbPaceFromSpeed.append(":");
+        if (paceFromSpeedDecimal < 10f) {
+            sbPaceFromSpeed.append("0");
+            sbPaceFromSpeed.append(paceFromSpeedDecimal);
 
-        float paceOptimal = (60f / (speed * 3.6f));
-        int paceOptimalEntier = (int)paceOptimal;
-        float paceOptimalDecimal = (paceOptimal - paceOptimalEntier) * 60f;
-        StringBuffer sbPaceOptimal = new StringBuffer("");
-        sbPaceOptimal.append(paceOptimalEntier);
-        sbPaceOptimal.append(":");
-        if (paceOptimalDecimal < 10f) {
-            sbPaceOptimal.append("10");
         } else {
-            sbPaceOptimal.append(paceOptimalDecimal);
+            sbPaceFromSpeed.append(paceFromSpeedDecimal);
         }
-        String paceOptimalString = sbPaceOptimal.toString().substring(0,4);
+        String paceOptimalString = sbPaceFromSpeed.toString().substring(0,4);
 
         return paceOptimalString;
     }
-
-    public static float getSpeedPredictionFromDistance(float distance, float speedOptimal, float speedMin, float speedMax) {
-        float speedReturned = speedOptimal + (5f / 6f) - (1f / 36000f) * distance;
-        if (speedReturned < speedMin) {
-            speedReturned = speedMin;
-        }
-        if (speedReturned > speedMax) {
-            speedReturned = speedMax;
-        }
-        return speedReturned;
-    }
-
+ 
     public static String getCalculateTimeFromSecondes(long seconds) {
         long sec = seconds % 60;
         long min = seconds % 3600 / 60;

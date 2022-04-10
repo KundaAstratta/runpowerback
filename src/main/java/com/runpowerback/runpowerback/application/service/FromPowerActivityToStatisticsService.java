@@ -34,6 +34,8 @@ public class FromPowerActivityToStatisticsService {
     @Autowired
     PredictionRepository predictionRepository;
 
+    @Autowired
+    FormulaVDOTService formulaVDOTService;
     //@Autowired
     //FireBaseService fireBaseService;
 
@@ -41,7 +43,6 @@ public class FromPowerActivityToStatisticsService {
 
     public void toStatistics (List<PowerActivityPointOf> runpower, Long idathlete) throws ExecutionException, InterruptedException {
         List<Float> runpowerSorted = new ArrayList<>();
-        logger.info("here");
         logger.info(runpower);
 
         float sumOfPower = runpower.get(1).getPower();
@@ -92,6 +93,7 @@ public class FromPowerActivityToStatisticsService {
             averageNumber = runpowerSorted.size()/2;
         }
         logger.info("average Number : " + averageNumber);
+
         float powerMedian = runpowerSorted.get(averageNumber-1);
         logger.info("power Median : " + powerMedian);
 
@@ -163,19 +165,43 @@ public class FromPowerActivityToStatisticsService {
         }
         logger.info("speed optimal {}", speedOptimal);
 
-        float speedMin = speedOptimal - 1f / 1.8f;
-        logger.info("speedMin {}" , speedMin);
 
-        float speedMax = speedOptimal + 1f / 1.2f;
-        logger.info("speedMax {}" , speedMax);
+        float timeForThisRun = runpower.get(runpower.size()-1).getTimezone() / 60;
+        logger.info("timeForThisRun {} (min)" , timeForThisRun);
+        float percentMax = formulaVDOTService.percentMax(timeForThisRun);
+        logger.info("percentMax {} %" , percentMax);
+        float vo2 = formulaVDOTService.VO2(60 * speedOptimal);
+        logger.info("vo2 {}" , vo2);
+        float vdot = formulaVDOTService.VDOT(vo2,percentMax);
+        logger.info("vdot {}" , vdot);
 
-        float speed40Km =  getSpeedPredictionFromDistance(40000,speedOptimal,speedMin,speedMax);
+        float easyPaceMax = formulaVDOTService.target(1000,0.59f,vdot) ;
+        logger.info("easyPaceMax {}" , easyPaceMax);
+        float easyPaceMin = formulaVDOTService.target(1000,0.74f,vdot) ;
+        logger.info("easyPaceMin {}" , easyPaceMin);
 
-        float speed20Km = getSpeedPredictionFromDistance(20000,speedOptimal,speedMin,speedMax);
+        float moderatePaceMax = formulaVDOTService.target(1000,0.75f,vdot);
+        logger.info("moderatePaceMax {}" , moderatePaceMax);
+        float moderatePaceMin = formulaVDOTService.target(1000,0.83f,vdot);
+        logger.info("moderatePaceMin {}" , moderatePaceMin);
 
-        float speed1OKm = getSpeedPredictionFromDistance(10000,speedOptimal,speedMin,speedMax);
 
-        float speed5Km = getSpeedPredictionFromDistance(5000,speedOptimal,speedMin,speedMax);
+        float thresholdPaceMax = formulaVDOTService.target(1000,0.84f,vdot);
+        logger.info("thresholdPaceMax {}" , thresholdPaceMax);
+        float thresholdPaceMin = formulaVDOTService.target(1000,0.88f,vdot);
+        logger.info("thresholdPaceMin {}" , thresholdPaceMin);
+
+
+        float intervalPaceMax = formulaVDOTService.target(1000,0.95f, vdot);
+        logger.info("intervalPaceMax {}" , intervalPaceMax);
+        float intervalPaceMin = formulaVDOTService.target(1000,1.0f, vdot);
+        logger.info("intervalPaceMin {}" , intervalPaceMin);
+
+
+        float repetitionPaceMax = formulaVDOTService.target(1000, 1.05f, vdot);
+        logger.info("repetitionPaceMax {}" , repetitionPaceMax);
+        float repetitionPaceMin = formulaVDOTService.target(1000, 1.20f, vdot);
+        logger.info("repetitionPaceMin {}" , repetitionPaceMin);
 
         int numberOfEasy = 0;
         int numberOfModerate = 0;
@@ -186,19 +212,19 @@ public class FromPowerActivityToStatisticsService {
         i = 2;
         while(i <= runpower.size()-1) {
 
-            if (runpower.get(i).getSpeed() < speed40Km) {
+            if (runpower.get(i).getPace() >= easyPaceMin) {
                 numberOfEasy = numberOfEasy + 1;
             } else {
-                if ((speed40Km <= runpower.get(i).getSpeed()) && (runpower.get(i).getSpeed() < speed20Km)) {
+                if ((moderatePaceMin <= runpower.get(i).getPace()) && (runpower.get(i).getPace() <= moderatePaceMax)) {
                     numberOfModerate = numberOfModerate + 1;
                 } else {
-                    if ((speed20Km <= runpower.get(i).getSpeed()) && (runpower.get(i).getSpeed() < speed1OKm)) {
+                    if ((thresholdPaceMin <= runpower.get(i).getPace()) && (runpower.get(i).getPace() <= thresholdPaceMax)) {
                         numberOfThreshold = numberOfThreshold + 1;
                     } else {
-                        if ((speed1OKm <= runpower.get(i).getSpeed()) && (runpower.get(i).getSpeed()< speed5Km)) {
+                        if ((intervalPaceMin <= runpower.get(i).getPace()) && (runpower.get(i).getPace() <= intervalPaceMax)) {
                             numberOfInterval = numberOfInterval + 1;
                         } else {
-                            if (speed5Km <= runpower.get(i).getSpeed()) {
+                            if ((repetitionPaceMin <= runpower.get(i).getPace()) && (runpower.get(i).getPace() <= repetitionPaceMax)) {
                                 numberOfRepetition = numberOfRepetition + 1;
                             }
                         }
@@ -252,30 +278,5 @@ public class FromPowerActivityToStatisticsService {
         logger.info("number of Repetition : " + numberOfRepetition);
 
     }
-
-    public static String getStringFromLong (Long number) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(number);
-        return stringBuffer.toString();
-    }
-
-    public static String getStringFromFloat(float number) {
-        StringBuffer stringBuffer =  new StringBuffer();
-        stringBuffer.append(number);
-        return stringBuffer.toString();
-    }
-
-    public static float getSpeedPredictionFromDistance(float distance, float speedOptimal, float speedMin, float speedMax) {
-        float speedReturned = speedOptimal + (5f / 6f) - (1f / 36000f) * distance;
-        if (speedReturned < speedMin) {
-            speedReturned = speedMin;
-        }
-        if (speedReturned > speedMax) {
-            speedReturned = speedMax;
-        }
-        return speedReturned;
-    }
-
-
 
 }
